@@ -18,7 +18,6 @@ public class Scene1Manager : MonoBehaviour {
 	void FixedUpdate () {
 		for (int i = 0; i < clouds.Length; i++) {
 			clouds[i].transform.Translate(Vector2.left * (speeds[i] / 3) * Time.deltaTime);
-			Debug.Log(clouds[i] + " " + speeds[i] / 3);
 		}
 	}
 

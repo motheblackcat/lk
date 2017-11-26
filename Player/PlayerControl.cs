@@ -14,7 +14,6 @@ public class PlayerControl : MonoBehaviour {
 	// Use this for initialization
 	void Start() {
 		rb = GetComponent<Rigidbody2D>();
-		rb.drag = 8;
 	}
 	
 	// Update is called once per frame
@@ -29,17 +28,15 @@ public class PlayerControl : MonoBehaviour {
 		// pos += move * runSpeed * Time.deltaTime;
 
 		if (Input.GetAxis("Horizontal") > 0) {
-			rb.AddForce(Vector2.right * runSpeed);
+			rb.AddForce(Vector2.right * runSpeed * 10);
 		}
 		
 		else if (Input.GetAxis("Horizontal") < 0) {
-			rb.AddForce(-Vector2.right * runSpeed);
+			rb.AddForce(-Vector2.right * runSpeed * 10);
 		}
 
 		if (Input.GetButtonDown("Jump") && isGrounded) {
-			rb.AddForce(Vector2.up * jumpSpeed);
-			// rb.velocity = new Vector2(0, jumpSpeed);
-			
+			rb.AddForce(Vector2.up * jumpSpeed * 100);
 		}
 
 		if (Input.GetButtonDown("Attack")) {
@@ -58,14 +55,14 @@ public class PlayerControl : MonoBehaviour {
 
 		else if (Input.GetAxis("Horizontal") < 0) {
 			sprite.flipX = true;
-			col.offset = new Vector2(-0.06f, -0.04f);			
+			col.offset = new Vector2(-0.06f, -0.04f);
 		}
 
 		if (sprite.flipX) {
-        	GameObject.Find("Ghost").GetComponent<SpriteRenderer>().flipX = true;        
+        	GameObject.Find("Ghost").GetComponent<SpriteRenderer>().flipX = true;
     }
     	else {
-       	 	GameObject.Find("Ghost").GetComponent<SpriteRenderer>().flipX = false;        
+       	 	GameObject.Find("Ghost").GetComponent<SpriteRenderer>().flipX = false;
     	}
 	}
 
