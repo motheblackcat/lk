@@ -20,12 +20,4 @@ public class Scene1Manager : MonoBehaviour {
 			clouds[i].transform.Translate(Vector2.left * (speeds[i] / 3) * Time.deltaTime);
 		}
 	}
-
-	void OnTriggerStay2D(Collider2D other) {
-		GameObject.Find("MainCamera").GetComponent<CameraFollowPlayer>().enabled = false;
-	}
-
-	void OnTriggerExit2D(Collider2D other) {
-		GameObject.Find("MainCamera").GetComponent<CameraFollowPlayer>().enabled = true;
-	}
 }
