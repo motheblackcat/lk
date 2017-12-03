@@ -21,25 +21,27 @@ public class PlayerHealth : MonoBehaviour {
 		}
 	}
 
-	// TODO: Fix x push, only y push is working
-	void PushBack(GameObject enemy) {
+	// TODO: Fix couritine issue, player can move after death
+	IEnumerator PushBack(GameObject enemy) {
+		GetComponent<PlayerControl>().canMove = false;
 		if (enemy.transform.position.x > transform.position.x) {
 			GetComponent<Rigidbody2D>().AddForce(new Vector2(-pushX, pushY), ForceMode2D.Impulse);
 		} else {
 			GetComponent<Rigidbody2D>().AddForce(new Vector2(pushX, pushY), ForceMode2D.Impulse);			
 		}
+		yield return new WaitForSeconds(0.5f);
+		GetComponent<PlayerControl>().canMove = true;
 	}
 	
 	IEnumerator Death() {
 		isDead = true;
-		GetComponent<PlayerControl>().canMove = false;
 		yield return new WaitForSeconds(3);
 		SceneManager.LoadScene("Scene_1_RoadtoForest");
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
 		if (other.gameObject.tag == "Enemy") {
-			PushBack(other.gameObject);
+			StartCoroutine(PushBack(other.gameObject));
 			healthBar.fillAmount -= 0.25f;
 		}
 	}
