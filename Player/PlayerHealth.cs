@@ -21,7 +21,6 @@ public class PlayerHealth : MonoBehaviour {
 		}
 	}
 
-	// TODO: Fix couritine issue, player can move after death
 	IEnumerator PushBack(GameObject enemy) {
 		GetComponent<PlayerControl>().canMove = false;
 		if (enemy.transform.position.x > transform.position.x) {

@@ -16,7 +16,7 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	void Update() {
-		if (canMove) {
+		if (canMove && !GetComponent<PlayerHealth>().isDead) {
 			PlayerMove();
 			Flip();
 		}
@@ -26,7 +26,6 @@ public class PlayerControl : MonoBehaviour {
 		if (Input.GetAxis("Horizontal") != 0) {
 			rb.velocity = new Vector2(Input.GetAxis("Horizontal") * runSpeed, rb.velocity.y) ;
 		}
-		// TODO: Fine tune the jump
 		if (Input.GetButtonDown("Jump") && isGrounded) {
 			rb.velocity = Vector2.up * jumpSpeed;
 		}
