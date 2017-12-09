@@ -20,6 +20,7 @@ public float attackDuration = 0.1f;
 	}
 
 	IEnumerator Attack() {
+		// Fix the attack animation spamming (cd?)
 		isAttacking = true;
 		yield return new WaitForSeconds(attackDuration); // Can be switched with the sword attack duration
 		isAttacking = false;
