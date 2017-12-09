@@ -3,18 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SlimeControl : MonoBehaviour {
+	public int enemyHealth = 2;
 
-	void Start () {
-		
-	}
-	
 	void Update () {
-		
+		if (enemyHealth <= 0) {
+			Death();
+		}
+	}
+
+	void Death() {
+		Destroy(gameObject);		
+	}
+
+	void TakeDamage() {
+		enemyHealth -= 1;		
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.tag == "Weapon") {
-			Destroy(gameObject);
+			TakeDamage(); // TOFIX: Applies damage twice;
 		}
 	}
 }
