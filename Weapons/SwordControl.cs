@@ -16,6 +16,7 @@ public class SwordControl : MonoBehaviour {
 	
 	void Update () {
 		Position();
+		ActivateCollider();
 		Animate();
 	}
 
@@ -23,14 +24,24 @@ public class SwordControl : MonoBehaviour {
 		if (player.GetComponent<SpriteRenderer>().flipX) {
 			GetComponent<SpriteRenderer>().flipX = true;
 			transform.localPosition = new Vector2(-0.74f, transform.localPosition.y);
+			GetComponent<BoxCollider2D>().offset = new Vector2(-0.25f, 0.45f);
 		} else {
 			GetComponent<SpriteRenderer>().flipX = false;
 			transform.localPosition = new Vector2(0.74f, transform.localPosition.y);
+			GetComponent<BoxCollider2D>().offset = new Vector2(0.25f, 0.45f);
 		}
 	}
+	
+	void ActivateCollider() {
+		if (player.GetComponent<PlayerAttack>().isAttacking) {
+			GetComponent<BoxCollider2D>().enabled = true;
+		} else {
+			GetComponent<BoxCollider2D>().enabled = false;			
+		}
+	}
+	
 
 	void Animate() {
-		// TODO: Fix sword animation lag
 		string[] animParams = new string[animator.parameterCount];
 		for (int i = 0; i < animator.parameterCount; i++) {
 			animParams[i] = animator.GetParameter(i).name;
