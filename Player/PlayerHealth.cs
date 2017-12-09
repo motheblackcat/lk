@@ -37,7 +37,7 @@ public class PlayerHealth : MonoBehaviour {
 		}
 	}
 	
-	public IEnumerator Death() {
+	IEnumerator Death() {
 		isDead = true;
 		yield return new WaitForSeconds(3);
 		SceneManager.LoadScene("Scene_1_RoadtoForest");

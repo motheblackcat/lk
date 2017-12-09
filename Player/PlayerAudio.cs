@@ -10,17 +10,15 @@ public class PlayerAudio : MonoBehaviour {
 	public AudioClip die;
 	public bool wasPlayed = false;
 
-	// Use this for initialization
 	void Start () {
 		audiosource = GetComponent<AudioSource>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
-		Soundify();
+		StartCoroutine(Soundify());
 	}
 
-	void Soundify() {
+	IEnumerator Soundify() {
 		// Refactor this method
 		if(Input.GetButtonDown("Jump")) {
 			audiosource.PlayOneShot(air);
@@ -31,11 +29,15 @@ public class PlayerAudio : MonoBehaviour {
 		}
 
 		// TOFIX: Sound play in loop
-		if(GetComponent<PlayerHealth>().isHurt) {
+		 if(GetComponent<PlayerHealth>().isHurt && !wasPlayed) {
+			wasPlayed = true;
 			audiosource.PlayOneShot(hurt);
+			yield return new WaitForSeconds(hurt.length);
+			wasPlayed = false;
 		}
 
-		if(GetComponent<PlayerHealth>().isDead) {
+		if(GetComponent<PlayerHealth>().isDead && !wasPlayed) {
+			wasPlayed = true;
 			audiosource.PlayOneShot(die);
 		}
 	}
