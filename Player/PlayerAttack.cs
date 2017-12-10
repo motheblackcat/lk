@@ -9,14 +9,17 @@ public float attackDuration = 0.1f;
 	
 	void Update () {
 		if(Input.GetButtonDown("Attack")) {
-			StartCoroutine(Attack());
+			if (GetComponent<PlayerControl>().canMove) {
+				StartCoroutine(Attack());
+			}
 		}
 	}
 
 	IEnumerator Attack() {
 		// Fix the attack system (player can spam, the animation is not fully played everytime but the damages are dealt)
 		isAttacking = true;
-		yield return new WaitForSeconds(attackDuration); // Can be switched with the sword's attack duration
+		// Can be switched with the sword's attack duration
+		yield return new WaitForSeconds(attackDuration);
 		isAttacking = false;
 	}
 }

@@ -22,7 +22,7 @@ public class PlayerAudio : MonoBehaviour {
 	}
 
 	IEnumerator Soundify() {
-		if(!playerHealth.isDead) {
+		if(!playerHealth.isDead && GetComponent<PlayerControl>().canMove) {
 			if(Input.GetButtonDown("Jump") && GetComponent<PlayerControl>().isGrounded) {
 				audiosource.PlayOneShot(air);
 			}
