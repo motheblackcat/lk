@@ -7,8 +7,8 @@ public class PauseMenu : MonoBehaviour {
 	public bool paused = false;
 	public bool gamePad = false;
 	public GameObject pauseUI;
-	Image joyCon;
-	Image keyCon;
+	public Image joyCon;
+	public Image keyCon;
 	GameObject player;
 	PlayerControl playerControl;
 
@@ -32,18 +32,27 @@ public class PauseMenu : MonoBehaviour {
 				gamePad = false;
 			}
 		}
+
+		// Refactor this
+		if (gamePad) {
+			joyCon.enabled = true;
+			keyCon.enabled = false;
+		}
+		else {
+			joyCon.enabled = false;
+			keyCon.enabled = true;
+		}
 	}
 
 	void PauseDetection() {
 		if (Input.GetButtonDown("Start")) {
 			paused = !paused;
-		}
-
-		if (paused) {
-			Pause();
-		}
-		else {
-			Resume();
+			if (paused) {
+				Pause();
+			}
+			else {
+				Resume();
+			}
 		}
 	}
 
@@ -56,18 +65,6 @@ public class PauseMenu : MonoBehaviour {
 
 		if (Input.GetButtonDown("Select")) {
 			Application.Quit();
-		}
-
-		// Refactor this
-		joyCon = GameObject.Find("JoyCon Text").GetComponent<Image>();
-		keyCon = GameObject.Find("KeyCon Text").GetComponent<Image>();
-		if (gamePad) {
-			joyCon.enabled = true;
-			keyCon.enabled = false;
-		}
-		else {
-			joyCon.enabled = false;
-			keyCon.enabled = true;
 		}
 	}
 

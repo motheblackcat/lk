@@ -39,6 +39,7 @@ public class PlayerHealth : MonoBehaviour {
 	
 	IEnumerator Death() {
 		isDead = true;
+		GameObject.Find("MainCamera").GetComponent<AudioSource>().Stop();
 		yield return new WaitForSeconds(3);
 		SceneManager.LoadScene("Scene_1_RoadtoForest");
 	}
@@ -46,7 +47,8 @@ public class PlayerHealth : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D other) {
 		if (other.gameObject.tag == "Enemy") {
 			StartCoroutine(PushBack(other.gameObject));
-			healthBar.fillAmount -= 0.5f; // Replace by enemy damage other.gameObject.GetComponent<EnemyDamage>.enemyDamage;
+			// Replace by enemy damage other.gameObject.GetComponent<EnemyDamage>.enemyDamage
+			healthBar.fillAmount -= 0.5f;
 		}
 	}
 }
