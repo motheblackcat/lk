@@ -11,9 +11,12 @@ public class PlayerHealth : MonoBehaviour {
 	Image healthBar;
 	public bool isDead = false;
 	public bool isHurt = false;
+	SpriteRenderer sprite;
+	public float timer  = 0.5f;
 
 	void Start() {
 		healthBar = GameObject.Find("Content").GetComponent<Image>();
+		sprite = GetComponent<SpriteRenderer>();
 	}
 
 	void Update() {
@@ -32,10 +35,16 @@ public class PlayerHealth : MonoBehaviour {
 			} else {
 				GetComponent<Rigidbody2D>().AddForce(new Vector2(pushX, pushY), ForceMode2D.Impulse);			
 			}
-			yield return new WaitForSeconds(0.5f);
+			yield return new WaitForSeconds(timer);
 			isHurt = false;		
 			GetComponent<PlayerControl>().canMove = true;
 		}
+	}
+
+	IEnumerator Flick() {
+		sprite.enabled = false;
+		yield return new WaitForSeconds(0.1f);
+		sprite.enabled = true;
 	}
 	
 	IEnumerator Death() {
@@ -48,6 +57,7 @@ public class PlayerHealth : MonoBehaviour {
 	void OnCollisionEnter2D(Collision2D other) {
 		if (other.gameObject.tag == "Enemy") {
 			StartCoroutine(PushBack(other.gameObject));
+			StartCoroutine(Flick());
 			// Replace by enemy damage other.gameObject.GetComponent<EnemyDamage>.enemyDamage
 			healthBar.fillAmount -= 0.5f;
 		}
