@@ -64,6 +64,7 @@ public class PauseMenu : MonoBehaviour {
 		playerControl.canMove = false;
 
 		if (Input.GetButtonDown("Select")) {
+			Debug.Log("Quit");
 			Application.Quit();
 		}
 	}

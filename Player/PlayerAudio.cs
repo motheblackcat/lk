@@ -7,7 +7,6 @@ public class PlayerAudio : MonoBehaviour {
 	public AudioClip air;
 	public AudioClip attack;
 	public AudioClip hurt;
-	public AudioClip hit;
 	public AudioClip die;
 	public bool wasPlayed = false;
 	PlayerHealth playerHealth;
@@ -44,16 +43,6 @@ public class PlayerAudio : MonoBehaviour {
 		if(GetComponent<Animator>().GetBool("die") && !wasPlayed) {
 			wasPlayed = true;
 			audiosource.PlayOneShot(die);
-		}
-	}
-
-	// TODO: Fix this for the hit sound, it is not working
-	IEnumerator OnTriggerEnter2D(Collider2D other) {
-		if(other.gameObject.tag == "enemy" && !wasPlayed) {
-		wasPlayed = true;
-		audiosource.PlayOneShot(hit);
-		yield return new WaitForSeconds(1);
-		wasPlayed = false;
 		}
 	}
 }

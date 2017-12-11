@@ -22,6 +22,7 @@ public class PlayerHealth : MonoBehaviour {
 		}
 	}
 
+	// Refactor so it can be used by both player and enemies
 	IEnumerator PushBack(GameObject enemy) {
 		if (!isDead) {
 			GetComponent<PlayerControl>().canMove = false;
