@@ -12,6 +12,7 @@ public class PlayerHealth : MonoBehaviour {
 	public bool isDead = false;
 	public bool isHurt = false;
 	SpriteRenderer sprite;
+	// Invicibility timer
 	public float timer  = 0.5f;
 
 	void Start() {
@@ -55,11 +56,12 @@ public class PlayerHealth : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
-		if (other.gameObject.tag == "Enemy") {
+		if (other.gameObject.tag == "Enemy" && !other.gameObject.GetComponent<EnemyHealthControl>().isDead) {
 			StartCoroutine(PushBack(other.gameObject));
 			StartCoroutine(Flick());
+			// Convert to more useable values
 			// Replace by enemy damage other.gameObject.GetComponent<EnemyDamage>.enemyDamage
-			healthBar.fillAmount -= 0.5f;
+			healthBar.fillAmount -= 0.25f;
 		}
 	}
 }
