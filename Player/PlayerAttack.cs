@@ -8,9 +8,11 @@ public bool isAttacking = false;
 public float attackDuration = 0.1f;
 	
 	void Update () {
-		if(Input.GetButtonDown("Attack")) {
-			if (GetComponent<PlayerControl>().canMove) {
-				StartCoroutine(Attack());
+		if (!GetComponent<PlayerHealth>().isDead) {
+			if(Input.GetButtonDown("Attack")) {
+				if (GetComponent<PlayerControl>().canMove) {
+					StartCoroutine(Attack());
+				}
 			}
 		}
 	}

@@ -14,6 +14,7 @@ public class PlayerHealth : MonoBehaviour {
 	SpriteRenderer sprite;
 	// Invicibility timer
 	public float timer  = 0.5f;
+	public float damageTaken = 0.25f;
 
 	void Start() {
 		healthBar = GameObject.Find("Content").GetComponent<Image>();
@@ -56,12 +57,12 @@ public class PlayerHealth : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
-		if (other.gameObject.tag == "Enemy" && !other.gameObject.GetComponent<EnemyHealthControl>().isDead) {
+		if (other.gameObject.tag == "Enemy" && !other.gameObject.GetComponent<EnemyHealthControl>().isDead && !isDead) {
 			StartCoroutine(PushBack(other.gameObject));
 			StartCoroutine(Flick());
 			// Convert to more useable values
 			// Replace by enemy damage other.gameObject.GetComponent<EnemyDamage>.enemyDamage
-			healthBar.fillAmount -= 0.25f;
+			healthBar.fillAmount -= damageTaken;
 		}
 	}
 }

@@ -70,7 +70,7 @@ public class EnemyHealthControl : MonoBehaviour {
 		sprite.enabled = true;
 	}
 
-	// Two colliders are used one for trigger the other for physics, this should be refactored
+	// Two colliders are used one for trigger the other for physics, this should be refactored it create a bug with the vision field (enemy receive damage from afar)
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.tag == "Weapon") {
 			StartCoroutine(PushBack(player));
