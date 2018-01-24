@@ -30,7 +30,7 @@ public class EnemyMoveControl : MonoBehaviour {
     void followPlayer() {
         float Xpos = player.transform.position.x - transform.position.x;
         float Ypos = player.transform.position.y - transform.position.y;
-        Debug.Log(Ypos);
+        
         if (Xpos < 9.0f && Xpos > -9.0f && Ypos < 2.5f && Ypos > -1) {
             canMove = true;
         } else {
