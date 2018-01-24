@@ -18,11 +18,9 @@ public class EnemyMoveControl : MonoBehaviour {
             if (player.transform.position.x > transform.position.x) {
                 sprite.flipX = true;
                 GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed, 0);
-                GetComponent<BoxCollider2D>().offset = new Vector2(3.4f, GetComponent<BoxCollider2D>().offset.y);
 			} else {
                 sprite.flipX = false;                
                 GetComponent<Rigidbody2D>().velocity = new Vector2(-moveSpeed, 0);
-                GetComponent<BoxCollider2D>().offset = new Vector2(-3.4f, GetComponent<BoxCollider2D>().offset.y);
 			}
         }
 
