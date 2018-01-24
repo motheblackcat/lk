@@ -25,16 +25,17 @@ public class EnemyMoveControl : MonoBehaviour {
                 GetComponent<BoxCollider2D>().offset = new Vector2(-3.4f, GetComponent<BoxCollider2D>().offset.y);
 			}
         }
-    }
-    
-    void OnTriggerStay2D(Collider2D other) {
-        if (other.gameObject.tag == "Player") {
-            canMove = true;
-        }
+
+        followPlayer();
     }
 
-    void OnTriggerExit2D(Collider2D other) {
-        if (other.gameObject.tag == "Player") {
+    void followPlayer() {
+        float Xpos = player.transform.position.x - transform.position.x;
+        float Ypos = player.transform.position.y - transform.position.y;
+        Debug.Log(Ypos);
+        if (Xpos < 9.0f && Xpos > -9.0f && Ypos < 2.5f && Ypos > -1) {
+            canMove = true;
+        } else {
             canMove = false;
         }
     }
