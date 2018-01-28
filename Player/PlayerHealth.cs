@@ -11,6 +11,7 @@ public class PlayerHealth : MonoBehaviour {
 	Image healthBar;
 	public bool isDead = false;
 	public bool isHurt = false;
+	public bool tookDamage = false;
 	SpriteRenderer sprite;
 	// Invicibility timer
 	public float timer  = 0.5f;
@@ -62,6 +63,7 @@ public class PlayerHealth : MonoBehaviour {
 			StartCoroutine(Flick());
 			// Convert to more useable values
 			// Replace by enemy damage other.gameObject.GetComponent<EnemyDamage>.enemyDamage
+			tookDamage = true;
 			healthBar.fillAmount -= damageTaken;
 		}
 	}

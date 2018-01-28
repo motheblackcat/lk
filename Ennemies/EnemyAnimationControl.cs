@@ -19,5 +19,11 @@ public class EnemyAnimationControl : MonoBehaviour {
 		if (GetComponent<EnemyHealthControl>().isDead) {
 			anim.SetTrigger("die");
 		}
+
+		if (GameObject.Find("Player").GetComponent<PlayerHealth>().tookDamage) {
+			anim.SetTrigger("atk");
+			GameObject.Find("Player").GetComponent<PlayerHealth>().tookDamage = false;
+		}
+
 	}
 }
