@@ -16,9 +16,16 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	void Update() {
-		if (canMove && !GetComponent<PlayerHealth>().isDead) {
-			PlayerMove();
-			Flip();
+		if (GetComponent<PlayerHealth>()) {
+			if (canMove && !GetComponent<PlayerHealth>().isDead) {
+				PlayerMove();
+				Flip();
+			}
+		} else {
+			if (canMove) {
+				PlayerMove();
+				Flip();
+			}
 		}
 	}
 
@@ -35,13 +42,17 @@ public class PlayerControl : MonoBehaviour {
 		if (Input.GetAxis("Horizontal") > 0) {
 			GetComponent<SpriteRenderer>().flipX = false;
 			GetComponent<CapsuleCollider2D>().offset = new Vector2(0.06f, -0.04f);
-       	 	GameObject.Find("Ghost").GetComponent<SpriteRenderer>().flipX = false;
+			if (GameObject.Find("Ghost")) {
+       	 		GameObject.Find("Ghost").GetComponent<SpriteRenderer>().flipX = false;
+			}
 		}
 
 		if (Input.GetAxis("Horizontal") < 0) {
 			GetComponent<SpriteRenderer>().flipX = true;
 			GetComponent<CapsuleCollider2D>().offset = new Vector2(-0.06f, -0.04f);
-        	GameObject.Find("Ghost").GetComponent<SpriteRenderer>().flipX = true;
+        	if (GameObject.Find("Ghost")) {
+       	 		GameObject.Find("Ghost").GetComponent<SpriteRenderer>().flipX = true;
+			}
 		}
 	}
 

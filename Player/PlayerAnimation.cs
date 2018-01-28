@@ -18,9 +18,22 @@ public class PlayerAnimation : MonoBehaviour {
 	void Update () {
 		bool canMove = playerControl.canMove;
 		bool isGrounded = playerControl.isGrounded;
-		bool isDead = playerHealth.isDead;
-		bool isHurt = playerHealth.isHurt;
-		bool isAttacking = playerAttack.isAttacking;
+		bool isDead;
+		bool isHurt;
+		bool isAttacking;
+		
+		if (playerHealth) {
+			isDead = playerHealth.isDead;
+			isHurt = playerHealth.isHurt;
+		} else {
+			isDead = false;
+			isHurt = false;
+		}
+		if(playerAttack) {
+			isAttacking = playerAttack.isAttacking;
+		} else {
+			isAttacking = false;
+		}
 
 		if (canMove) {
 			if (Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Horizontal") < 0) {
