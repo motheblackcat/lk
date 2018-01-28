@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyHealthControl : MonoBehaviour {
+	GameObject player;
+	SpriteRenderer sprite;
 	public int enemyHealth = 2;
 	public bool hasTakenDamage = false;
 	public bool isDead = false;
-	GameObject player;
 	public int pushX = 5;
 	public int pushY = 5;
-	SpriteRenderer sprite;
-	public float timer  = 0.5f;
+	public float pushTimer  = 0.5f;
+	public bool wasPushed = false;
+	public float deathTimer  = 1.0f;
+	
 
 	void Start() {
 		player = GameObject.Find("Player");
@@ -40,7 +43,7 @@ public class EnemyHealthControl : MonoBehaviour {
 			collider.enabled = false;
 		}
 		GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-		yield return new WaitForSeconds(timer);		
+		yield return new WaitForSeconds(deathTimer);		
 		Destroy(gameObject);
 	}
 
@@ -53,13 +56,15 @@ public class EnemyHealthControl : MonoBehaviour {
 	
 	IEnumerator PushBack(GameObject player) {
 		if (!isDead) {
+			wasPushed = true;
 			GetComponent<EnemyMoveControl>().canMove = false;
 			if (player.transform.position.x > transform.position.x) {
 				GetComponent<Rigidbody2D>().AddForce(new Vector2(-pushX, pushY), ForceMode2D.Impulse);
 			} else {
 				GetComponent<Rigidbody2D>().AddForce(new Vector2(pushX, pushY), ForceMode2D.Impulse);			
 			}
-			yield return new WaitForSeconds(timer);
+			yield return new WaitForSeconds(pushTimer);
+			wasPushed = false;
 			GetComponent<EnemyMoveControl>().canMove = true;
 		}
 	}
@@ -70,7 +75,7 @@ public class EnemyHealthControl : MonoBehaviour {
 		sprite.enabled = true;
 	}
 
-	// Two colliders are used one for trigger the other for physics, this should be refactored
+	// NOTE: Two colliders are used: one for trigger the other for physics, this should be refactored (taking damage)
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.tag == "Weapon") {
 			StartCoroutine(PushBack(player));

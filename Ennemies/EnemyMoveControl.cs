@@ -7,6 +7,8 @@ public class EnemyMoveControl : MonoBehaviour {
     public float moveSpeed = 3;
     GameObject player;
     SpriteRenderer sprite;
+    public float visionDistance = 8.0f;
+    
 
     void Start() {
 	    player = GameObject.Find("Player");
@@ -24,15 +26,17 @@ public class EnemyMoveControl : MonoBehaviour {
 			}
         }
 
-        followPlayer();
+        followPlayer(); 
     }
 
     void followPlayer() {
-        float Xpos = player.transform.position.x - transform.position.x;
-        float Ypos = player.transform.position.y - transform.position.y;
-        
-        if (Xpos < 9.0f && Xpos > -9.0f && Ypos < 2.5f && Ypos > -1) {
-            canMove = true;
+        float xPos = player.transform.position.x - transform.position.x;
+        float yPos = player.transform.position.y - transform.position.y;
+
+        if (xPos < visionDistance && xPos > -visionDistance && yPos < 2.5f && yPos > -1 && !GetComponent<EnemyHealthControl>().hasTakenDamage) {
+            if (!GetComponent<EnemyHealthControl>().wasPushed) {
+                canMove = true;
+            }
         } else {
             canMove = false;
         }
