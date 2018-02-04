@@ -12,7 +12,7 @@ public class NPCManager : MonoBehaviour {
 		}
 	}
 
-	void ArrowManager() {
+	void DoorManager() {
 		if (this.name == "Door") {
 			GetComponentInChildren<SpriteRenderer>().enabled = true;
 			if (Input.GetAxis("Vertical") > 0) {
@@ -39,10 +39,19 @@ public class NPCManager : MonoBehaviour {
 		}
 	}
 
+	void DrinkerManager() {
+		if (this.name == "Drinker1") {
+			if (Input.GetAxis("Vertical") > 0) {
+				GetComponent<Animator>().SetBool("talk", true);
+			}
+		}
+	}
+
 	void OnTriggerStay2D(Collider2D other) {
 		if (other.gameObject.tag == "Player") {
-			ArrowManager();
+			DoorManager();
 			BartenderManager(other.gameObject);
+			DrinkerManager();
 		}
 	}
 
@@ -56,6 +65,10 @@ public class NPCManager : MonoBehaviour {
 
 			if (this.name == "Bartender") {
 				GetComponent<Animator>().SetBool("watch", false);
+				GetComponent<Animator>().SetBool("talk", false);
+			}
+
+			if (this.name == "Drinker1") {
 				GetComponent<Animator>().SetBool("talk", false);
 			}
 		}
