@@ -18,20 +18,19 @@ public class NPCManager : MonoBehaviour {
 			if (Input.GetAxis("Vertical") > 0) {
 				SceneManager.LoadScene("Scene_1_RoadtoForest");
 			}
-		} else if (introDone) {
-			GetComponentsInChildren<SpriteRenderer>()[1].enabled = true;
 		}
 	}
 
 	void BartenderManager(GameObject player) {
 		if (this.name == "Bartender") {
+			GetComponent<Animator>().SetBool("watch", true);
+			GetComponentsInChildren<SpriteRenderer>()[1].enabled = true;
+			
 			if (player.transform.position.x > transform.position.x) {
 				GetComponent<SpriteRenderer>().flipX = true;
 			} else {
 				GetComponent<SpriteRenderer>().flipX = false;				
 			}
-
-			GetComponent<Animator>().SetBool("watch", true);
 			
 			if (Input.GetAxis("Vertical") > 0) {
 				GetComponent<Animator>().SetBool("talk", true);
@@ -41,6 +40,8 @@ public class NPCManager : MonoBehaviour {
 
 	void DrinkerManager() {
 		if (this.name == "Drinker1") {
+			GetComponentsInChildren<SpriteRenderer>()[1].enabled = true;
+			
 			if (Input.GetAxis("Vertical") > 0) {
 				GetComponent<Animator>().SetBool("talk", true);
 			}
@@ -48,10 +49,14 @@ public class NPCManager : MonoBehaviour {
 	}
 
 	void OnTriggerStay2D(Collider2D other) {
-		if (other.gameObject.tag == "Player") {
+		if (other.gameObject.tag == "Player" && introDone) {
 			DoorManager();
 			BartenderManager(other.gameObject);
 			DrinkerManager();
+		}
+
+		if (this.name == "Bartender" ||this.name == "Drinker1") {
+			GameObject.Find("DialogBox").GetComponent<DialogManager>().npc = this.gameObject;
 		}
 	}
 
