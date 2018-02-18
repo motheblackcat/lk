@@ -20,6 +20,8 @@ public class EnemyAnimationControl : MonoBehaviour {
 			anim.SetTrigger("die");
 		}
 
+		// Better use a timer for player taking damage?
+		// Use a OnTriggerEnter method instead
 		if (GameObject.Find("Player").GetComponent<PlayerHealth>().tookDamage) {
 			anim.SetTrigger("atk");
 			GameObject.Find("Player").GetComponent<PlayerHealth>().tookDamage = false;

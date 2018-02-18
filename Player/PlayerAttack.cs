@@ -5,23 +5,22 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour {
 
 public bool isAttacking = false;
-public float attackDuration = 0.1f;
+public float attackDuration = 0.2f;
 	
 	void Update () {
 		if (!GetComponent<PlayerHealth>().isDead) {
-			if(Input.GetButtonDown("Attack")) {
-				if (GetComponent<PlayerControl>().canMove) {
-					StartCoroutine(Attack());
-				}
+			if(Input.GetButtonDown("Attack") && !isAttacking && GetComponent<PlayerControl>().canMove) {
+				StartCoroutine(Attack());
 			}
 		}
 	}
 
 	IEnumerator Attack() {
-		// Fix the attack system (player can spam, the animation is not fully played everytime but the damages are dealt)
+		// Check if it's the best way to go about this.
 		isAttacking = true;
-		// Can be switched with the sword's attack duration
+		GameObject.Find("Sword").GetComponent<Collider2D>().enabled = true;
 		yield return new WaitForSeconds(attackDuration);
+		GameObject.Find("Sword").GetComponent<Collider2D>().enabled = false;
 		isAttacking = false;
 	}
 }

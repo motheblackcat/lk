@@ -28,7 +28,6 @@ public class PlayerHealth : MonoBehaviour {
 		}
 	}
 
-	// Refactor so it can be used by both player and enemies
 	IEnumerator PushBack(GameObject enemy) {
 		if (!isDead) {
 			GetComponent<PlayerControl>().canMove = false;
@@ -58,10 +57,11 @@ public class PlayerHealth : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
+		// Check if it is needed to check if the enemy is not dead
 		if (other.gameObject.tag == "Enemy" && !other.gameObject.GetComponent<EnemyHealthControl>().isDead && !isDead) {
 			StartCoroutine(PushBack(other.gameObject));
 			StartCoroutine(Flick());
-			// Convert to more useable values
+			// Convert to more useable values (playerHealth)
 			// Replace by enemy damage other.gameObject.GetComponent<EnemyDamage>.enemyDamage
 			tookDamage = true;
 			healthBar.fillAmount -= damageTaken;

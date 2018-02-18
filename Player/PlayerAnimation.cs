@@ -16,26 +16,15 @@ public class PlayerAnimation : MonoBehaviour {
 	}
 	
 	void Update () {
-		bool canMove = playerControl.canMove;
-		bool isGrounded = playerControl.isGrounded;
-		bool isDead;
-		bool isHurt;
-		bool isAttacking;
-		
-		if (playerHealth) {
-			isDead = playerHealth.isDead;
-			isHurt = playerHealth.isHurt;
-		} else {
-			isDead = false;
-			isHurt = false;
+		// Refactor this section
+		if (playerAttack.isAttacking) {
+			animator.SetBool("attack", true);
 		}
-		if(playerAttack) {
-			isAttacking = playerAttack.isAttacking;
-		} else {
-			isAttacking = false;
+		else {
+			animator.SetBool("attack", false);
 		}
 
-		if (canMove) {
+		if (playerControl.canMove) {
 			if (Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Horizontal") < 0) {
 				animator.SetBool("run", true);
 			} else {
@@ -43,28 +32,22 @@ public class PlayerAnimation : MonoBehaviour {
 			}
 		}
 
-		if (isGrounded) {
+		if (playerControl.isGrounded) {
 			animator.SetBool("air", false);
 		} else {
 			animator.SetBool("air", true);
 		}
 		
-		if (isHurt) {
+		if (playerHealth.isHurt) {
 			animator.SetBool("hurt", true);
 		}
 		else {
 			animator.SetBool("hurt", false);
 		}
 
-		if (isDead && !isHurt) {
+		// TOFIX: If isHurt is not used the ghost appears before the death animation
+		if (playerHealth.isDead && !playerHealth.isHurt) {
 			GetComponent<Animator>().SetTrigger("die");
-		}
-
-		if (isAttacking) {
-			animator.SetBool("attack", true);
-		}
-		else {
-			animator.SetBool("attack", false);
 		}
 	}
 }

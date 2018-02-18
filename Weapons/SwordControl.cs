@@ -16,7 +16,6 @@ public class SwordControl : MonoBehaviour {
 	
 	void Update () {
 		Position();
-		ActivateCollider();
 		Animate();
 	}
 
@@ -31,15 +30,6 @@ public class SwordControl : MonoBehaviour {
 			GetComponent<BoxCollider2D>().offset = new Vector2(0.25f, 0.45f);
 		}
 	}
-	
-	void ActivateCollider() {
-		if (player.GetComponent<PlayerAttack>().isAttacking) {
-			GetComponent<BoxCollider2D>().enabled = true;
-		} else {
-			GetComponent<BoxCollider2D>().enabled = false;			
-		}
-	}
-	
 
 	void Animate() {
 		string[] animParams = new string[animator.parameterCount];
