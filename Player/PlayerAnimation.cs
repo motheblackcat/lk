@@ -16,7 +16,7 @@ public class PlayerAnimation : MonoBehaviour {
 	}
 	
 	void Update () {
-		// Refactor this section
+		// Refactor this section?
 		if (playerAttack.isAttacking) {
 			animator.SetBool("attack", true);
 		}

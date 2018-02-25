@@ -57,7 +57,7 @@ public class PlayerHealth : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
-		// Check if it is needed to check if the enemy is not dead
+		// Check if it's needed to check if the enemy is not dead
 		if (other.gameObject.tag == "Enemy" && !other.gameObject.GetComponent<EnemyHealthControl>().isDead && !isDead) {
 			StartCoroutine(PushBack(other.gameObject));
 			StartCoroutine(Flick());

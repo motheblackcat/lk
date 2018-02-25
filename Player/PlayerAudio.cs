@@ -11,6 +11,7 @@ public class PlayerAudio : MonoBehaviour {
 	public bool wasPlayed = false;
 	PlayerHealth playerHealth;
 
+
 	void Start () {
 		audiosource = GetComponent<AudioSource>();
 		playerHealth = GetComponent<PlayerHealth>();
@@ -21,17 +22,18 @@ public class PlayerAudio : MonoBehaviour {
 	}
 
 	IEnumerator Soundify() {
+		// SOUNDS SHOULD BE PLAYED ACCORDING TO THE PLAYER ANIMATIONS INSTEAD OF BUTTON PRESS?
+		// Recheck this script	
 		if(!playerHealth.isDead && GetComponent<PlayerControl>().canMove) {
 			if(Input.GetButtonDown("Jump") && GetComponent<PlayerControl>().isGrounded) {
 				audiosource.PlayOneShot(air);
 			}
 
-			if(Input.GetButtonDown("Attack")) {
+			if(Input.GetButtonDown("Attack") && !GetComponent<PlayerAttack>().isAttacking) {
 				audiosource.PlayOneShot(attack);
 			}
 		}
 
-		// TODO: Refactor this
 		if(playerHealth.isHurt && !wasPlayed) {
 			wasPlayed = true;
 			audiosource.PlayOneShot(hurt);
@@ -39,7 +41,6 @@ public class PlayerAudio : MonoBehaviour {
 			wasPlayed = false;
 		}
 		
-		// TODO: Refactor this
 		if(GetComponent<Animator>().GetBool("die") && !wasPlayed) {
 			wasPlayed = true;
 			audiosource.PlayOneShot(die);

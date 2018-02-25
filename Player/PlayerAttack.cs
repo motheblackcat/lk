@@ -16,9 +16,9 @@ public float attackDuration = 0.2f;
 	}
 
 	IEnumerator Attack() {
-		// Check if it's the best way to go about this.
-		isAttacking = true;
+		// FIX THE COLLIDER ACTIVATION
 		GameObject.Find("Sword").GetComponent<Collider2D>().enabled = true;
+		isAttacking = true;		
 		yield return new WaitForSeconds(attackDuration);
 		GameObject.Find("Sword").GetComponent<Collider2D>().enabled = false;
 		isAttacking = false;
