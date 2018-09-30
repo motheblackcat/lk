@@ -59,17 +59,11 @@ public class PlayerAnimation : MonoBehaviour {
 		// }
 	}
 
-	// Check if this method can be refactored
 	void SwordPosition() {
-		if (GetComponent<SpriteRenderer>().flipX) {
-			sword.GetComponent<SpriteRenderer>().flipX = true;
-			sword.transform.localPosition = new Vector2(-0.74f, sword.transform.localPosition.y);
-			sword.GetComponent<BoxCollider2D>().offset = new Vector2(-0.25f, 0.45f);
-		} else {
-			sword.GetComponent<SpriteRenderer>().flipX = false;
-			sword.transform.localPosition = new Vector2(0.74f, sword.transform.localPosition.y);
-			sword.GetComponent<BoxCollider2D>().offset = new Vector2(0.25f, 0.45f);
-		}
+		bool flipX = GetComponent<SpriteRenderer>().flipX;
+		float y = sword.transform.localPosition.y;
+		sword.GetComponent<SpriteRenderer>().flipX = flipX;
+		sword.transform.localPosition = flipX ? new Vector2(-0.74f, y) : new Vector2(0.74f, y);
+		sword.GetComponent<BoxCollider2D>().offset = flipX ? new Vector2(-0.25f, 0.45f): new Vector2(0.25f, 0.45f);
 	}
-
 }
