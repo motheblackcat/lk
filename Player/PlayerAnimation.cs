@@ -19,18 +19,21 @@ public class PlayerAnimation : MonoBehaviour {
 
 	void Update() {
 		PlayerAnimate();
-		SwordPosition();
+		if (sword) { SwordPosition(); }
 	}
 
 	void PlayerAnimate() {
 		if (playerControl.canMove) {
 			animator.SetBool("run", Input.GetAxis("Horizontal") != 0 ? true : false);
-			sword.GetComponent<Animator>().Play(Input.GetAxis("Horizontal") != 0 ? "Sword_Run" : "Sword_Idle");
+			if (sword) {
+				sword.GetComponent<Animator>().Play(Input.GetAxis("Horizontal") != 0 ? "Sword_Run" : "Sword_Idle");
+			}
 		}
 
 		animator.SetBool("air", !playerControl.isGrounded);
-		// TODO: Try to refactor this IF & check if sword atk jump do not mess landing anim
-		if (!playerControl.isGrounded) {
+		
+		// TODO: check if sword atk jump do not mess landing anim
+		if (sword && !playerControl.isGrounded) {
 			sword.GetComponent<Animator>().Play("Sword_Jump");
 		}
 
