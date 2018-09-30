@@ -16,38 +16,44 @@ public class PlayerAnimation : MonoBehaviour {
 	}
 	
 	void Update () {
-		// Refactor this section?
-		if (playerAttack.isAttacking) {
-			animator.SetBool("attack", true);
-		}
-		else {
-			animator.SetBool("attack", false);
-		}
+		// Had conditions in the case the component is null
+		if (playerControl) {
+			if (playerControl.canMove) {
+				if (Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Horizontal") < 0) {
+					animator.SetBool("run", true);
+				} else {
+					animator.SetBool("run", false);
+				}
+			}
 
-		if (playerControl.canMove) {
-			if (Input.GetAxis("Horizontal") > 0 || Input.GetAxis("Horizontal") < 0) {
-				animator.SetBool("run", true);
+			if (playerControl.isGrounded) {
+				animator.SetBool("air", false);
 			} else {
-				animator.SetBool("run", false);
+				animator.SetBool("air", true);
+			}
+		}
+		
+		if (playerAttack) {
+			if (playerAttack.isAttacking) {
+				animator.SetBool("attack", true);
+			}
+			else {
+				animator.SetBool("attack", false);
 			}
 		}
 
-		if (playerControl.isGrounded) {
-			animator.SetBool("air", false);
-		} else {
-			animator.SetBool("air", true);
-		}
-		
-		if (playerHealth.isHurt) {
-			animator.SetBool("hurt", true);
-		}
-		else {
-			animator.SetBool("hurt", false);
-		}
+		if (playerHealth) {
+			if (playerHealth.isHurt) {
+				animator.SetBool("hurt", true);
+			}
+			else {
+				animator.SetBool("hurt", false);
+			}
 
-		// TOFIX: If isHurt is not used the ghost appears before the death animation
-		if (playerHealth.isDead && !playerHealth.isHurt) {
-			GetComponent<Animator>().SetTrigger("die");
+			// TOFIX: If isHurt is not used the ghost appears before the death animation
+			if (playerHealth.isDead && !playerHealth.isHurt) {
+				GetComponent<Animator>().SetTrigger("die");
+			}
 		}
 	}
 }

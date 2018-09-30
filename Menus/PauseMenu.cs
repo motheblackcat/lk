@@ -12,11 +12,15 @@ public class PauseMenu : MonoBehaviour {
 	GameObject player;
 	PlayerControl playerControl;
 	PlayerAnimation playerAnimation;
+	PlayerAttack playerAttack;
+	PlayerAudio	playerAudio;
 
 	void Start() {
 		player = GameObject.Find("Player");
 		playerControl = player.GetComponent<PlayerControl>();
 		playerAnimation = player.GetComponent<PlayerAnimation>();
+		playerAttack = player.GetComponent<PlayerAttack>();
+		playerAudio = player.GetComponent<PlayerAudio>();
 		pauseUI.GetComponent<AudioSource>().ignoreListenerPause = true;
 	}
 
@@ -58,16 +62,15 @@ public class PauseMenu : MonoBehaviour {
 			Resume();
 		}
 	}
-	// TOFIX: Camera position change during pause, on resume it lags before following the player again
-	// Refactor Pause() and Resume() with playerControl.canMove
+	
 	void Pause() {
 		Time.timeScale = 0;
 		AudioListener.pause = true;
 		pauseUI.SetActive(true);
 		playerControl.enabled = false;
 		playerAnimation.enabled = false;
-		player.GetComponent<PlayerAttack>().enabled = false;
-		player.GetComponent<PlayerAudio>().enabled = false;
+		playerAttack.enabled = false;
+		playerAudio.enabled = false;
 
 		if (Input.GetButtonDown("Select")) {
 			Application.Quit();
@@ -80,8 +83,7 @@ public class PauseMenu : MonoBehaviour {
 		pauseUI.SetActive(false);
 		playerControl.enabled = true;
 		playerAnimation.enabled = true;
-		player.GetComponent<PlayerAttack>().enabled = true;
-		player.GetComponent<PlayerAudio>().enabled = true;
-		
+		playerAttack.enabled = true;
+		playerAudio.enabled = true;
 	}
 }
