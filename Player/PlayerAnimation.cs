@@ -23,19 +23,20 @@ public class PlayerAnimation : MonoBehaviour {
 	}
 
 	void PlayerAnimate() {
-		if (playerControl.canMove) {
-			if (playerControl.isGrounded) {
-				animator.SetBool("run", Input.GetAxis("Horizontal") != 0 ? true : false); 
-				if (sword) { sword.GetComponent<Animator>().Play(Input.GetAxis("Horizontal") != 0 ? "Sword_Run" : "Sword_Idle"); }
-				animator.SetBool("air", false);
-			} else {
-				animator.SetBool("air", true);
-				if (sword) { sword.GetComponent<Animator>().Play("Sword_Jump"); }
-			}
-		} else if (playerHealth.isDead) {
+		if (playerControl.canMove && playerControl.isGrounded) {
+			animator.SetBool("run", Input.GetAxis("Horizontal") != 0 ? true : false); 
+			if (sword) { sword.GetComponent<Animator>().Play(Input.GetAxis("Horizontal") != 0 ? "Sword_Run" : "Sword_Idle"); }
+		}
+
+		if (playerHealth.isDead) {
 			sword.GetComponent<SpriteRenderer>().enabled = false;
 			animator.SetTrigger("die");
 		}
+		
+		// TODO: Need new transition between hurt and run to fix animation;
+		if (sword && !playerControl.isGrounded) { sword.GetComponent<Animator>().Play("Sword_Jump"); }
+		animator.SetBool("air", playerControl.isGrounded ? false : true);
+		animator.SetBool("hurt", playerHealth.tookDamage && !playerHealth.isDead ? true : false);
 	}
 
 	void SwordPosition() {

@@ -5,11 +5,11 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour {
-	// public int pushX = 10;
-	// public int pushY = 10;
 	Image healthBar;
 	SpriteRenderer sprite;
 	SpriteRenderer wSprite;
+	public float pushX = 10f;
+	public float pushY = 10f;
 	public float playerHealth = 100f;
 	public bool isDead = false;
 	public bool tookDamage = false;
@@ -31,27 +31,15 @@ public class PlayerHealth : MonoBehaviour {
 		resetLevelTimerStart();
 	}
 
-	// IEnumerator PushBack(GameObject enemy) {
-	// 	if (!isDead) {
-	// 		GetComponent<PlayerControl>().canMove = false;
-	// 		isHurt = true;
-	// 		if (enemy.transform.position.x > transform.position.x) {
-	// 			GetComponent<Rigidbody2D>().AddForce(new Vector2(-pushX, pushY), ForceMode2D.Impulse);
-	// 		} else {
-	// 			GetComponent<Rigidbody2D>().AddForce(new Vector2(pushX, pushY), ForceMode2D.Impulse);
-	// 		}
-	// 		yield return new WaitForSeconds(timer);
-	// 		isHurt = false;
-	// 		GetComponent<PlayerControl>().canMove = true;
-	// 	}
-	// }
-
 	void InvincibilityTimerStart() {
 		if (tookDamage) {
 			invicibilityTimer -= Time.deltaTime;
 			if (invicibilityTimer <= 0) {
 				sprite.enabled = true;
-				wSprite.enabled = true;
+				if (!isDead) {
+					GetComponent<PlayerControl>().canMove = true;
+					wSprite.enabled = true;
+				}
 				tookDamage = false;
 				invicibilityTimer = invTimerTemp;
 				CancelInvoke();
@@ -75,6 +63,12 @@ public class PlayerHealth : MonoBehaviour {
 		}
 	}
 
+	void PushBack(GameObject enemy) {
+		GetComponent<PlayerControl>().canMove = false;
+		bool pos = enemy.transform.position.x > transform.position.x;
+		GetComponent<Rigidbody2D>().AddForce(pos ? new Vector2(-pushX, pushY) : new Vector2(pushX, pushY), ForceMode2D.Impulse);
+	}
+
 	void Death() {
 		if (playerHealth <= 0) { 
 			isDead = true;
@@ -84,7 +78,7 @@ public class PlayerHealth : MonoBehaviour {
 	}
 
 	void TakeDamage(GameObject enemy) {
-		// Use damage enemy prop instead
+		// Use enemy damage value instead
 		playerHealth -= 25;
 		tookDamage = true;
 	}
@@ -94,7 +88,10 @@ public class PlayerHealth : MonoBehaviour {
 			if (!tookDamage) {
 				TakeDamage(col.gameObject);
 				Death();
-				if (!isDead) { InvokeRepeating("SpriteFlick", 0, flickTimer); };
+				if (!isDead) { 
+					InvokeRepeating("SpriteFlick", 0, flickTimer);
+					PushBack(col.gameObject);
+				};
 			}
 		}
 	}
