@@ -20,15 +20,15 @@ public class PlayerHealth : MonoBehaviour {
 
 	void Start() {
 		sprite = GetComponent<SpriteRenderer>();
-		wSprite = GameObject.FindGameObjectsWithTag("Weapon")[0] ? GameObject.FindGameObjectsWithTag("Weapon")[0].GetComponent<SpriteRenderer>() : null;
 		healthBar = GameObject.Find("Content").GetComponent<Image>();
 		invTimerTemp = invicibilityTimer;
 	}
 
 	void Update() {
+		wSprite = GameObject.FindGameObjectsWithTag("Weapon")[0].GetComponent<SpriteRenderer>();
 		healthBar.fillAmount = playerHealth / 100;
 		InvincibilityTimerStart();
-		if (playerHealth <= 0) { Death(); }
+		resetLevelTimerStart();
 	}
 
 	// IEnumerator PushBack(GameObject enemy) {
@@ -59,34 +59,42 @@ public class PlayerHealth : MonoBehaviour {
 		}
 	}
 
+	void resetLevelTimerStart() {
+		if (isDead) {
+			restartLevelTimer -= Time.deltaTime;
+			if (restartLevelTimer <= 0) {
+				SceneManager.LoadScene("Scene_1_RoadtoForest");
+			}
+		}
+	}
+
 	void SpriteFlick() {
 		sprite.enabled = !sprite.enabled;
-		if (wSprite) {
+		if (wSprite != null) {
 			wSprite.enabled = !wSprite.enabled;
 		}
 	}
 
 	void Death() {
-		isDead = true;
-		GameObject.Find("MainCamera").GetComponent<AudioSource>().Stop();
-		GetComponent<PlayerControl>().canMove = false;
-		restartLevelTimer -= Time.deltaTime;
-		if (restartLevelTimer <= 0) {
-			SceneManager.LoadScene("Scene_1_RoadtoForest");
+		if (playerHealth <= 0) { 
+			isDead = true;
+			GameObject.Find("MainCamera").GetComponent<AudioSource>().Stop();
+			GetComponent<PlayerControl>().canMove = false;
 		}
 	}
 
 	void TakeDamage(GameObject enemy) {
+		// Use damage enemy prop instead
 		playerHealth -= 25;
 		tookDamage = true;
-		Destroy(GameObject.Find("Slime"));
 	}
 
 	void OnCollisionEnter2D(Collision2D col) {
 		if (col.gameObject.tag == "Enemy") { 
 			if (!tookDamage) {
 				TakeDamage(col.gameObject);
-				InvokeRepeating("SpriteFlick", 0, flickTimer);
+				Death();
+				if (!isDead) { InvokeRepeating("SpriteFlick", 0, flickTimer); };
 			}
 		}
 	}

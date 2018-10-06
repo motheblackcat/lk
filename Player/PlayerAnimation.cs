@@ -33,7 +33,7 @@ public class PlayerAnimation : MonoBehaviour {
 				if (sword) { sword.GetComponent<Animator>().Play("Sword_Jump"); }
 			}
 		} else if (playerHealth.isDead) {
-			Destroy(sword);
+			sword.GetComponent<SpriteRenderer>().enabled = false;
 			animator.SetTrigger("die");
 		}
 	}
