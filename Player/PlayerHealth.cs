@@ -5,66 +5,89 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour {
-	GameObject enemy;
-	public int pushX = 10;
-	public int pushY = 10;
+	// public int pushX = 10;
+	// public int pushY = 10;
 	Image healthBar;
-	public bool isDead = false;
-	public bool isHurt = false;
-	public bool tookDamage = false;
 	SpriteRenderer sprite;
-	// Invicibility timer
-	public float timer  = 0.5f;
-	public float damageTaken = 0.25f;
+	SpriteRenderer wSprite;
+	public float playerHealth = 100f;
+	public bool isDead = false;
+	public bool tookDamage = false;
+	public float restartLevelTimer = 3f;
+	public float flickTimer = 0.2f;
+	float invTimerTemp;
+	public float invicibilityTimer = 1f;
 
 	void Start() {
-		healthBar = GameObject.Find("Content").GetComponent<Image>();
 		sprite = GetComponent<SpriteRenderer>();
+		wSprite = GameObject.FindGameObjectsWithTag("Weapon")[0] ? GameObject.FindGameObjectsWithTag("Weapon")[0].GetComponent<SpriteRenderer>() : null;
+		healthBar = GameObject.Find("Content").GetComponent<Image>();
+		invTimerTemp = invicibilityTimer;
 	}
 
 	void Update() {
-		if(healthBar.fillAmount <= 0) {
-			StartCoroutine(Death());
-		}
+		healthBar.fillAmount = playerHealth / 100;
+		InvincibilityTimerStart();
+		if (playerHealth <= 0) { Death(); }
 	}
 
-	IEnumerator PushBack(GameObject enemy) {
-		if (!isDead) {
-			GetComponent<PlayerControl>().canMove = false;
-			isHurt = true;
-			if (enemy.transform.position.x > transform.position.x) {
-				GetComponent<Rigidbody2D>().AddForce(new Vector2(-pushX, pushY), ForceMode2D.Impulse);
-			} else {
-				GetComponent<Rigidbody2D>().AddForce(new Vector2(pushX, pushY), ForceMode2D.Impulse);			
+	// IEnumerator PushBack(GameObject enemy) {
+	// 	if (!isDead) {
+	// 		GetComponent<PlayerControl>().canMove = false;
+	// 		isHurt = true;
+	// 		if (enemy.transform.position.x > transform.position.x) {
+	// 			GetComponent<Rigidbody2D>().AddForce(new Vector2(-pushX, pushY), ForceMode2D.Impulse);
+	// 		} else {
+	// 			GetComponent<Rigidbody2D>().AddForce(new Vector2(pushX, pushY), ForceMode2D.Impulse);
+	// 		}
+	// 		yield return new WaitForSeconds(timer);
+	// 		isHurt = false;
+	// 		GetComponent<PlayerControl>().canMove = true;
+	// 	}
+	// }
+
+	void InvincibilityTimerStart() {
+		if (tookDamage) {
+			invicibilityTimer -= Time.deltaTime;
+			if (invicibilityTimer <= 0) {
+				sprite.enabled = true;
+				wSprite.enabled = true;
+				tookDamage = false;
+				invicibilityTimer = invTimerTemp;
+				CancelInvoke();
 			}
-			yield return new WaitForSeconds(timer);
-			isHurt = false;		
-			GetComponent<PlayerControl>().canMove = true;
 		}
 	}
 
-	IEnumerator Flick() {
-		sprite.enabled = false;
-		yield return new WaitForSeconds(0.1f);
-		sprite.enabled = true;
+	void SpriteFlick() {
+		sprite.enabled = !sprite.enabled;
+		if (wSprite) {
+			wSprite.enabled = !wSprite.enabled;
+		}
 	}
-	
-	IEnumerator Death() {
+
+	void Death() {
 		isDead = true;
 		GameObject.Find("MainCamera").GetComponent<AudioSource>().Stop();
-		yield return new WaitForSeconds(3);
-		SceneManager.LoadScene("Scene_1_RoadtoForest");
+		GetComponent<PlayerControl>().canMove = false;
+		restartLevelTimer -= Time.deltaTime;
+		if (restartLevelTimer <= 0) {
+			SceneManager.LoadScene("Scene_1_RoadtoForest");
+		}
 	}
 
-	void OnCollisionEnter2D(Collision2D other) {
-		// Check if it's needed to check if the enemy is not dead
-		if (other.gameObject.tag == "Enemy" && !other.gameObject.GetComponent<EnemyHealthControl>().isDead && !isDead) {
-			StartCoroutine(PushBack(other.gameObject));
-			StartCoroutine(Flick());
-			// Convert to more useable values (playerHealth)
-			// Replace by enemy damage other.gameObject.GetComponent<EnemyDamage>.enemyDamage
-			tookDamage = true;
-			healthBar.fillAmount -= damageTaken;
+	void TakeDamage(GameObject enemy) {
+		playerHealth -= 25;
+		tookDamage = true;
+		Destroy(GameObject.Find("Slime"));
+	}
+
+	void OnCollisionEnter2D(Collision2D col) {
+		if (col.gameObject.tag == "Enemy") { 
+			if (!tookDamage) {
+				TakeDamage(col.gameObject);
+				InvokeRepeating("SpriteFlick", 0, flickTimer);
+			}
 		}
 	}
 }

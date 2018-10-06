@@ -5,11 +5,15 @@ using UnityEngine;
 public class PlayerAnimation : MonoBehaviour {
 	Animator animator;
 	PlayerControl playerControl;
+	PlayerHealth playerHealth;
 	public GameObject sword;
+
+	// TODO: Sword control is specific only to the current sword
 
 	void Start () {
 		animator = GetComponent<Animator>();
 		playerControl = GetComponent<PlayerControl>();
+		playerHealth = GetComponent<PlayerHealth>();
 	}
 
 	void Update() {
@@ -28,6 +32,9 @@ public class PlayerAnimation : MonoBehaviour {
 				animator.SetBool("air", true);
 				if (sword) { sword.GetComponent<Animator>().Play("Sword_Jump"); }
 			}
+		} else if (playerHealth.isDead) {
+			Destroy(sword);
+			animator.SetTrigger("die");
 		}
 	}
 
