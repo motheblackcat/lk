@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAudioControl : MonoBehaviour {
-	AudioSource audioS;
-	EnemyHealthControl enemyHealth;
-	bool wasPlayed = false;
-	public AudioClip hit;
-	public AudioClip death;
+	// AudioSource audioS;
+	// EnemyHealthControl enemyHealth;
+	// bool wasPlayed = false;
+	// public AudioClip hit;
+	// public AudioClip death;
 	
 	// void Start () {
 	// 	audioS = GetComponent<AudioSource>();

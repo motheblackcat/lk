@@ -27,7 +27,6 @@ public class EnemyMoveControl : MonoBehaviour {
         if (canMove) { GetComponent<Rigidbody2D>().velocity = player.transform.position.x > transform.position.x ? new Vector2(moveSpeed, 0) : new Vector2(-moveSpeed, 0); }
     }
 
-    // Tweak it on a children so we can't attack just being in the vision field
     void OnTriggerStay2D(Collider2D other) {
         if (other.gameObject.tag == "Player") { canMove = true; }
     }

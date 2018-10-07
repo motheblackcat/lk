@@ -6,8 +6,9 @@ public class PlayerAttack : MonoBehaviour {
 
 	public float attackDuration;
 	public bool isAttacking;
-	private float timeBtwAttack;
+	float timeBtwAttack;
 	public float startTimeBtwAttack;
+	float atkPosX;
 	public Transform atkPos;
 	public float atkRange;
 	public LayerMask whatIsEnemies;
@@ -15,11 +16,21 @@ public class PlayerAttack : MonoBehaviour {
 	// TODO: Use sword damage instead
 	public int damage;
 
-	// TODO: Make the way to lower enemy health generic
-	// TODO: ATTACK POS SHOULD FLIP
+	void Start() {
+		atkPos = GameObject.Find("AttackPos").GetComponent<Transform>();
+		atkPosX = atkPos.localPosition.x;
+	}
+
+	// TODO: Make the way to lower enemy health generic (now it use a specific script)
 	void Update () {
+		Attack();
+	}
+
+	void Attack() {
+		atkPos.localPosition = GetComponent<SpriteRenderer>().flipX ? new Vector2(-atkPosX, atkPos.localPosition.y) : new Vector2(atkPosX, atkPos.localPosition.y);
+
 		if (timeBtwAttack <= 0) {
-			if (Input.GetButtonDown("Attack")) {
+			if (Input.GetButtonDown("Attack") && !GetComponent<PlayerHealth>().tookDamage) {
 				isAttacking = true;
 				Collider2D[] ennemiesToDamage = Physics2D.OverlapCircleAll(atkPos.position, atkRange, whatIsEnemies);
 				for (int i = 0; i < ennemiesToDamage.Length; i++) {
@@ -33,7 +44,6 @@ public class PlayerAttack : MonoBehaviour {
 		}
 	}
 
-	// Move it to atkpos object
 	void OnDrawGizmosSelected() {
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireSphere(atkPos.position, atkRange);
