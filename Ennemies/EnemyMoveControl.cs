@@ -18,7 +18,7 @@ public class EnemyMoveControl : MonoBehaviour {
 	}
 
     void Update() {
-        if (player && !player.GetComponent<PlayerHealth>().isDead) { Move(); }
+        if (player && !player.GetComponent<PlayerHealth>().isDead && !GetComponent<EnemyHealthControl>().isDead) { Move(); }
     }
 
     void Move() {

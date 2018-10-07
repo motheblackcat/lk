@@ -6,21 +6,12 @@ public class EnemyAnimationControl : MonoBehaviour {
 	Animator anim;
 
 	// TODO: MAKE IT GENERIC
-
 	void Start () {
 		anim = GetComponent<Animator>();
 	}
 	
 	void Update () {
-		// if (GetComponent<EnemyHealthControl>().hasTakenDamage) {
-		// 	anim.SetBool("hurt", true);
-		// } else {
-		// 	anim.SetBool("hurt", false);			
-		// }
-
-		// if (GetComponent<EnemyHealthControl>().isDead) {
-		// 	anim.SetTrigger("die");
-		// }
+		if (GetComponent<EnemyHealthControl>().isDead) { anim.SetTrigger("die"); }
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
