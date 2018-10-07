@@ -3,42 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMoveControl : MonoBehaviour {
-    public bool canMove = true;
+    public bool canMove = false;
     public float moveSpeed = 3;
     GameObject player;
     SpriteRenderer sprite;
-    public float visionDistance = 8.0f;
-    
+    BoxCollider2D box;
+    float boxOffsetX;
 
     void Start() {
 	    player = GameObject.Find("Player");
         sprite = GetComponent<SpriteRenderer>();
+        box = GetComponent<BoxCollider2D>();
+        boxOffsetX = box.offset.x;
 	}
 
     void Update() {
-        if (canMove && !player.GetComponent<PlayerHealth>().isDead) {
-            if (player.transform.position.x > transform.position.x) {
-                sprite.flipX = true;
-                GetComponent<Rigidbody2D>().velocity = new Vector2(moveSpeed, 0);
-			} else {
-                sprite.flipX = false;                
-                GetComponent<Rigidbody2D>().velocity = new Vector2(-moveSpeed, 0);
-			}
-        }
-
-        followPlayer(); 
+        if (player && !player.GetComponent<PlayerHealth>().isDead) { Move(); }
     }
 
-    void followPlayer() {
-        float xPos = player.transform.position.x - transform.position.x;
-        float yPos = player.transform.position.y - transform.position.y;
+    void Move() {
+        sprite.flipX = player.transform.position.x > transform.position.x ? true : false;
+        box.offset = sprite.flipX ? new Vector2(-boxOffsetX, box.offset.y) : new Vector2(boxOffsetX, box.offset.y);
+        if (canMove) { GetComponent<Rigidbody2D>().velocity = player.transform.position.x > transform.position.x ? new Vector2(moveSpeed, 0) : new Vector2(-moveSpeed, 0); }
+    }
 
-        if (xPos < visionDistance && xPos > -visionDistance && yPos < 2.5f && yPos > -1 && !GetComponent<EnemyHealthControl>().hasTakenDamage) {
-            if (!GetComponent<EnemyHealthControl>().wasPushed) {
-                canMove = true;
-            }
-        } else {
-            canMove = false;
-        }
+    void OnTriggerStay2D(Collider2D other) {
+        if (other.gameObject.tag == "Player") { canMove = true; }
+    }
+
+    void OnTriggerExit2D(Collider2D other) {
+        if (other.gameObject.tag == "Player") { canMove = false; }
     }
 }
