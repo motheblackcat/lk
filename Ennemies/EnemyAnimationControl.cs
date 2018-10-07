@@ -5,12 +5,13 @@ using UnityEngine;
 public class EnemyAnimationControl : MonoBehaviour {
 	Animator anim;
 
-	// TODO: MAKE IT GENERIC
+	// TODO: MAKE IT GENERIC (care for states names and in Attack)
 	void Start () {
 		anim = GetComponent<Animator>();
 	}
 	
 	void Update () {
+		anim.SetBool("hurt", GetComponent<EnemyHealthControl>().tookDamage ? true : false);
 		if (GetComponent<EnemyHealthControl>().isDead) { anim.SetTrigger("die"); }
 	}
 

@@ -21,7 +21,7 @@ public class PlayerAttack : MonoBehaviour {
 		atkPosX = atkPos.localPosition.x;
 	}
 
-	// TODO: Make the way to lower enemy health generic (now it use a specific script)
+	// TODO: Make the way to lower enemy health generic (now it use a specific enemy script)
 	void Update () {
 		Attack();
 	}
@@ -34,7 +34,7 @@ public class PlayerAttack : MonoBehaviour {
 				isAttacking = true;
 				Collider2D[] ennemiesToDamage = Physics2D.OverlapCircleAll(atkPos.position, atkRange, whatIsEnemies);
 				for (int i = 0; i < ennemiesToDamage.Length; i++) {
-					ennemiesToDamage[i].GetComponent<EnemyHealthControl>().enemyHealth -= damage;
+					ennemiesToDamage[i].GetComponent<EnemyHealthControl>().TakeDamage(damage);
 				}
 				timeBtwAttack = startTimeBtwAttack;
 			}
