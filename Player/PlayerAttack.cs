@@ -7,8 +7,8 @@ public class PlayerAttack : MonoBehaviour {
 PlayerHealth playerHealth;
 public GameObject weapon;
 public bool isAttacking = false;
-public float attackDuration = 0.2f;
-float tempAtkStored;
+public float attackDuration = 0.3f;
+public float tempAtkStored;
 
 	void Start() {
 		playerHealth = GetComponent<PlayerHealth>();
