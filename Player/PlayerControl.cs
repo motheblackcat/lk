@@ -9,9 +9,13 @@ public class PlayerControl : MonoBehaviour {
 	public bool canMove = true;
 	public bool isGrounded;
 	Rigidbody2D rb;
+	SpriteRenderer sprite;
+	GameObject ghost;
 	
 	void Start() {
 		rb = GetComponent<Rigidbody2D>();
+		sprite = GetComponent<SpriteRenderer>();
+		ghost = GameObject.Find("Ghost");
 	}
 
 	void Update() {
@@ -27,10 +31,10 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	void Flip() {
-		if (Input.GetAxis("Horizontal") > 0) { GetComponent<SpriteRenderer>().flipX = false; }
-		if (Input.GetAxis("Horizontal") < 0) { GetComponent<SpriteRenderer>().flipX = true; }
+		if (Input.GetAxis("Horizontal") > 0) { sprite.flipX = false; }
+		if (Input.GetAxis("Horizontal") < 0) { sprite.flipX = true; }
 		GetComponent<CapsuleCollider2D>().offset = Input.GetAxis("Horizontal") > 0 ? new Vector2(0.06f, -0.04f) : new Vector2(-0.06f, -0.04f);
-		GameObject.Find("Ghost").GetComponent<SpriteRenderer>().flipX = GetComponent<SpriteRenderer>().flipX;
+		if (ghost) { ghost.GetComponent<SpriteRenderer>().flipX = sprite.flipX; }
 	}
 
 	void OnCollisionStay2D(Collision2D other) {

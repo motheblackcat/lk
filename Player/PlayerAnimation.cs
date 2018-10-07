@@ -28,15 +28,14 @@ public class PlayerAnimation : MonoBehaviour {
 			if (sword) { sword.GetComponent<Animator>().Play(Input.GetAxis("Horizontal") != 0 ? "Sword_Run" : "Sword_Idle"); }
 		}
 
-		if (playerHealth.isDead) {
+		if (playerHealth && playerHealth.isDead) {
 			sword.GetComponent<SpriteRenderer>().enabled = false;
 			animator.SetTrigger("die");
 		}
 		
-		// TODO: Need new transition between hurt and run to fix animation;
 		if (sword && !playerControl.isGrounded) { sword.GetComponent<Animator>().Play("Sword_Jump"); }
 		animator.SetBool("air", playerControl.isGrounded ? false : true);
-		animator.SetBool("hurt", playerHealth.tookDamage && !playerHealth.isDead ? true : false);
+		if (playerHealth) { animator.SetBool("hurt", playerHealth.tookDamage && !playerHealth.isDead ? true : false); }
 	}
 
 	void SwordPosition() {
