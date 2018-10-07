@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour {
 	Image healthBar;
 	SpriteRenderer sprite;
 	SpriteRenderer wSprite;
+	GameObject weapon;
 	public float pushX = 10f;
 	public float pushY = 10f;
 	public float playerHealth = 100f;
@@ -19,13 +20,14 @@ public class PlayerHealth : MonoBehaviour {
 	public float invicibilityTimer = 1f;
 
 	void Start() {
+		weapon = GameObject.FindGameObjectsWithTag("Weapon")[0];
 		sprite = GetComponent<SpriteRenderer>();
 		healthBar = GameObject.Find("Content").GetComponent<Image>();
 		invTimerTemp = invicibilityTimer;
 	}
 
 	void Update() {
-		wSprite = GameObject.FindGameObjectsWithTag("Weapon")[0].GetComponent<SpriteRenderer>();
+		if (weapon) { wSprite = weapon.GetComponent<SpriteRenderer>(); }
 		healthBar.fillAmount = playerHealth / 100;
 		InvincibilityTimerStart();
 		resetLevelTimerStart();
@@ -38,7 +40,7 @@ public class PlayerHealth : MonoBehaviour {
 				sprite.enabled = true;
 				if (!isDead) {
 					GetComponent<PlayerControl>().canMove = true;
-					wSprite.enabled = true;
+					if (weapon) { wSprite.enabled = true; }
 				}
 				tookDamage = false;
 				invicibilityTimer = invTimerTemp;
@@ -58,9 +60,7 @@ public class PlayerHealth : MonoBehaviour {
 
 	void SpriteFlick() {
 		sprite.enabled = !sprite.enabled;
-		if (wSprite != null) {
-			wSprite.enabled = !wSprite.enabled;
-		}
+		if (weapon) { wSprite.enabled = !wSprite.enabled; }
 	}
 
 	void PushBack(GameObject enemy) {

@@ -6,43 +6,50 @@ public class PlayerAnimation : MonoBehaviour {
 	Animator animator;
 	PlayerControl playerControl;
 	PlayerHealth playerHealth;
-	public GameObject sword;
-
-	// TODO: Sword control is specific only to the current sword
+	PlayerAttack playerAttack;
+	public GameObject weapon;
 
 	void Start () {
 		animator = GetComponent<Animator>();
 		playerControl = GetComponent<PlayerControl>();
 		playerHealth = GetComponent<PlayerHealth>();
+		playerAttack = GetComponent<PlayerAttack>();
+		weapon = GameObject.FindGameObjectsWithTag("Weapon")[0];
 	}
 
 	void Update() {
-		sword = GameObject.Find("Sword");
 		PlayerAnimate();
-		if (sword) { SwordPosition(); }
+		if (weapon) { SwordPosition(); }
 	}
 
 	void PlayerAnimate() {
 		if (playerControl.canMove && playerControl.isGrounded) {
 			animator.SetBool("run", Input.GetAxis("Horizontal") != 0 ? true : false); 
-			if (sword) { sword.GetComponent<Animator>().Play(Input.GetAxis("Horizontal") != 0 ? "Sword_Run" : "Sword_Idle"); }
+			if (weapon) { weapon.GetComponent<Animator>().Play(Input.GetAxis("Horizontal") != 0 ? "Sword_Run" : "Sword_Idle"); }
 		}
 
-		if (playerHealth && playerHealth.isDead) {
-			sword.GetComponent<SpriteRenderer>().enabled = false;
-			animator.SetTrigger("die");
-		}
-		
-		if (sword && !playerControl.isGrounded) { sword.GetComponent<Animator>().Play("Sword_Jump"); }
 		animator.SetBool("air", playerControl.isGrounded ? false : true);
+		if (weapon && !playerControl.isGrounded) { weapon.GetComponent<Animator>().Play("Sword_Jump"); }
+		
+		animator.SetBool("attack", playerAttack.isAttacking ? true : false);
+
+		if (playerAttack.isAttacking) {
+			weapon.GetComponent<Animator>().PlayInFixedTime("Sword_Attack", -1, 1.0f);
+		}
+
 		if (playerHealth) { animator.SetBool("hurt", playerHealth.tookDamage && !playerHealth.isDead ? true : false); }
+
+		if (playerHealth && playerHealth.isDead) {
+			animator.SetTrigger("die");
+			if (weapon) { weapon.GetComponent<SpriteRenderer>().enabled = false; }
+		}
 	}
 
 	void SwordPosition() {
 		bool flipX = GetComponent<SpriteRenderer>().flipX;
-		float y = sword.transform.localPosition.y;
-		sword.GetComponent<SpriteRenderer>().flipX = flipX;
-		sword.transform.localPosition = flipX ? new Vector2(-0.74f, y) : new Vector2(0.74f, y);
-		sword.GetComponent<BoxCollider2D>().offset = flipX ? new Vector2(-0.25f, 0.45f): new Vector2(0.25f, 0.45f);
+		float y = weapon.transform.localPosition.y;
+		weapon.GetComponent<SpriteRenderer>().flipX = flipX;
+		weapon.transform.localPosition = flipX ? new Vector2(-0.74f, y) : new Vector2(0.74f, y);
+		weapon.GetComponent<BoxCollider2D>().offset = flipX ? new Vector2(-0.25f, 0.45f): new Vector2(0.25f, 0.45f);
 	}
 }
