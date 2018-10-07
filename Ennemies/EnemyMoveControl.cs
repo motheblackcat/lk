@@ -13,7 +13,7 @@ public class EnemyMoveControl : MonoBehaviour {
     void Start() {
 	    player = GameObject.Find("Player");
         sprite = GetComponent<SpriteRenderer>();
-        box = GetComponent<BoxCollider2D>();
+        box = GetComponentsInChildren<BoxCollider2D>()[0];
         boxOffsetX = box.offset.x;
 	}
 
@@ -27,7 +27,7 @@ public class EnemyMoveControl : MonoBehaviour {
         if (canMove) { GetComponent<Rigidbody2D>().velocity = player.transform.position.x > transform.position.x ? new Vector2(moveSpeed, 0) : new Vector2(-moveSpeed, 0); }
     }
 
-    // Can't use trigger
+    // Tweak it on a children so we can't attack just being in the vision field
     void OnTriggerStay2D(Collider2D other) {
         if (other.gameObject.tag == "Player") { canMove = true; }
     }

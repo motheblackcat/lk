@@ -11,15 +11,19 @@ public class PlayerAttack : MonoBehaviour {
 	public Transform atkPos;
 	public float atkRange;
 	public LayerMask whatIsEnemies;
+
+	// TODO: Use sword damage instead
 	public int damage;
 
+	// TODO: Make the way to lower enemy health generic
+	// TODO: ATTACK POS SHOULD FLIP
 	void Update () {
 		if (timeBtwAttack <= 0) {
 			if (Input.GetButtonDown("Attack")) {
 				isAttacking = true;
 				Collider2D[] ennemiesToDamage = Physics2D.OverlapCircleAll(atkPos.position, atkRange, whatIsEnemies);
 				for (int i = 0; i < ennemiesToDamage.Length; i++) {
-					ennemiesToDamage[i].GetComponent<EneStartTimeBtwAttackmyHealthControl>().enemyHealth -= damage;
+					ennemiesToDamage[i].GetComponent<EnemyHealthControl>().enemyHealth -= damage;
 				}
 				timeBtwAttack = startTimeBtwAttack;
 			}
