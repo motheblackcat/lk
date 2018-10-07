@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyAnimationControl : MonoBehaviour {
 	Animator anim;
 
-	// TODO: MAKE IT GENERIC (care for states names and in Attack)
+	// TODO: MAKE IT GENERIC (specific name for script and animation)
 	void Start () {
 		anim = GetComponent<Animator>();
 	}

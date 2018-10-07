@@ -15,7 +15,7 @@ public class EnemyHealthControl : MonoBehaviour {
 		stunTimerReset = stunTimer;
 	}
 
-	// TODO: Add feedback when the enemy take damage
+	// TODO: fine tune feedback when the enemy take damage (knockback ?)
 	void Update () {
 		Stun();
 		Death();
