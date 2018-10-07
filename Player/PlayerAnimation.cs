@@ -22,7 +22,7 @@ public class PlayerAnimation : MonoBehaviour {
 		if (weapon) { SwordPosition(); }
 	}
 
-	// TODO: Refactor the animation system with proper use of the animator
+	// TODO: Refactor the animation system with proper use of the animator for the sword
 	void PlayerAnimate() {
 		if (playerControl.canMove && playerControl.isGrounded) {
 			animator.SetBool("run", Input.GetAxis("Horizontal") != 0 ? true : false); 
@@ -32,6 +32,7 @@ public class PlayerAnimation : MonoBehaviour {
 		animator.SetBool("air", playerControl.isGrounded ? false : true);
 		if (weapon && !playerControl.isGrounded) { weapon.GetComponent<Animator>().Play("Sword_Jump"); }
 		
+		// FIX ATTACK ANIMATION
 		animator.SetBool("attack", playerAttack.isAttacking ? true : false);
 
 		if (playerAttack.isAttacking) {

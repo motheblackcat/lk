@@ -5,27 +5,27 @@ using UnityEngine;
 public class EnemyAnimationControl : MonoBehaviour {
 	Animator anim;
 
+	// TODO: MAKE IT GENERIC
+
 	void Start () {
 		anim = GetComponent<Animator>();
 	}
 	
 	void Update () {
-		if (GetComponent<EnemyHealthControl>().hasTakenDamage) {
-			anim.SetBool("hurt", true);
-		} else {
-			anim.SetBool("hurt", false);			
-		}
-
-		if (GetComponent<EnemyHealthControl>().isDead) {
-			anim.SetTrigger("die");
-		}
-
-		// Better use a timer for player taking damage?
-		// Use a OnTriggerEnter method instead
-		// if (GameObject.Find("Player").GetComponent<PlayerHealth>().tookDamage) {
-		// 	anim.SetTrigger("atk");
-		// 	GameObject.Find("Player").GetComponent<PlayerHealth>().tookDamage = false;
+		// if (GetComponent<EnemyHealthControl>().hasTakenDamage) {
+		// 	anim.SetBool("hurt", true);
+		// } else {
+		// 	anim.SetBool("hurt", false);			
 		// }
 
+		// if (GetComponent<EnemyHealthControl>().isDead) {
+		// 	anim.SetTrigger("die");
+		// }
+	}
+
+	void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.tag == "Player") {
+			anim.PlayInFixedTime("Slime_Atk", 0, 1.0f);
+		}		
 	}
 }
