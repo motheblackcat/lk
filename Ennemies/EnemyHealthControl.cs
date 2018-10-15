@@ -23,10 +23,10 @@ public class EnemyHealthControl : MonoBehaviour {
 	void Stun() {
 		if (tookDamage) {
 			stunTimer -= Time.deltaTime;
-			GetComponent<EnemyMoveControl>().canMove = false;
+			GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
 			if (stunTimer <= 0) {
 				tookDamage = false;
-				GetComponent<EnemyMoveControl>().canMove = true;
+				GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
 				stunTimer = stunTimerReset;
 			}
  		}

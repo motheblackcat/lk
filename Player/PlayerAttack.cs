@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour {
-
-	public float attackDuration;
 	public bool isAttacking;
 	float timeBtwAttack;
 	public float startTimeBtwAttack;
@@ -12,8 +10,6 @@ public class PlayerAttack : MonoBehaviour {
 	public Transform atkPos;
 	public float atkRange;
 	public LayerMask whatIsEnemies;
-
-	// TODO: Use sword damage instead
 	public int damage;
 
 	void Start() {

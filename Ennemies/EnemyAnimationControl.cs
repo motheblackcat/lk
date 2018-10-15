@@ -16,7 +16,7 @@ public class EnemyAnimationControl : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.tag == "Player") {
+        if (other.gameObject.tag == "Player" && !GetComponent<EnemyHealthControl>().tookDamage) {
 			anim.PlayInFixedTime("Slime_Atk", 0, 1.0f);
 		}		
 	}

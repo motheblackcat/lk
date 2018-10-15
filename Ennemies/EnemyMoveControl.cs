@@ -18,13 +18,13 @@ public class EnemyMoveControl : MonoBehaviour {
 	}
 
     void Update() {
-        if (player && !player.GetComponent<PlayerHealth>().isDead && !GetComponent<EnemyHealthControl>().isDead) { Move(); }
+        if (player && !player.GetComponent<PlayerHealth>().isDead && canMove && !GetComponent<EnemyHealthControl>().isDead) { Move(); }
     }
 
     void Move() {
         sprite.flipX = player.transform.position.x > transform.position.x ? true : false;
         box.offset = sprite.flipX ? new Vector2(-boxOffsetX, box.offset.y) : new Vector2(boxOffsetX, box.offset.y);
-        if (canMove) { GetComponent<Rigidbody2D>().velocity = player.transform.position.x > transform.position.x ? new Vector2(moveSpeed, 0) : new Vector2(-moveSpeed, 0); }
+        GetComponent<Rigidbody2D>().velocity = player.transform.position.x > transform.position.x ? new Vector2(moveSpeed, 0) : new Vector2(-moveSpeed, 0);
     }
 
     void OnTriggerStay2D(Collider2D other) {
