@@ -22,13 +22,13 @@ public class PlayerHealth : MonoBehaviour {
 	void Start() {
 		weapon = GameObject.FindGameObjectsWithTag("Weapon")[0];
 		sprite = GetComponent<SpriteRenderer>();
-		healthBar = GameObject.Find("Content").GetComponent<Image>();
+		healthBar = GameObject.Find("Content") ?  GameObject.Find("Content").GetComponent<Image>() : null;
 		invTimerTemp = invicibilityTimer;
 	}
 
 	void Update() {
 		if (weapon) { wSprite = weapon.GetComponent<SpriteRenderer>(); }
-		healthBar.fillAmount = playerHealth / 100;
+		if (healthBar) { healthBar.fillAmount = playerHealth / 100; }
 		InvincibilityTimerStart();
 		resetLevelTimerStart();
 	}
