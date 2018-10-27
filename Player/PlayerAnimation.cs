@@ -7,14 +7,14 @@ public class PlayerAnimation : MonoBehaviour {
 	PlayerControl playerControl;
 	PlayerHealth playerHealth;
 	PlayerAttack playerAttack;
-	public GameObject weapon;
+	GameObject weapon;
 
 	void Start () {
 		animator = GetComponent<Animator>();
 		playerControl = GetComponent<PlayerControl>();
 		playerHealth = GetComponent<PlayerHealth>();
 		playerAttack = GetComponent<PlayerAttack>();
-		weapon = GameObject.FindGameObjectsWithTag("Weapon")[0];
+		weapon = GameObject.FindGameObjectsWithTag("Weapon").Length > 0 ? GameObject.FindGameObjectsWithTag("Weapon")[0] : null;
 	}
 
 	void Update() {
@@ -22,25 +22,12 @@ public class PlayerAnimation : MonoBehaviour {
 		if (weapon) { SwordPosition(); }
 	}
 
-	// TODO: Refactor the animation system with proper use of the animator for the sword
 	void PlayerAnimate() {
-		if (playerControl.canMove && playerControl.isGrounded) {
-			animator.SetBool("run", Input.GetAxis("Horizontal") != 0 ? true : false); 
-			if (weapon) { weapon.GetComponent<Animator>().Play(Input.GetAxis("Horizontal") != 0 ? "Sword_Run" : "Sword_Idle"); }
-		}
-
+		if (playerControl.canMove && playerControl.isGrounded) { animator.SetBool("run", Input.GetAxis("Horizontal") != 0 ? true : false); }
 		animator.SetBool("air", playerControl.isGrounded ? false : true);
-		if (weapon && !playerControl.isGrounded) { weapon.GetComponent<Animator>().Play("Sword_Jump"); }
-		
-		// FIX ATTACK ANIMATION
-		animator.SetBool("attack", playerAttack.isAttacking ? true : false);
-		if (playerAttack.isAttacking) { weapon.GetComponent<Animator>().PlayInFixedTime("Sword_Attack", 0, 1.0f); }
-
+		if (playerAttack) { animator.SetBool("attack", playerAttack.isAttacking ? true : false); }
 		if (playerHealth) { animator.SetBool("hurt", playerHealth.tookDamage && !playerHealth.isDead ? true : false); }
-		if (playerHealth && playerHealth.isDead) {
-			animator.SetTrigger("die");
-			if (weapon) { weapon.GetComponent<SpriteRenderer>().enabled = false; }
-		}
+		if (playerHealth && playerHealth.isDead) { animator.SetTrigger("die"); }
 	}
 
 	void SwordPosition() {
