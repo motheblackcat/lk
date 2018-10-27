@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyMoveControl : MonoBehaviour {
     public bool canMove = false;
+    public bool canSee = false;
     public float moveSpeed = 3;
     GameObject player;
     SpriteRenderer sprite;
@@ -19,7 +20,8 @@ public class EnemyMoveControl : MonoBehaviour {
 	}
 
     void Update() {
-        if (canMove && !GetComponent<EnemyHealthControl>().tookDamage) { Move(); }
+        canMove = !player.GetComponent<PlayerHealth>().isDead && !GetComponent<EnemyHealthControl>().tookDamage;
+        if (canSee && canMove) { Move(); }
     }
 
     void Move() {
@@ -30,12 +32,12 @@ public class EnemyMoveControl : MonoBehaviour {
 
     void OnTriggerStay2D(Collider2D other) {
         if (other.gameObject.tag == "Player" && isGrounded) {
-            canMove = true;
+            canSee = true;
         }
     }
 
     void OnTriggerExit2D(Collider2D other) {
-        if (other.gameObject.tag == "Player") { canMove = false; }
+        if (other.gameObject.tag == "Player") { canSee = false; }
     }
 
     void OnCollisionStay2D(Collision2D other) {

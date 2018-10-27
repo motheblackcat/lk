@@ -33,7 +33,7 @@ public class PlayerControl : MonoBehaviour {
 	void Flip() {
 		if (Input.GetAxis("Horizontal") > 0) { sprite.flipX = false; }
 		if (Input.GetAxis("Horizontal") < 0) { sprite.flipX = true; }
-		GetComponent<CapsuleCollider2D>().offset = Input.GetAxis("Horizontal") > 0 ? new Vector2(0.06f, -0.04f) : new Vector2(-0.06f, -0.04f);
+		GetComponent<CapsuleCollider2D>().offset = sprite.flipX ? new Vector2(-0.06f, -0.04f) : new Vector2(0.06f, -0.04f);
 		if (ghost) { ghost.GetComponent<SpriteRenderer>().flipX = sprite.flipX; }
 	}
 
