@@ -9,6 +9,7 @@ public class EnemyMoveControl : MonoBehaviour {
     SpriteRenderer sprite;
     BoxCollider2D box;
     float boxOffsetX;
+    bool isGrounded;
 
     void Start() {
 	    player = GameObject.Find("Player");
@@ -18,7 +19,7 @@ public class EnemyMoveControl : MonoBehaviour {
 	}
 
     void Update() {
-        if (player && !player.GetComponent<PlayerHealth>().isDead && canMove && !GetComponent<EnemyHealthControl>().isDead) { Move(); }
+        if (canMove && !GetComponent<EnemyHealthControl>().tookDamage) { Move(); }
     }
 
     void Move() {
@@ -28,10 +29,24 @@ public class EnemyMoveControl : MonoBehaviour {
     }
 
     void OnTriggerStay2D(Collider2D other) {
-        if (other.gameObject.tag == "Player") { canMove = true; }
+        if (other.gameObject.tag == "Player" && isGrounded) {
+            canMove = true;
+        }
     }
 
     void OnTriggerExit2D(Collider2D other) {
         if (other.gameObject.tag == "Player") { canMove = false; }
     }
+
+    void OnCollisionStay2D(Collision2D other) {
+		if (other.gameObject.tag == "Ground") {
+			isGrounded = true;
+		}
+	}
+
+    void OnCollisionExit2D(Collision2D other) {
+		if (other.gameObject.tag == "Ground") {
+			isGrounded = false;
+		}
+	}
 }

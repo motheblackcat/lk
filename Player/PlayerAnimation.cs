@@ -34,7 +34,7 @@ public class PlayerAnimation : MonoBehaviour {
 		
 		// FIX ATTACK ANIMATION
 		animator.SetBool("attack", playerAttack.isAttacking ? true : false);
-		if (playerAttack.isAttacking) { weapon.GetComponent<Animator>().Play("Sword_Attack"); }
+		if (playerAttack.isAttacking) { weapon.GetComponent<Animator>().PlayInFixedTime("Sword_Attack", 0, 1.0f); }
 
 		if (playerHealth) { animator.SetBool("hurt", playerHealth.tookDamage && !playerHealth.isDead ? true : false); }
 		if (playerHealth && playerHealth.isDead) {

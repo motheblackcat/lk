@@ -9,13 +9,17 @@ public class EnemyHealthControl : MonoBehaviour {
 	public bool tookDamage;
 	public float stunTimer = 0.5f;
 	float stunTimerReset;
+	public float pushX = 10f;
+	public float pushY = 0f;
 	public float destroyTimer = 1.0f;
+	public float flickTimer = 0.1f;
+	SpriteRenderer sprite;
 
 	void Start() {
 		stunTimerReset = stunTimer;
+		sprite = GetComponent<SpriteRenderer>();
 	}
 
-	// TODO: fine tune feedback when the enemy take damage (knockback ?)
 	void Update () {
 		Stun();
 		Death();
@@ -23,27 +27,38 @@ public class EnemyHealthControl : MonoBehaviour {
 	void Stun() {
 		if (tookDamage) {
 			stunTimer -= Time.deltaTime;
-			GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
 			if (stunTimer <= 0) {
 				tookDamage = false;
-				GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+				CancelInvoke();
+				sprite.enabled = true;
 				stunTimer = stunTimerReset;
 			}
  		}
 	}
 
+	void SpriteFlick() {
+		sprite.enabled = !sprite.enabled;
+	}
+
+	void PushBack() {
+		bool pos = GameObject.Find("Player").transform.position.x > transform.position.x;
+		GetComponent<Rigidbody2D>().AddForce(pos ? new Vector2(-pushX, pushY) : new Vector2(pushX, pushY), ForceMode2D.Impulse);
+	}
+
 	public void TakeDamage(int damage) {
 		enemyHealth -= damage;
 		tookDamage = true;
+		PushBack();
+		InvokeRepeating("SpriteFlick", 0, flickTimer);
 	}
 
 	void Death() {
 		if (enemyHealth <= 0) {
+			CancelInvoke();
+			sprite.enabled = true;
 			isDead = true;
 			GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
 			GetComponent<Collider2D>().enabled = false;
-			// Failed attempt to destroy the object after the death animation according to its length, the timer is always reset
-			// if (animator.GetCurrentAnimatorStateInfo(0).IsName("Slime_Death")) { destroyTimer = animator.GetCurrentAnimatorStateInfo(0).length; }
 			destroyTimer -= Time.deltaTime;
 			if (destroyTimer <= 0) {
 				Destroy(gameObject);
