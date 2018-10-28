@@ -22,6 +22,7 @@ public class PauseMenu : MonoBehaviour {
 		// playerAudio = player.GetComponent<PlayerAudio>();
         pauseUI = GameObject.Find("PauseUI");
         pauseUI.GetComponent<AudioSource>().ignoreListenerPause = true;
+        pauseUI.GetComponent<Canvas>().enabled = true;
         joyCon = GameObject.Find("JoyCon Text").GetComponent<Image>();
         keyCon = GameObject.Find("KeyCon Text").GetComponent<Image>();
 	}
