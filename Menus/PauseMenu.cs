@@ -21,19 +21,22 @@ public class PauseMenu : MonoBehaviour {
 		playerAttack = player.GetComponent<PlayerAttack>();
 		// playerAudio = player.GetComponent<PlayerAudio>();
         pauseUI = GameObject.Find("PauseUI");
+        pauseUI.GetComponent<AudioSource>().ignoreListenerPause = true;
         joyCon = GameObject.Find("JoyCon Text").GetComponent<Image>();
         keyCon = GameObject.Find("KeyCon Text").GetComponent<Image>();
 	}
 
 	void Update() {
-		JoystickDetection();
+		GamepadDetection();
 		PauseDetection();
 	}
 
-	void JoystickDetection() {
-		// Gamepad detection need polishing
-        joyCon.enabled = Input.GetJoystickNames()[0] != "" ? true : false;
-        keyCon.enabled = Input.GetJoystickNames()[0] == "" ? true : false;
+	void GamepadDetection() {
+		// Gamepad detection is clunky
+		foreach (string gamePad in Input.GetJoystickNames()) {
+			joyCon.enabled = gamePad == "" ? false : true;
+			keyCon.enabled = gamePad == "" ? true : false;
+		}
 	}
 
 	void PauseDetection() {
