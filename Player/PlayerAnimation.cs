@@ -22,6 +22,7 @@ public class PlayerAnimation : MonoBehaviour {
 		if (weapon) { SwordPosition(); }
 	}
 
+	// Attacks right after landing are not animated but still deals damages
 	void PlayerAnimate() {
 		if (playerControl.canMove && playerControl.isGrounded) { animator.SetBool("run", Input.GetAxis("Horizontal") != 0 ? true : false); }
 		animator.SetBool("air", playerControl.isGrounded ? false : true);

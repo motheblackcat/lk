@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerSound : MonoBehaviour {
-	Animator animator;
     AudioSource audioSource;
 
 	PlayerControl playerControl;
@@ -18,7 +17,6 @@ public class PlayerSound : MonoBehaviour {
     public bool soundPlayed = false;
 
 	void Start () {
-		animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 		playerControl = GetComponent<PlayerControl>();
 		playerHealth = GetComponent<PlayerHealth>();
@@ -44,7 +42,7 @@ public class PlayerSound : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.tag == "Enemy" && playerHealth.tookDamage) {
+        if (collision.gameObject.tag == "Enemy" && playerHealth.tookDamage && !playerHealth.isDead) {
             audioSource.PlayOneShot(hurtSound);
         }
     }
