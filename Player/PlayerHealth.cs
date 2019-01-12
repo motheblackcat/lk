@@ -18,8 +18,10 @@ public class PlayerHealth : MonoBehaviour {
 	public float flickTimer = 0.2f;
 	float invTimerTemp;
 	public float invicibilityTimer = 1f;
+	PlayerSound playerSound;
 
 	void Start() {
+		playerSound = GetComponent<PlayerSound>();
 		weapon = GameObject.FindGameObjectsWithTag("Weapon")[0];
 		sprite = GetComponent<SpriteRenderer>();
 		healthBar = GameObject.Find("Content") ?  GameObject.Find("Content").GetComponent<Image>() : null;
@@ -74,12 +76,14 @@ public class PlayerHealth : MonoBehaviour {
 			isDead = true;
 			GameObject.Find("MainCamera").GetComponent<AudioSource>().Stop();
 			GetComponent<PlayerControl>().canMove = false;
+			// Try to find a more local way to play the sound in regards to the separation of responsabilities
+			playerSound.soundPlayed = false;
 		}
 	}
 
 	void TakeDamage(GameObject enemy) {
-		// Use enemy damage value instead
-		playerHealth -= 25;
+		// Will need to move enemy damage to an enemy damage script for enemies with more advanced attack tactics
+		playerHealth -= enemy.GetComponent<EnemyHealthControl>().damage;
 		tookDamage = true;
 	}
 

@@ -11,8 +11,10 @@ public class PlayerAttack : MonoBehaviour {
 	public float atkRange;
 	public LayerMask whatIsEnemies;
 	public int damage;
+	PlayerHealth playerHealth;
 
 	void Start() {
+		playerHealth = GetComponent<PlayerHealth>();
 		atkPos = GameObject.Find("AttackPos").GetComponent<Transform>();
 		atkPosX = atkPos.localPosition.x;
 	}
@@ -26,7 +28,7 @@ public class PlayerAttack : MonoBehaviour {
 		atkPos.localPosition = GetComponent<SpriteRenderer>().flipX ? new Vector2(-atkPosX, atkPos.localPosition.y) : new Vector2(atkPosX, atkPos.localPosition.y);
 
 		if (timeBtwAttack <= 0) {
-			if (Input.GetButtonDown("Attack") && !GetComponent<PlayerHealth>().tookDamage && !GetComponent<PlayerHealth>().isDead) {
+			if (Input.GetButtonDown("Attack") && !playerHealth.tookDamage && !playerHealth.isDead) {
 				isAttacking = true;
 				Collider2D[] ennemiesToDamage = Physics2D.OverlapCircleAll(atkPos.position, atkRange, whatIsEnemies);
 				for (int i = 0; i < ennemiesToDamage.Length; i++) {

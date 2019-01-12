@@ -14,7 +14,8 @@ public class EnemyHealthControl : MonoBehaviour {
 	public float destroyTimer = 1.0f;
 	public float flickTimer = 0.1f;
 	SpriteRenderer sprite;
-
+	public int damage = 25;
+	
 	void Start() {
 		stunTimerReset = stunTimer;
 		sprite = GetComponent<SpriteRenderer>();
