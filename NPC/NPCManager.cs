@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class NPCManager : MonoBehaviour {
 	bool introDone = false;
 	
+	// Check this script, it needs refactoring.
 	void FixedUpdate() {
 		if (Time.time > GameObject.Find("MainCamera").GetComponent<IntroSceneManager>().startTimer) {
 			introDone = true;
@@ -53,10 +54,6 @@ public class NPCManager : MonoBehaviour {
 			DoorManager();
 			BartenderManager(other.gameObject);
 			DrinkerManager();
-		}
-
-		if (this.name == "Bartender" ||this.name == "Drinker1") {
-			GameObject.Find("DialogBox").GetComponent<DialogManager>().npc = this.gameObject;
 		}
 	}
 

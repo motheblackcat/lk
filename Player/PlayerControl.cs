@@ -11,6 +11,7 @@ public class PlayerControl : MonoBehaviour {
 	Rigidbody2D rb;
 	SpriteRenderer sprite;
 	GameObject ghost;
+	public GameObject npc;
 	
 	void Start() {
 		rb = GetComponent<Rigidbody2D>();
@@ -47,5 +48,15 @@ public class PlayerControl : MonoBehaviour {
 		if (other.gameObject.tag == "Ground") {
 			isGrounded = false;
 		}
+	}
+
+	private void OnTriggerStay2D(Collider2D other) {
+		if (other.gameObject.tag == "NPC") {
+			npc = other.gameObject;
+		}
+	}
+
+	private void OnTriggerExit2D(Collider2D other) {
+		npc = null;	
 	}
 }
