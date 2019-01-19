@@ -18,10 +18,8 @@ public class PlayerHealth : MonoBehaviour {
 	public float flickTimer = 0.2f;
 	float invTimerTemp;
 	public float invicibilityTimer = 1f;
-	PlayerSound playerSound;
 
 	void Start() {
-		playerSound = GetComponent<PlayerSound>();
 		weapon = GameObject.FindGameObjectsWithTag("Weapon")[0];
 		sprite = GetComponent<SpriteRenderer>();
 		healthBar = GameObject.Find("Content") ?  GameObject.Find("Content").GetComponent<Image>() : null;
