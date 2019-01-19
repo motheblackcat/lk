@@ -19,7 +19,7 @@ public class PlayerAttack : MonoBehaviour {
 		atkPosX = atkPos.localPosition.x;
 	}
 
-	// TODO: Make the way to lower enemy health generic (now it use a specific enemy script)
+	// TODO: Make the way to lower enemy health generic (now it use the specific EnemyHealthControl script)
 	void Update () {
 		Attack();
 	}

@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyAnimationControl : MonoBehaviour {
 	Animator anim;
 
-	// TODO: MAKE IT GENERIC (specific name for script and animation)
+	// TODO: MAKE IT GENERIC (specific name for script)
 	void Start () {
 		anim = GetComponent<Animator>();
 	}
@@ -17,7 +17,7 @@ public class EnemyAnimationControl : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.tag == "Player" && !GetComponent<EnemyHealthControl>().tookDamage) {
-			anim.PlayInFixedTime("Slime_Atk", 0, 1.0f);
+			anim.PlayInFixedTime("Atk", 0, 1.0f);
 		}		
 	}
 }

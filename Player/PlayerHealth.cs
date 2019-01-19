@@ -76,8 +76,6 @@ public class PlayerHealth : MonoBehaviour {
 			isDead = true;
 			GameObject.Find("MainCamera").GetComponent<AudioSource>().Stop();
 			GetComponent<PlayerControl>().canMove = false;
-			// Try to find a more local way to play the sound in regards to the separation of responsabilities
-			playerSound.soundPlayed = false;
 		}
 	}
 
