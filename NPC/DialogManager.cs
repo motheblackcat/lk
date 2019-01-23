@@ -40,7 +40,7 @@ public class DialogManager : MonoBehaviour {
             }
         }
 
-        if (Input.GetButtonDown("Jump")) {
+        if (GetComponent<Image>().enabled && Input.GetButtonDown("Jump")) {
             GetComponent<Image>().enabled = false;
             GameObject.Find("Text").GetComponent<Text>().text = "";
             GameObject.Find("ButtonA").GetComponent<Image>().enabled = false;

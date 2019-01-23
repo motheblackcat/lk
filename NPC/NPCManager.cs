@@ -24,7 +24,7 @@ public class NPCManager : MonoBehaviour {
 				GetComponent<SpriteRenderer>().flipX = other.gameObject.transform.position.x > transform.position.x;
 			}
 			if (tag == "Door" && Input.GetAxis("Vertical") > 0) {
-				SceneManager.LoadScene("Scene_1_RoadtoForest");
+				SceneManager.LoadScene(1);
 			}
 		}
 	}

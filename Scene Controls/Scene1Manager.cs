@@ -37,7 +37,7 @@ public class Scene1Manager : MonoBehaviour {
 
 	void OnTriggerExit2D(Collider2D other) {
 		if (other.gameObject.tag == "Player") {
-			SceneManager.LoadScene("Scene_2_Forest");
+			SceneManager.LoadScene(2);
 		}	
 	}
 }
