@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerSound : MonoBehaviour {
     AudioSource audioSource;
@@ -23,21 +24,22 @@ public class PlayerSound : MonoBehaviour {
 		playerAttack = GetComponent<PlayerAttack>();
 	}
 
-    // Update is called once per frame
+    // Audio clip format and volume normalization required when removing placeholders
     void Update() {
-		if (Input.GetButtonDown("Jump") && playerControl.isGrounded && playerControl.canMove) {
-            // Audio clip format and volume normalization required when removing placeholders
-            audioSource.PlayOneShot(jumpSound, 0.2f);
-        }
+        if (!GameObject.Find("DialogBox").GetComponent<Image>().enabled) {
+            if (Input.GetButtonDown("Jump") && playerControl.isGrounded && playerControl.canMove) {
+                audioSource.PlayOneShot(jumpSound, 0.2f);
+            }
 
-        if (playerAttack.isAttacking) {
-            audioSource.PlayOneShot(attackSound);
-        }
+            if (playerAttack.isAttacking) {
+                audioSource.PlayOneShot(attackSound);
+            }
 
 
-        if (playerHealth.isDead && !soundPlayed) {
-            audioSource.PlayOneShot(deathSound);
-            soundPlayed = true;
+            if (playerHealth.isDead && !soundPlayed) {
+                audioSource.PlayOneShot(deathSound);
+                soundPlayed = true;
+            }
         }
     }
 

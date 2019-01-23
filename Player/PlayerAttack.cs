@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerAttack : MonoBehaviour {
 	public bool isAttacking;
@@ -28,7 +29,7 @@ public class PlayerAttack : MonoBehaviour {
 		atkPos.localPosition = GetComponent<SpriteRenderer>().flipX ? new Vector2(-atkPosX, atkPos.localPosition.y) : new Vector2(atkPosX, atkPos.localPosition.y);
 
 		if (timeBtwAttack <= 0) {
-			if (Input.GetButtonDown("Attack") && !playerHealth.tookDamage && !playerHealth.isDead) {
+			if (Input.GetButtonDown("Attack") && !playerHealth.tookDamage && !playerHealth.isDead && GetComponent<PlayerControl>().canMove) {
 				isAttacking = true;
 				Collider2D[] ennemiesToDamage = Physics2D.OverlapCircleAll(atkPos.position, atkRange, whatIsEnemies);
 				for (int i = 0; i < ennemiesToDamage.Length; i++) {

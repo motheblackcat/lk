@@ -25,7 +25,9 @@ public class EnemyMoveControl : MonoBehaviour {
     }
 
     void Move() {
-        sprite.flipX = player.transform.position.x > transform.position.x ? true : false;
+        if (!GetComponent<EnemyHealthControl>().isDead) {
+            sprite.flipX =  player.transform.position.x > transform.position.x ? true : false;
+        }
         box.offset = sprite.flipX ? new Vector2(-boxOffsetX, box.offset.y) : new Vector2(boxOffsetX, box.offset.y);
         if (canSee && canMove) {
             GetComponent<Rigidbody2D>().velocity = player.transform.position.x > transform.position.x ? new Vector2(moveSpeed, 0) : new Vector2(-moveSpeed, 0);

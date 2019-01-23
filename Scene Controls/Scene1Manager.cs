@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Scene1Manager : MonoBehaviour {
 	GameObject[] clouds;
@@ -32,5 +33,11 @@ public class Scene1Manager : MonoBehaviour {
 		GameObject thirdPlan = GameObject.Find("Plains 3rd Plan");
 		cameraPos = GameObject.Find("MainCamera").transform.position.x;
 		thirdPlan.transform.position = new Vector2((cameraPos - 10) / paraSpeed, 0);
+	}
+
+	void OnTriggerExit2D(Collider2D other) {
+		if (other.gameObject.tag == "Player") {
+			SceneManager.LoadScene("Scene_2_Forest");
+		}	
 	}
 }

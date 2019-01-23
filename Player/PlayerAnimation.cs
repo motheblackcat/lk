@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerAnimation : MonoBehaviour {
 	Animator animator;
@@ -24,10 +25,10 @@ public class PlayerAnimation : MonoBehaviour {
 
 	// Attacks right after landing are not animated but still deals damages
 	void PlayerAnimate() {
-		if (playerControl.canMove && playerControl.isGrounded) { animator.SetBool("run", Input.GetAxis("Horizontal") != 0 ? true : false); }
-		animator.SetBool("air", playerControl.isGrounded ? false : true);
-		if (playerAttack) { animator.SetBool("attack", playerAttack.isAttacking ? true : false); }
-		if (playerHealth) { animator.SetBool("hurt", playerHealth.tookDamage && !playerHealth.isDead ? true : false); }
+		if (playerControl.canMove && playerControl.isGrounded) { animator.SetBool("run", GetComponent<Rigidbody2D>().velocity.x != 0); }
+		animator.SetBool("air", !playerControl.isGrounded);
+		if (playerAttack && !GameObject.Find("DialogBox").GetComponent<Image>().enabled) { animator.SetBool("attack", playerAttack.isAttacking); }
+		if (playerHealth) { animator.SetBool("hurt", playerHealth.tookDamage && !playerHealth.isDead); }
 		if (playerHealth && playerHealth.isDead) { animator.SetTrigger("die"); }
 	}
 

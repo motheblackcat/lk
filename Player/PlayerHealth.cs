@@ -53,7 +53,7 @@ public class PlayerHealth : MonoBehaviour {
 		if (isDead) {
 			restartLevelTimer -= Time.deltaTime;
 			if (restartLevelTimer <= 0) {
-				SceneManager.LoadScene("Scene_1_RoadtoForest");
+				SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 			}
 		}
 	}

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour {
 
@@ -19,8 +20,8 @@ public class PlayerControl : MonoBehaviour {
 		ghost = GameObject.Find("Ghost");
 	}
 
-	void Update() {
-		if (canMove) {
+	void Update() {		
+		if (canMove && !GameObject.Find("DialogBox").GetComponent<Image>().enabled) {
 			PlayerMove();
 			Flip();
 		}
@@ -51,7 +52,7 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	private void OnTriggerStay2D(Collider2D other) {
-		if (other.gameObject.tag == "NPC") {
+		if (other.gameObject.tag == "NPC" || other.gameObject.tag == "StaticNPC") {
 			npc = other.gameObject;
 		}
 	}
