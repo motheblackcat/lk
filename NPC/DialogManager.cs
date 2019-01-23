@@ -40,10 +40,11 @@ public class DialogManager : MonoBehaviour {
             }
         }
 
-        if (npc == null || Input.GetButtonDown("Jump")) {
+        if (Input.GetButtonDown("Jump")) {
             GetComponent<Image>().enabled = false;
             GameObject.Find("Text").GetComponent<Text>().text = "";
             GameObject.Find("ButtonA").GetComponent<Image>().enabled = false;
+            eventDone = true;
         }
     }
 }
