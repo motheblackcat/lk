@@ -8,7 +8,9 @@ public class DialogManager : MonoBehaviour {
     GameObject player;
     float startTimer;
     public bool eventDone = false;
+    public bool inDialog = false;
 	
+    // Refactor this script (make dialog box activation generic)
 	void Start() {
         player = GameObject.Find("Player");
         if (GameObject.Find("MainCamera").GetComponent<IntroSceneManager>()) {
@@ -18,6 +20,7 @@ public class DialogManager : MonoBehaviour {
 	
 	void Update() {
         checkNpc(player.GetComponent<PlayerControl>().npc);
+        inDialog = GetComponent<Image>().enabled;
 	}
 
     void readDialog(GameObject npc) {
@@ -40,7 +43,7 @@ public class DialogManager : MonoBehaviour {
             }
         }
 
-        if (GetComponent<Image>().enabled && Input.GetButtonDown("Jump")) {
+        if (inDialog && Input.GetButtonDown("Jump")) {
             GetComponent<Image>().enabled = false;
             GameObject.Find("Text").GetComponent<Text>().text = "";
             GameObject.Find("ButtonA").GetComponent<Image>().enabled = false;

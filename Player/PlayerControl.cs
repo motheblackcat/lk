@@ -21,7 +21,7 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	void Update() {		
-		if (canMove && !GameObject.Find("DialogBox").GetComponent<Image>().enabled) {
+		if (canMove && !GameObject.Find("DialogBox").GetComponent<DialogManager>().inDialog) {
 			PlayerMove();
 			Flip();
 		}
