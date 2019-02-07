@@ -32,7 +32,7 @@ public class DialogManager : MonoBehaviour {
     void checkNpc(GameObject npc) {
         if (startTimer < Time.time && npc) {
             if (npc.name != "Bob") {
-                if (Input.GetButtonDown("Up")) {
+                if (Input.GetAxis("Vertical") > 0) {
                     readDialog(npc);
                 }
             } else if (!eventDone) {
