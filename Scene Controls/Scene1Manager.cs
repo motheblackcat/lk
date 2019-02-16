@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 public class Scene1Manager : MonoBehaviour {
 	GameObject[] clouds;
 	float[] speeds = new float[3];
-	public float cameraPos;
+	float thirdPlanStartPos;
+	public GameObject thirdPlan;
 	public float paraSpeed = 2.0f;
 
 	void Start() {
@@ -16,9 +17,11 @@ public class Scene1Manager : MonoBehaviour {
 		for (int i = 0; i < clouds.Length; i++) {
 			speeds[i] = Random.value;
 		}
+		thirdPlan = GameObject.Find("Plains 3rd Plan");
+		thirdPlanStartPos = thirdPlan.transform.position.x;
 	}
 
-	void FixedUpdate () {
+	void Update () {
 		MoveClouds();
 		SimpleParallax();
 	}
@@ -30,9 +33,8 @@ public class Scene1Manager : MonoBehaviour {
 	}
 
 	void SimpleParallax() {
-		GameObject thirdPlan = GameObject.Find("Plains 3rd Plan");
-		cameraPos = GameObject.Find("MainCamera").transform.position.x;
-		thirdPlan.transform.position = new Vector2((cameraPos - 10) / paraSpeed, 0);
+		float cameraPos = GameObject.Find("Player").transform.position.x;
+		thirdPlan.transform.position = new Vector2((cameraPos + thirdPlanStartPos) / paraSpeed, 0);
 	}
 
 	void OnTriggerExit2D(Collider2D other) {

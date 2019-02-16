@@ -11,6 +11,7 @@ public class IntroSceneManager : MonoBehaviour {
 	public float startTimer = 5.0f;
 	
 	void Start () {
+		Cursor.visible = false;
 		fadeImage = GameObject.Find("Fade Image").GetComponent<Image>();
 		fadeImage.enabled = true;
 		player = GameObject.Find("Player");
