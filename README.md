@@ -7,4 +7,4 @@ Feel free to contribute in any way you wish!
 
 <img src="https://motheblackcat.github.io/assets/img/game.gif">
 
-You can test the current build here: https://motheblackcat.github.io/games
+You can test the current build here: https://motheblackcat.github.io
