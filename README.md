@@ -5,6 +5,6 @@ My first attempt at making a 2D game demo with the Unity engine, my goal is to a
 
 Feel free to contribute in any way you wish!
 
-<img src="http://motheblackcat.free.fr/assets/img/game.gif">
+<img src="https://motheblackcat.github.io/assets/img/game.gif">
 
-You can test the current build here: http://motheblackcat.free.fr/game.html
+You can test the current build here: https://motheblackcat.github.io/games
