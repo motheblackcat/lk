@@ -5,16 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class NPCManager : MonoBehaviour {
-    bool introDone = false;
-
-    void FixedUpdate() {
-        if (Time.time > GameObject.Find("MainCamera").GetComponent<IntroSceneManager>().startTimer) {
-            introDone = true;
-        }
-    }
-
     void OnTriggerStay2D(Collider2D other) {
-		if (other.gameObject.tag == "Player" && introDone) {
+		if (other.gameObject.tag == "Player" && Camera.main.GetComponent<IntroSceneManager>().introDone) {
 			GameObject.Find(this.name + "/ArrowUp").GetComponent<SpriteRenderer>().enabled = true;
 			if (GetComponent<Animator>()) {
 				GetComponent<Animator>().SetBool("watch", true);
@@ -31,7 +23,10 @@ public class NPCManager : MonoBehaviour {
 
 	void OnTriggerExit2D(Collider2D other) {
 		if (other.gameObject.tag == "Player") {
-			if (GetComponent<Animator>()) { GetComponent<Animator>().SetBool("watch", false); }
+			if (GetComponent<Animator>()) {
+				GetComponent<Animator>().SetBool("watch", false);
+				GetComponent<Animator>().SetBool("talk", false);
+			}
 			GameObject.Find(this.name + "/ArrowUp").GetComponent<SpriteRenderer>().enabled = false;
 		}
 	}

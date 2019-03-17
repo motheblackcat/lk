@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class IntroSceneManager : MonoBehaviour {
 	Image fadeImage;
 	GameObject player;
-	public float speed = 1.0f;
-	public float globalTimer;
+    public bool introDone = false;
+	public float fadeSpeed = 1.0f;
 	public float startTimer = 5.0f;
 	
 	void Start () {
@@ -17,19 +17,25 @@ public class IntroSceneManager : MonoBehaviour {
 		player = GameObject.Find("Player");
 	}
 	
-	void FixedUpdate () {
-		globalTimer = Time.time;		
+	void Update () {
 		FadeOut();
-		FreePlayer();
+		CheckTimer();
 	}
 
 	void FadeOut() {
 		Color clearColor = Color.clear;
-		fadeImage.color = Color.Lerp(fadeImage.color, clearColor, Time.time * Time.deltaTime * speed);
+		fadeImage.color = Color.Lerp(fadeImage.color, clearColor, Time.time * Time.deltaTime * fadeSpeed);
+	}
+
+	void CheckTimer() {
+		if (Time.time > GameObject.Find("MainCamera").GetComponent<IntroSceneManager>().startTimer) {
+            introDone = true;
+			FreePlayer();
+        }
 	}
 
 	void FreePlayer() {
-		if (globalTimer > startTimer) {
+		if (Time.time > startTimer) {
 			player.GetComponent<PlayerControl>().canMove = true;
 			player.GetComponent<Animator>().enabled = true;
 			player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;

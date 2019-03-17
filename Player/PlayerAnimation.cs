@@ -25,7 +25,7 @@ public class PlayerAnimation : MonoBehaviour {
 
 	// Attacks right after landing are not animated but still deals damages
 	void PlayerAnimate() {
-		if (playerControl.canMove && playerControl.isGrounded) { animator.SetBool("run", GetComponent<Rigidbody2D>().velocity.x != 0); }
+		animator.SetBool("run", GetComponent<Rigidbody2D>().velocity.x != 0);
 		animator.SetBool("air", !playerControl.isGrounded);
 		if (playerAttack && !GameObject.Find("DialogBox").GetComponent<Image>().enabled) { animator.SetBool("attack", playerAttack.isAttacking); }
 		if (playerHealth) { animator.SetBool("hurt", playerHealth.tookDamage && !playerHealth.isDead); }

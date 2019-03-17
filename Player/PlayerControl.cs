@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour {
 
+public bool inDialog = false;
 	public float runSpeed = 40;
 	public float jumpSpeed = 600;
 	public bool canMove = true;
@@ -20,8 +21,9 @@ public class PlayerControl : MonoBehaviour {
 		ghost = GameObject.Find("Ghost");
 	}
 
-	void Update() {		
-		if (canMove && !GameObject.Find("DialogBox").GetComponent<DialogManager>().inDialog) {
+	void Update() {
+		inDialog = GameObject.Find("DialogBox").GetComponent<DialogManager>().inDialog;
+		if (canMove && !inDialog) {
 			PlayerMove();
 			Flip();
 		}
