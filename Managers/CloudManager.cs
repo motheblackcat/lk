@@ -14,8 +14,8 @@ public class CloudManager : MonoBehaviour {
 		}
 	}
 
-	void Update () {
-			for (int i = 0; i < clouds.Length; i++) {
+	void Update() {
+		for (int i = 0; i < clouds.Length; i++) {
 			clouds[i].transform.Translate(Vector2.left * (speeds[i] / 3) * Time.deltaTime);
 		}
 	}

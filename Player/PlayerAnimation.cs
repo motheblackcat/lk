@@ -10,7 +10,7 @@ public class PlayerAnimation : MonoBehaviour {
 	PlayerAttack playerAttack;
 	GameObject weapon;
 
-	void Start () {
+	void Start() {
 		animator = GetComponent<Animator>();
 		playerControl = GetComponent<PlayerControl>();
 		playerHealth = GetComponent<PlayerHealth>();

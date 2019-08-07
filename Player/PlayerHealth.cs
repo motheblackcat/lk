@@ -1,8 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
 	Image healthBar;
@@ -22,7 +22,7 @@ public class PlayerHealth : MonoBehaviour {
 	void Start() {
 		weapon = GameObject.FindGameObjectsWithTag("Weapon")[0];
 		sprite = GetComponent<SpriteRenderer>();
-		healthBar = GameObject.Find("Content") ?  GameObject.Find("Content").GetComponent<Image>() : null;
+		healthBar = GameObject.Find("Content") ? GameObject.Find("Content").GetComponent<Image>() : null;
 		invTimerTemp = invicibilityTimer;
 	}
 
@@ -70,7 +70,7 @@ public class PlayerHealth : MonoBehaviour {
 	}
 
 	void Death() {
-		if (playerHealth <= 0) { 
+		if (playerHealth <= 0) {
 			isDead = true;
 			GameObject.Find("MainCamera").GetComponent<AudioSource>().Stop();
 			GetComponent<PlayerControl>().canMove = false;
@@ -84,11 +84,11 @@ public class PlayerHealth : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D col) {
-		if (col.gameObject.tag == "Enemy") { 
+		if (col.gameObject.tag == "Enemy") {
 			if (!tookDamage) {
 				TakeDamage(col.gameObject);
 				Death();
-				if (!isDead) { 
+				if (!isDead) {
 					InvokeRepeating("SpriteFlick", 0, flickTimer);
 					PushBack(col.gameObject);
 				};

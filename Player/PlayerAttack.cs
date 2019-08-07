@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerAttack : MonoBehaviour {
 	public bool isAttacking;
-	float timeBtwAttack;
+	public float timeBtwAttack;
 	public float cdBtwAttack;
 	float atkPosX;
 	public Transform atkPos;
@@ -14,14 +14,15 @@ public class PlayerAttack : MonoBehaviour {
 	public int damage;
 	PlayerHealth playerHealth;
 
+	public Collider2D[] ennemiesToDamage;
+
 	void Start() {
 		playerHealth = GetComponent<PlayerHealth>();
 		atkPos = GameObject.Find("AttackPos").GetComponent<Transform>();
 		atkPosX = atkPos.localPosition.x;
 	}
 
-	// TODO: Make the way to lower enemy health generic (now it use the specific EnemyHealthControl script)
-	void Update () {
+	void Update() {
 		Attack();
 	}
 
@@ -29,9 +30,10 @@ public class PlayerAttack : MonoBehaviour {
 		atkPos.localPosition = GetComponent<SpriteRenderer>().flipX ? new Vector2(-atkPosX, atkPos.localPosition.y) : new Vector2(atkPosX, atkPos.localPosition.y);
 
 		if (timeBtwAttack <= 0) {
+			// Check if all those conditions are necessary
 			if (Input.GetButtonDown("Attack") && !playerHealth.tookDamage && !playerHealth.isDead && GetComponent<PlayerControl>().canMove) {
 				isAttacking = true;
-				Collider2D[] ennemiesToDamage = Physics2D.OverlapCircleAll(atkPos.position, atkRange, whatIsEnemies);
+				ennemiesToDamage = Physics2D.OverlapCircleAll(atkPos.position, atkRange, whatIsEnemies);
 				for (int i = 0; i < ennemiesToDamage.Length; i++) {
 					ennemiesToDamage[i].GetComponent<EnemyHealthControl>().TakeDamage(damage);
 				}

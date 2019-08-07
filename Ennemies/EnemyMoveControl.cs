@@ -13,11 +13,11 @@ public class EnemyMoveControl : MonoBehaviour {
     bool isGrounded;
 
     void Start() {
-	    player = GameObject.Find("Player");
+        player = GameObject.Find("Player");
         sprite = GetComponent<SpriteRenderer>();
         box = GetComponentsInChildren<BoxCollider2D>()[0];
         boxOffsetX = box.offset.x;
-	}
+    }
 
     void Update() {
         canMove = !player.GetComponent<PlayerHealth>().isDead && !GetComponent<EnemyHealthControl>().tookDamage;
@@ -26,7 +26,7 @@ public class EnemyMoveControl : MonoBehaviour {
 
     void Move() {
         if (!GetComponent<EnemyHealthControl>().isDead) {
-            sprite.flipX =  player.transform.position.x > transform.position.x ? true : false;
+            sprite.flipX = player.transform.position.x > transform.position.x ? true : false;
         }
         box.offset = sprite.flipX ? new Vector2(-boxOffsetX, box.offset.y) : new Vector2(boxOffsetX, box.offset.y);
         if (canSee && canMove) {
@@ -45,14 +45,14 @@ public class EnemyMoveControl : MonoBehaviour {
     }
 
     void OnCollisionStay2D(Collision2D other) {
-		if (other.gameObject.tag == "Ground") {
-			isGrounded = true;
-		}
-	}
+        if (other.gameObject.tag == "Ground") {
+            isGrounded = true;
+        }
+    }
 
     void OnCollisionExit2D(Collision2D other) {
-		if (other.gameObject.tag == "Ground") {
-			isGrounded = false;
-		}
-	}
+        if (other.gameObject.tag == "Ground") {
+            isGrounded = false;
+        }
+    }
 }

@@ -6,18 +6,18 @@ using UnityEngine.UI;
 public class IntroSceneManager : MonoBehaviour {
 	Image fadeImage;
 	GameObject player;
-    public bool introDone = false;
+	public bool introDone = false;
 	public float fadeSpeed = 1.0f;
 	public float startTimer = 5.0f;
-	
-	void Start () {
+
+	void Start() {
 		Cursor.visible = false;
 		fadeImage = GameObject.Find("Fade Image").GetComponent<Image>();
 		fadeImage.enabled = true;
 		player = GameObject.Find("Player");
 	}
-	
-	void Update () {
+
+	void Update() {
 		FadeOut();
 		CheckTimer();
 	}
@@ -29,9 +29,9 @@ public class IntroSceneManager : MonoBehaviour {
 
 	void CheckTimer() {
 		if (Time.time > GameObject.Find("MainCamera").GetComponent<IntroSceneManager>().startTimer) {
-            introDone = true;
+			introDone = true;
 			FreePlayer();
-        }
+		}
 	}
 
 	void FreePlayer() {

@@ -8,12 +8,12 @@ public class EnemyAudioControl : MonoBehaviour {
 	// bool wasPlayed = false;
 	// public AudioClip hit;
 	// public AudioClip death;
-	
+
 	// void Start () {
 	// 	audioS = GetComponent<AudioSource>();
 	// 	enemyHealth = GetComponent<EnemyHealthControl>();
 	// }
-	
+
 	// void Update () {
 	// 	if (enemyHealth.hasTakenDamage && !enemyHealth.isDead) {
 	// 		audioS.PlayOneShot(hit);

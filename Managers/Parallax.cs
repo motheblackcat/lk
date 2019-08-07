@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Parallax : MonoBehaviour
-{
+public class Parallax : MonoBehaviour {
     Transform camPos;
     public Vector3 camCoord;
     public Transform bgPos;
     public Vector3 bgCoord;
     public float smoothing = 1f;
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         camPos = Camera.main.transform;
         camCoord = camPos.position;
         bgCoord = bgPos.position;

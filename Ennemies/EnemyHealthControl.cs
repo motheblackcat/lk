@@ -15,18 +15,19 @@ public class EnemyHealthControl : MonoBehaviour {
 	public float flickTimer = 0.1f;
 	SpriteRenderer sprite;
 	public int damage = 25;
-	
+
 	void Start() {
 		stunTimerReset = stunTimer;
 		sprite = GetComponent<SpriteRenderer>();
 	}
 
-	void Update () {
+	void Update() {
 		Stun();
 		Death();
 	}
 	void Stun() {
 		if (tookDamage) {
+			Debug.Log("DAMAGE");
 			stunTimer -= Time.deltaTime;
 			if (stunTimer <= 0) {
 				tookDamage = false;
@@ -34,7 +35,7 @@ public class EnemyHealthControl : MonoBehaviour {
 				sprite.enabled = true;
 				stunTimer = stunTimerReset;
 			}
- 		}
+		}
 	}
 
 	void SpriteFlick() {

@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseMenu : MonoBehaviour
-{
+public class PauseMenu : MonoBehaviour {
     public bool paused = false;
     Image joyCon;
     Image keyCon;
@@ -14,8 +13,7 @@ public class PauseMenu : MonoBehaviour
     PlayerAnimation playerAnimation;
     PlayerAttack playerAttack;
 
-    void Start()
-    {
+    void Start() {
         player = GameObject.Find("Player");
         playerControl = player.GetComponent<PlayerControl>();
         playerAnimation = player.GetComponent<PlayerAnimation>();
@@ -29,30 +27,24 @@ public class PauseMenu : MonoBehaviour
         keyCon.enabled = true;
     }
 
-    void Update()
-    {
+    void Update() {
         GamepadDetection();
         PauseDetection();
     }
 
-    void GamepadDetection()
-    {
-        foreach (string gamePad in Input.GetJoystickNames())
-        {
+    void GamepadDetection() {
+        foreach (string gamePad in Input.GetJoystickNames()) {
             joyCon.enabled = gamePad == "" ? false : true;
             keyCon.enabled = gamePad == "" ? true : false;
-            Debug.Log(Input.GetJoystickNames() + " " + gamePad);
         }
     }
 
-    void PauseDetection()
-    {
+    void PauseDetection() {
         if (Input.GetButtonDown("Start")) { paused = !paused; }
         if (paused) { Pause(); } else { Resume(); }
     }
 
-    void Pause()
-    {
+    void Pause() {
         Time.timeScale = 0;
         AudioListener.pause = true;
         pauseUI.SetActive(true);
@@ -62,8 +54,7 @@ public class PauseMenu : MonoBehaviour
         if (Input.GetButtonDown("Select")) { Application.Quit(); }
     }
 
-    void Resume()
-    {
+    void Resume() {
         Time.timeScale = 1;
         AudioListener.pause = false;
         pauseUI.SetActive(false);

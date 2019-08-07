@@ -6,7 +6,7 @@ public class CreateSlimes : MonoBehaviour {
 	public GameObject enemy;
 	public Transform pos;
 
-	void Update () {
+	void Update() {
 		if (Input.GetKeyDown("m")) { Instantiate(enemy, pos.position, pos.rotation); }
 	}
 }
