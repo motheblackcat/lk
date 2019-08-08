@@ -20,7 +20,7 @@ public class EnemyMoveControl : MonoBehaviour {
     }
 
     void Update() {
-        canMove = !player.GetComponent<PlayerHealth>().isDead && !GetComponent<EnemyHealthControl>().tookDamage;
+        canMove = !player.GetComponent<PlayerHealth>().isDead && !GetComponent<EnemyHealthControl>().isStunned;
         Move();
     }
 

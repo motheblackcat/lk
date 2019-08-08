@@ -5,8 +5,8 @@ using UnityEngine;
 public class EnemyHealthControl : MonoBehaviour {
 
 	public float enemyHealth = 2;
-	public bool isDead;
-	public bool tookDamage;
+	public bool isDead = false;
+	public bool isStunned = false;
 	public float stunTimer = 0.5f;
 	float stunTimerReset;
 	public float pushX = 10f;
@@ -26,16 +26,16 @@ public class EnemyHealthControl : MonoBehaviour {
 		Death();
 	}
 	void Stun() {
-		if (tookDamage) {
-			Debug.Log("DAMAGE");
+		if (isStunned) {
 			stunTimer -= Time.deltaTime;
 			if (stunTimer <= 0) {
-				tookDamage = false;
+				isStunned = false;
 				CancelInvoke();
 				sprite.enabled = true;
 				stunTimer = stunTimerReset;
 			}
 		}
+
 	}
 
 	void SpriteFlick() {
@@ -44,12 +44,13 @@ public class EnemyHealthControl : MonoBehaviour {
 
 	void PushBack() {
 		bool pos = GameObject.Find("Player").transform.position.x > transform.position.x;
-		GetComponent<Rigidbody2D>().AddForce(pos ? new Vector2(-pushX, pushY) : new Vector2(pushX, pushY), ForceMode2D.Impulse);
+		GetComponent<Rigidbody2D>().AddForce(new Vector2(pos ? -pushX : pushX, pushY), ForceMode2D.Impulse);
 	}
 
 	public void TakeDamage(int damage) {
 		enemyHealth -= damage;
-		tookDamage = true;
+		isStunned = true;
+		GetComponent<EnemyAudioControl>().PlayHitSound();
 		PushBack();
 		InvokeRepeating("SpriteFlick", 0, flickTimer);
 	}

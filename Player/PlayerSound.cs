@@ -40,19 +40,6 @@ public class PlayerSound : MonoBehaviour {
                 deathSoundPlayed = true;
             }
         }
-
-        // Damage sound trigger needs to be reset
-        Collider2D[] ennemies = GetComponent<PlayerAttack>().ennemiesToDamage;
-        for (int i = 0; i < ennemies.Length; i++) {
-            if (ennemies[i] && ennemies[i].GetComponent<EnemyHealthControl>().tookDamage && !damageSoundPlayed) {
-                audioSource.PlayOneShot(damageSound);
-                damageSoundPlayed = true;
-            }
-            if (ennemies[i] == null || (ennemies[i] && !ennemies[i].GetComponent<EnemyHealthControl>().tookDamage)) {
-                damageSoundPlayed = false;
-            }
-            Debug.Log(ennemies[i].GetComponent<EnemyHealthControl>().tookDamage);
-        }
     }
 
     void OnCollisionEnter2D(Collision2D collision) {
