@@ -10,10 +10,12 @@ Feel free to contribute in any way you wish!
 
 You can test the current build here: https://motheblackcat.github.io
 
-UPCOMING FEATURES / DEV:
+Upcoming Features / Improvements:
 
 - Secondary weapon remake
+- Start Menu
 
-KNOWN ISSUES:
+Known Bugs / Things to check:
 
-- Currently none
+- Jump animation from anystate prevent attack animation from being fully played during a jump
+- Attack sound played with no animation when spamming (check it attack is registered)

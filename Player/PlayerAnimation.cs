@@ -28,7 +28,7 @@ public class PlayerAnimation : MonoBehaviour {
 		animator.SetBool("run", GetComponent<Rigidbody2D>().velocity.x != 0);
 		animator.SetBool("air", !playerControl.isGrounded);
 		if (playerAttack && !GameObject.Find("DialogBox").GetComponent<Image>().enabled) { animator.SetBool("attack", playerAttack.isAttacking); }
-		if (playerHealth) { animator.SetBool("hurt", playerHealth.tookDamage && !playerHealth.isDead); }
+		if (playerHealth) { animator.SetBool("hurt", playerHealth.startInv && !playerHealth.isDead); }
 		if (playerHealth && playerHealth.isDead) { animator.SetTrigger("die"); }
 	}
 
