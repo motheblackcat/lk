@@ -14,6 +14,7 @@ public class PlayerHealth : MonoBehaviour {
 	public float playerHealth = 100f;
 	public bool isDead = false;
 	public bool tookDamage = false;
+	public bool startInv = false;
 	public float restartLevelTimer = 3f;
 	public float flickTimer = 0.2f;
 	float invTimerTemp;
@@ -35,6 +36,10 @@ public class PlayerHealth : MonoBehaviour {
 
 	void InvincibilityTimerStart() {
 		if (tookDamage) {
+			startInv = true;
+			tookDamage = false;
+		}
+		if (startInv) {
 			invicibilityTimer -= Time.deltaTime;
 			if (invicibilityTimer <= 0) {
 				sprite.enabled = true;
@@ -42,18 +47,9 @@ public class PlayerHealth : MonoBehaviour {
 					GetComponent<PlayerControl>().canMove = true;
 					if (weapon) { wSprite.enabled = true; }
 				}
-				tookDamage = false;
+				startInv = false;
 				invicibilityTimer = invTimerTemp;
 				CancelInvoke();
-			}
-		}
-	}
-
-	void resetLevelTimerStart() {
-		if (isDead) {
-			restartLevelTimer -= Time.deltaTime;
-			if (restartLevelTimer <= 0) {
-				SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 			}
 		}
 	}
@@ -66,6 +62,7 @@ public class PlayerHealth : MonoBehaviour {
 	void PushBack(GameObject enemy) {
 		GetComponent<PlayerControl>().canMove = false;
 		bool pos = enemy.transform.position.x > transform.position.x;
+		// Push back strength sould be taken / set by the enemy?
 		GetComponent<Rigidbody2D>().AddForce(pos ? new Vector2(-pushX, pushY) : new Vector2(pushX, pushY), ForceMode2D.Impulse);
 	}
 
@@ -77,21 +74,29 @@ public class PlayerHealth : MonoBehaviour {
 		}
 	}
 
-	void TakeDamage(GameObject enemy) {
-		// Will need to move enemy damage to an enemy damage script for enemies with more advanced attack tactics
-		playerHealth -= enemy.GetComponent<EnemyHealthControl>().damage;
-		tookDamage = true;
+	void resetLevelTimerStart() {
+		if (isDead) {
+			restartLevelTimer -= Time.deltaTime;
+			if (restartLevelTimer <= 0) {
+				SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+			}
+		}
 	}
 
-	void OnCollisionEnter2D(Collision2D col) {
+	void TakeDamage(GameObject enemy) {
+		playerHealth -= enemy.GetComponent<EnemyHealthControl>().damage;
+		Death();
+		if (!isDead) {
+			tookDamage = true;
+			InvokeRepeating("SpriteFlick", 0, flickTimer);
+			PushBack(enemy);
+		};
+	}
+
+	void OnCollisionStay2D(Collision2D col) {
 		if (col.gameObject.tag == "Enemy") {
-			if (!tookDamage) {
+			if (!tookDamage && !startInv && !isDead) {
 				TakeDamage(col.gameObject);
-				Death();
-				if (!isDead) {
-					InvokeRepeating("SpriteFlick", 0, flickTimer);
-					PushBack(col.gameObject);
-				};
 			}
 		}
 	}

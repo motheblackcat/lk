@@ -11,7 +11,3 @@ Feel free to contribute in any way you wish!
 You can test the current build here: https://motheblackcat.github.io
 
 KNOWN ISSUES:
-
-- Attack system is clunky the enemy feedback seems delayed
-- Enemy death animation plays after a long delay
-- Need a generic handler for NPC Events

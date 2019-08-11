@@ -12,11 +12,9 @@ public class PlayerSound : MonoBehaviour {
 
     public AudioClip jumpSound;
     public AudioClip attackSound;
-    public AudioClip damageSound;
     public AudioClip hurtSound;
     public AudioClip deathSound;
     public bool deathSoundPlayed = false;
-    public bool damageSoundPlayed = false;
 
     void Start() {
         audioSource = GetComponent<AudioSource>();
@@ -39,11 +37,7 @@ public class PlayerSound : MonoBehaviour {
                 audioSource.PlayOneShot(deathSound);
                 deathSoundPlayed = true;
             }
-        }
-    }
 
-    void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.tag == "Enemy") {
             if (playerHealth.tookDamage && !playerHealth.isDead) {
                 audioSource.PlayOneShot(hurtSound);
             }
