@@ -10,4 +10,10 @@ Feel free to contribute in any way you wish!
 
 You can test the current build here: https://motheblackcat.github.io
 
+UPCOMING FEATURES / DEV:
+
+- Secondary weapon remake
+
 KNOWN ISSUES:
+
+- Currently none
