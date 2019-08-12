@@ -19,3 +19,5 @@ Known Bugs / Things to check:
 
 - Jump animation from anystate prevent attack animation from being fully played during a jump
 - Attack sound played with no animation when spamming (check it attack is registered)
+- Warning on animation param "watch"
+- Add sounds to menus

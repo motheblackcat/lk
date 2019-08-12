@@ -7,7 +7,7 @@ public class IntroSceneManager : MonoBehaviour {
 	Image fadeImage;
 	GameObject player;
 	public bool introDone = false;
-	public float fadeSpeed = 1.0f;
+	public float fadeSpeed = 5.0f;
 	public float startTimer = 5.0f;
 
 	void Start() {
@@ -24,17 +24,18 @@ public class IntroSceneManager : MonoBehaviour {
 
 	void FadeOut() {
 		Color clearColor = Color.clear;
-		fadeImage.color = Color.Lerp(fadeImage.color, clearColor, Time.time * Time.deltaTime * fadeSpeed);
+		fadeImage.color = Color.Lerp(fadeImage.color, clearColor, Time.deltaTime * fadeSpeed);
 	}
 
 	void CheckTimer() {
-		if (Time.time > GameObject.Find("MainCamera").GetComponent<IntroSceneManager>().startTimer) {
-			introDone = true;
+		startTimer -= Time.deltaTime;
+		if (startTimer <= 0) {
 			FreePlayer();
 		}
 	}
 
 	void FreePlayer() {
+		introDone = true;
 		if (Time.time > startTimer) {
 			player.GetComponent<PlayerControl>().canMove = true;
 			player.GetComponent<Animator>().enabled = true;

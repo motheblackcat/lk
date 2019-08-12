@@ -9,6 +9,9 @@ public class SceneLoader : MonoBehaviour {
 	public void LoadScene(int sceneId) {
 		SceneManager.LoadScene(sceneId);
 	}
+	public void QuitGame() {
+		Application.Quit();
+	}
 
 	void OnTriggerExit2D(Collider2D other) {
 		if (other.gameObject.tag == "Player") {

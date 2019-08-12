@@ -23,7 +23,7 @@ public class DialogManager : MonoBehaviour {
         npc = playerControl.npc;
         inDialog = GetComponent<Image>().enabled;
         CheckNpc(npc);
-        playerSound.enabled = !inDialog;
+        if (playerSound)playerSound.enabled = !inDialog;
     }
 
     // Check for an npc to get the dialogs and close the dialog box
