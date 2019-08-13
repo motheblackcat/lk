@@ -12,12 +12,13 @@ You can test the current build here: https://motheblackcat.github.io
 
 Upcoming Features / Improvements:
 
-- Secondary weapon remake
-- Start Menu
+- Secondary weapon system remake
+- Advanced Start Menu
+- Options menu
 
 Known Bugs / Things to check:
 
 - Jump animation from anystate prevent attack animation from being fully played during a jump
-- Attack sound played with no animation when spamming (check it attack is registered)
+- Attack sound played with no animation when spamming (check if attack is registered)
 - Warning on animation param "watch"
-- Add sounds to menus
+- Refactor sceneloader / npc manager / transition manager with transitions (do not reload the scene at the end of level 1)

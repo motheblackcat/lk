@@ -5,26 +5,50 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class NPCManager : MonoBehaviour {
-    bool dialogOpen;
+    bool dialogOpen = false;
+    bool loadNextScene = false;
     SpriteRenderer dialogArrow;
+    Animator animator;
+    // transitionTimer and loadnextscene duplicate should be refactored
+    float transitionTimer;
+
+    void Start() {
+        animator = GetComponent<Animator>();
+        transitionTimer = GameObject.Find("Sprite Mask").GetComponent<TransitionManager>().transitionTimer;
+    }
 
     void Update() {
         dialogOpen = GameObject.Find("DialogBox").GetComponent<Image>().enabled;
         dialogArrow = GameObject.Find(this.name + "/ArrowUp").GetComponent<SpriteRenderer>();
+        if (loadNextScene) {
+            LoadNextScene();
+        }
+    }
+
+    // Duplicated logic in scene loader
+    void LoadNextScene() {
+        GameObject.Find("Player").GetComponent<PlayerControl>().enabled = false;
+        transitionTimer -= Time.deltaTime;
+        GameObject.Find("Sprite Mask").GetComponent<Animator>().SetTrigger("end");
+        Debug.Log(transitionTimer);
+        if (transitionTimer <= 0) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 
     void OnTriggerStay2D(Collider2D other) {
         if (other.gameObject.tag == "Player" && Camera.main.GetComponent<IntroSceneManager>().introDone) {
             dialogArrow.enabled = !dialogOpen;
-            if (GetComponent<Animator>()) {
-                GetComponent<Animator>().SetBool("watch", true);
-                GetComponent<Animator>().SetBool("talk", dialogOpen);
+            if (animator) {
+                animator.SetBool("watch", true);
+                animator.SetBool("talk", dialogOpen);
             }
             if (tag == "NPC") {
                 GetComponent<SpriteRenderer>().flipX = other.gameObject.transform.position.x > transform.position.x;
             }
+            // This is specific to the intro
             if (tag == "Door" && Input.GetAxis("Vertical") > 0) {
-                SceneManager.LoadScene(1);
+                loadNextScene = true;
             }
         }
     }
@@ -32,10 +56,9 @@ public class NPCManager : MonoBehaviour {
     void OnTriggerExit2D(Collider2D other) {
         if (other.gameObject.tag == "Player") {
             dialogArrow.enabled = false;
-            Debug.Log(dialogArrow.enabled);
-            if (GetComponent<Animator>()) {
-                GetComponent<Animator>().SetBool("watch", false);
-                GetComponent<Animator>().SetBool("talk", false);
+            if (animator) {
+                animator.SetBool("watch", false);
+                animator.SetBool("talk", false);
             }
         }
     }
