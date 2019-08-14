@@ -24,3 +24,4 @@ Known Bugs / Things to check:
 - Refactor sceneloader / npc manager / transition manager with transitions (do not reload the scene at the end of level 1)
 - Refactor audio on menus (use invoke with audio clip length instead of timer)
 - Check audio logic for enemies "Destroy (gameObject, source.clip.length)"
+- Check global audio logic (is the implementation of an audio manager worthwhile?)
