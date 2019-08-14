@@ -22,3 +22,4 @@ Known Bugs / Things to check:
 - Attack sound played with no animation when spamming (check if attack is registered)
 - Warning on animation param "watch"
 - Refactor sceneloader / npc manager / transition manager with transitions (do not reload the scene at the end of level 1)
+- Refactor audio on menus (use invoke with audio clip length instead of timer)
