@@ -21,7 +21,5 @@ Known Bugs / Things to check:
 - Jump animation from anystate prevent attack animation from being fully played during a jump
 - Attack sound played with no animation when spamming (check if attack is registered)
 - Warning on animation param "watch"
-- Refactor sceneloader / npc manager / transition manager with transitions (do not reload the scene at the end of level 1)
-- Refactor audio on menus (use invoke with audio clip length instead of timer)
 - Check audio logic for enemies "Destroy (gameObject, source.clip.length)"
 - Check global audio logic (is the implementation of an audio manager worthwhile?)

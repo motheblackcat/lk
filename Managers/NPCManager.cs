@@ -5,35 +5,19 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class NPCManager : MonoBehaviour {
-    bool dialogOpen = false;
-    bool loadNextScene = false;
     SpriteRenderer dialogArrow;
     Animator animator;
-    // transitionTimer and loadnextscene duplicate should be refactored
-    float transitionTimer;
+    SceneLoader sceneLoader;
+    bool dialogOpen = false;
 
     void Start() {
         animator = GetComponent<Animator>();
-        transitionTimer = GameObject.Find("Sprite Mask").GetComponent<TransitionManager>().transitionTimer;
+        sceneLoader = GameObject.Find("Transition").GetComponent<SceneLoader>();
     }
 
     void Update() {
         dialogOpen = GameObject.Find("DialogBox").GetComponent<Image>().enabled;
         dialogArrow = GameObject.Find(this.name + "/ArrowUp").GetComponent<SpriteRenderer>();
-        if (loadNextScene) {
-            LoadNextScene();
-        }
-    }
-
-    // Duplicated logic in scene loader
-    void LoadNextScene() {
-        GameObject.Find("Player").GetComponent<PlayerControl>().enabled = false;
-        transitionTimer -= Time.deltaTime;
-        GameObject.Find("Sprite Mask").GetComponent<Animator>().SetTrigger("end");
-        Debug.Log(transitionTimer);
-        if (transitionTimer <= 0) {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
     }
 
     void OnTriggerStay2D(Collider2D other) {
@@ -46,9 +30,9 @@ public class NPCManager : MonoBehaviour {
             if (tag == "NPC") {
                 GetComponent<SpriteRenderer>().flipX = other.gameObject.transform.position.x > transform.position.x;
             }
-            // This is specific to the intro
+            // This is specific to the door of the intro
             if (tag == "Door" && Input.GetAxis("Vertical") > 0) {
-                loadNextScene = true;
+                sceneLoader.loadScene = true;
             }
         }
     }

@@ -4,12 +4,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour {
+	GameObject spriteMask;
+	Animator animator;
+	public bool loadScene;
 	public int sceneIndex;
-	bool loadScene = false;
-	public float transitionTimer = 1.0f;
+	public float transitionTimer;
+	public string transitionType = "box";
 
 	void Start() {
-		GameObject.Find("Sprite Mask").GetComponent<Animator>().SetTrigger("start");
+		spriteMask = GameObject.Find("Transition");
+		animator = spriteMask.GetComponent<Animator>();
+		animator.SetFloat("transitionSpeed", 1 / transitionTimer);
+		animator.SetTrigger("start" + transitionType);
 	}
 
 	void Update() {
@@ -18,22 +24,15 @@ public class SceneLoader : MonoBehaviour {
 		}
 	}
 
-	public void LoadScene(int sceneId) {
+	void LoadScene(int sceneId) {
+		IntroSceneManager introSceneManager = Camera.main.GetComponent<IntroSceneManager>();
+		if (introSceneManager) { introSceneManager.introMove = false; }
 		GameObject.Find("Player").GetComponent<PlayerControl>().canMove = false;
-		loadScene = false;
 		transitionTimer -= Time.deltaTime;
-		GameObject.Find("Sprite Mask").GetComponent<Animator>().SetTrigger("end");
+		GameObject.Find("Transition").GetComponent<Animator>().SetTrigger("end" + transitionType);
 		if (transitionTimer <= 0) {
 			SceneManager.LoadScene(sceneId);
-		}
-	}
-	public void QuitGame() {
-		Application.Quit();
-	}
-
-	void OnTriggerExit2D(Collider2D other) {
-		if (other.gameObject.tag == "Player") {
-			loadScene = true;
+			loadScene = false;
 		}
 	}
 }
