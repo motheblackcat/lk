@@ -26,10 +26,8 @@ public class SceneLoader : MonoBehaviour {
 		if (startScene) {
 			startTimer -= Time.deltaTime;
 			if (startTimer >= 0) {
-				Debug.Log(startTimer + " " + playerControl.canMove);
 				playerControl.canMove = false;
 			} else {
-				Debug.Log(startTimer + " " + playerControl.canMove);
 				playerControl.canMove = true;
 				startTimer = transitionTimer;
 				startScene = false;
