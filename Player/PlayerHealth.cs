@@ -15,7 +15,7 @@ public class PlayerHealth : MonoBehaviour {
 	public bool isDead = false;
 	public bool tookDamage = false;
 	public bool startInv = false;
-	public float restartLevelTimer = 3f;
+	public float restartLevelTimer = 2f;
 	public float flickTimer = 0.2f;
 	float invTimerTemp;
 	public float invicibilityTimer = 1f;
@@ -31,7 +31,7 @@ public class PlayerHealth : MonoBehaviour {
 		if (weapon) { wSprite = weapon.GetComponent<SpriteRenderer>(); }
 		if (healthBar) { healthBar.fillAmount = playerHealth / 100; }
 		InvincibilityTimerStart();
-		resetLevelTimerStart();
+		Death();
 	}
 
 	void InvincibilityTimerStart() {
@@ -71,14 +71,9 @@ public class PlayerHealth : MonoBehaviour {
 			isDead = true;
 			GameObject.Find("MainCamera").GetComponent<AudioSource>().Stop();
 			GetComponent<PlayerControl>().canMove = false;
-		}
-	}
-
-	void resetLevelTimerStart() {
-		if (isDead) {
 			restartLevelTimer -= Time.deltaTime;
 			if (restartLevelTimer <= 0) {
-				SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+				GameObject.Find("Transition").GetComponent<SceneLoader>().loadScene = true;
 			}
 		}
 	}

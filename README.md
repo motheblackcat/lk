@@ -13,13 +13,14 @@ You can test the current build here: https://motheblackcat.github.io
 Upcoming Features / Improvements:
 
 - Secondary weapon system remake
-- Advanced Start Menu
+- Fancy Start Menu
 - Options menu
+- Fancy stage start (tbd)
 
 Known Bugs / Things to check:
 
 - Jump animation from anystate prevent attack animation from being fully played during a jump
 - Attack sound played with no animation when spamming (check if attack is registered)
-- Warning on animation param "watch"
+- Warning on animation param "watch" on npcs
 - Check audio logic for enemies "Destroy (gameObject, source.clip.length)"
 - Check global audio logic (is the implementation of an audio manager worthwhile?)

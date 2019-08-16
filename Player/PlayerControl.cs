@@ -5,15 +5,15 @@ using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour {
 
+    public GameObject npc;
     DialogManager dialogManager;
-    public float runSpeed = 40;
-    public float jumpSpeed = 600;
-    public bool canMove = true;
-    public bool isGrounded;
     Rigidbody2D rb;
     SpriteRenderer sprite;
     GameObject ghost;
-    public GameObject npc;
+    public float runSpeed = 40;
+    public float jumpSpeed = 600;
+    public bool canMove;
+    public bool isGrounded;
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
