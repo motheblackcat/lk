@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour {
@@ -23,12 +21,15 @@ public class SceneLoader : MonoBehaviour {
 	}
 
 	void Update() {
+		bool introDone = Camera.main.GetComponent<IntroSceneManager>() ? Camera.main.GetComponent<IntroSceneManager>().introDone : true;
 		if (startScene) {
 			startTimer -= Time.deltaTime;
 			if (startTimer >= 0) {
 				playerControl.canMove = false;
 			} else {
-				playerControl.canMove = true;
+				if (introDone) {
+					playerControl.canMove = true;
+				}
 				startTimer = transitionTimer;
 				startScene = false;
 			}
@@ -40,8 +41,6 @@ public class SceneLoader : MonoBehaviour {
 	}
 
 	void LoadScene(int sceneId) {
-		IntroSceneManager introSceneManager = Camera.main.GetComponent<IntroSceneManager>();
-		if (introSceneManager) { introSceneManager.introMove = false; }
 		playerControl.canMove = false;
 		transitionTimer -= Time.deltaTime;
 		GameObject.Find("Transition").GetComponent<Animator>().SetTrigger("end" + transitionType);

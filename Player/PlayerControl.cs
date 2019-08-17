@@ -12,8 +12,8 @@ public class PlayerControl : MonoBehaviour {
     GameObject ghost;
     public float runSpeed = 40;
     public float jumpSpeed = 600;
-    public bool canMove;
-    public bool isGrounded;
+    public bool canMove = true;
+    public bool isGrounded = false;
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
