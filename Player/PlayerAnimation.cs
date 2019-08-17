@@ -30,6 +30,7 @@ public class PlayerAnimation : MonoBehaviour {
 		animator.SetBool("air", !playerControl.isGrounded);
 		// Not working ref is here but throwWeapon state never changes
 		animator.SetBool("throw", playerSWeapons.throwWeapon);
+		// The fixed duration for attack and throw should be set according to the animation clip length
 		if (playerAttack && !GameObject.Find("DialogBox").GetComponent<Image>().enabled) { animator.SetBool("attack", playerAttack.isAttacking); }
 		if (playerHealth) { animator.SetBool("hurt", playerHealth.startInv && !playerHealth.isDead); }
 		if (playerHealth && playerHealth.isDead) { animator.SetTrigger("die"); }

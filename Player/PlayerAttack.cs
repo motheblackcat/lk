@@ -22,6 +22,7 @@ public class PlayerAttack : MonoBehaviour {
         atkPosX = atkPos.localPosition.x;
     }
 
+    // Refactor with fixedupdate for consitent timer?
     void Update() {
         Attack();
     }
