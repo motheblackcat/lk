@@ -12,6 +12,7 @@ public class StartMenuManager : MonoBehaviour {
 
     void Start() {
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         lastSelect = new GameObject("lastSelect");
         audioSource = GetComponent<AudioSource>();
         audioTimer = audioSource.clip.length;
