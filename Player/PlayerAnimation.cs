@@ -8,6 +8,7 @@ public class PlayerAnimation : MonoBehaviour {
 	PlayerControl playerControl;
 	PlayerHealth playerHealth;
 	PlayerAttack playerAttack;
+	PlayerSWeapons playerSWeapons;
 	GameObject weapon;
 
 	void Start() {
@@ -15,6 +16,7 @@ public class PlayerAnimation : MonoBehaviour {
 		playerControl = GetComponent<PlayerControl>();
 		playerHealth = GetComponent<PlayerHealth>();
 		playerAttack = GetComponent<PlayerAttack>();
+		playerSWeapons = GetComponent<PlayerSWeapons>();
 		weapon = GameObject.FindGameObjectsWithTag("Weapon").Length > 0 ? GameObject.FindGameObjectsWithTag("Weapon")[0] : null;
 	}
 
@@ -23,10 +25,11 @@ public class PlayerAnimation : MonoBehaviour {
 		if (weapon) { SwordPosition(); }
 	}
 
-	// Attacks right after landing are not animated but still deals damages
 	void PlayerAnimate() {
 		animator.SetBool("run", GetComponent<Rigidbody2D>().velocity.x != 0);
 		animator.SetBool("air", !playerControl.isGrounded);
+		// Not working ref is here but throwWeapon state never changes
+		animator.SetBool("throw", playerSWeapons.throwWeapon);
 		if (playerAttack && !GameObject.Find("DialogBox").GetComponent<Image>().enabled) { animator.SetBool("attack", playerAttack.isAttacking); }
 		if (playerHealth) { animator.SetBool("hurt", playerHealth.startInv && !playerHealth.isDead); }
 		if (playerHealth && playerHealth.isDead) { animator.SetTrigger("die"); }
