@@ -22,7 +22,7 @@ public class SWeaponsControl : MonoBehaviour {
                 weaponDamage = 5;
                 // How to get soundclip?
                 // sWeaponSound = null;
-                throwTimerCd = 0.3f;
+                throwTimerCd = 0.5f;
                 break;
             default:
                 break;
