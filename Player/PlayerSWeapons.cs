@@ -8,7 +8,7 @@ public class PlayerSWeapons : MonoBehaviour {
     public float throwTimer = 0;
 
     void Update() {
-        if (sWeapon) {
+        if (sWeapon && GetComponent<PlayerControl>().canMove) {
             if (Input.GetButtonDown("SWeapon")) {
                 if (throwTimer <= 0) {
                     throwWeapon = true;

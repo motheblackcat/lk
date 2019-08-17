@@ -23,6 +23,7 @@ Upcoming Features / Improvements:
 
 Known Bugs / Things to check:
 
+- Sounds levels needs to be adjusted (music too low, some sfx too high)
 - Jump animation from anystate prevent attack animation from being fully played during a jump
 - Attack sound played with no animation when spamming (check if attack is registered)
 - Warning on animation param "watch" on npcs
