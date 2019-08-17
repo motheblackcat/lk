@@ -19,6 +19,7 @@ Upcoming Features / Improvements:
     * Get prefab
     * UI for sweapon with selectable sweapon from keys / menu
     * Make animations for Sweapons on impact depending on type of weapon / col?
+    * Add air throw animation
 
 Known Bugs / Things to check:
 
