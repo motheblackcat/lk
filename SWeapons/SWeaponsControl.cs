@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SWeaponsControl : MonoBehaviour {
-    public AudioClip sound = null;
-    AudioClip[] sounds;
+    public AudioClip[] sounds;
+    public AudioClip sound;
     public int throwForceX = 0;
     public int throwForceY = 0;
     public int weaponDamage = 0;
