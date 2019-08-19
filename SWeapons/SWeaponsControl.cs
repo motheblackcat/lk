@@ -33,9 +33,9 @@ public class SWeaponsControl : MonoBehaviour {
     }
     
     AudioClip GetSound() {
-        // Check string operation in C#
+        // Check string operation and array find in C#
         string sWeaponName = name.toLowerCase();
-        sounds.find(sWeaponName + "ThrowSound");
+        return sounds.find(sWeaponName + "ThrowSound");
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
