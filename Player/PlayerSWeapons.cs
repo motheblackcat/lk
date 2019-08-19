@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerSWeapons : MonoBehaviour {
+    public GameObject[] sWeapons;
     public GameObject sWeapon;
     public bool throwWeapon = false;
     public float throwTimer = 0;
