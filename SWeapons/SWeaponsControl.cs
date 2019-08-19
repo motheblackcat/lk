@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SWeaponsControl : MonoBehaviour {
-    public AudioClip sWeaponSound = null;
+    public AudioClip sound = null;
+    AudioClip[] sounds;
     public int throwForceX = 0;
     public int throwForceY = 0;
     public int weaponDamage = 0;
     public float throwTimerCd = 0;
-    AudioClip[] sounds = sWeaponSound[];
 
     private void Awake() {
         CheckWeaponType();
-        sounds = GameObject.Find('sWeaponsSounds').GetComponent<Sounds>().sounds;
     }
 
     void CheckWeaponType() {
@@ -22,9 +21,7 @@ public class SWeaponsControl : MonoBehaviour {
                 throwForceX = 8;
                 throwForceY = 20;
                 weaponDamage = 5;
-                // How to get soundclip (ressources.load or array of sounds)?
-                // sWeaponSound = null;
-                // sWeaponSound = GetSound();
+                // sound = GetSound();
                 throwTimerCd = 0.5f;
                 break;
             default:
