@@ -1,38 +1,37 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SWeaponsControl : MonoBehaviour {
-    public AudioClip[] sounds;
-    public AudioClip sound;
     public int throwForceX = 0;
     public int throwForceY = 0;
     public int weaponDamage = 0;
     public float throwTimerCd = 0;
 
     private void Awake() {
-        CheckWeaponType();
+        SetWeaponType();
     }
 
-    void CheckWeaponType() {
-        // Prolly need a better to handle names (string manip at clone creation in PlayerSWeapons?)
+    void SetWeaponType() {
+        name = name.Replace("(Clone)", "");
+        bool playerFlip = GameObject.Find("Player").GetComponent<SpriteRenderer>().flipX;
         switch (name) {
-            case "Axe(Clone)":
+            case "Axe":
+                GetComponent<Animator>().SetFloat("speed", playerFlip ? -1 : 1);
                 throwForceX = 8;
                 throwForceY = 20;
                 weaponDamage = 5;
-                // sound = GetSound();
-                throwTimerCd = 0.5f;
+                throwTimerCd = 1f;
+                break;
+
+            case "Dagger":
+                GetComponent<SpriteRenderer>().flipX = playerFlip;
+                throwForceX = 20;
+                throwForceY = 0;
+                weaponDamage = 1;
+                throwTimerCd = 1f;
                 break;
             default:
                 break;
         }
-    }
-    
-    AudioClip GetSound() {
-        // Check string operation and array find in C#
-        string sWeaponName = name.toLowerCase();
-        return sounds.find(sWeaponName + "ThrowSound");
     }
 
     private void OnTriggerEnter2D(Collider2D other) {

@@ -8,6 +8,10 @@ public class PlayerSWeapons : MonoBehaviour {
     public bool throwWeapon = false;
     public float throwTimer = 0;
 
+    void Start() {
+        sWeapon = sWeapons[0];
+    }
+
     void Update() {
         if (sWeapon && GetComponent<PlayerControl>().canMove) {
             if (Input.GetButtonDown("SWeapon")) {
@@ -40,7 +44,6 @@ public class PlayerSWeapons : MonoBehaviour {
                 new Vector2((playerFlip ? -sWeaponControl.throwForceX : sWeaponControl.throwForceX) + playerVel.x, sWeaponControl.throwForceY),
                 ForceMode2D.Impulse
             );
-            GetComponent<AudioSource>().PlayOneShot(sWeaponControl.sWeaponSound);
             throwTimer = sWeaponControl.throwTimerCd;
         } else {
             throwWeapon = false;
