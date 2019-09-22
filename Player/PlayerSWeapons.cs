@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerSWeapons : MonoBehaviour {
     public GameObject[] sWeapons;
@@ -24,6 +25,9 @@ public class PlayerSWeapons : MonoBehaviour {
                 throwTimer -= Time.fixedDeltaTime;
             }
         }
+
+        GameObject.Find("SWeaponIcon").GetComponent<Image>().sprite = sWeapon ? sWeapon.GetComponent<SpriteRenderer>().sprite : null;
+        GameObject.Find("SWeaponIcon").GetComponent<Image>().enabled = sWeapon;
     }
 
     // Lazy way of handling input > update / physics > fixedupdate

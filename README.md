@@ -10,16 +10,23 @@ Feel free to contribute in any way you wish!
 
 You can test the current build here: https://motheblackcat.github.io
 
+What was done:
+
+- Dynamic SWeapon UI
+
 Upcoming Features / Improvements:
 
 - Fancy Start Menu
 - Options menu
 - Fancy stage start (tbd)
+- Inventory / Info Menu
 - Secondary weapon system remake:
-    * Get prefab
-    * UI for sweapon with selectable sweapon from keys / menu
-    * Make animations for Sweapons on impact depending on type of weapon / col?
-    * Add air throw animation
+  - Switch Sweapon with player controls and menu
+  - Make animations for Sweapons on impact depending on type of weapon / col?
+  - Add air throw animation
+  - Should SWeapons usage be limited? (Magic?)
+- Bigger sword?
+- Change Sword and Armors (And other equipment like speed boots or double jump jewelry?)
 
 Known Bugs / Things to check:
 
@@ -30,5 +37,6 @@ Known Bugs / Things to check:
 - Check audio logic for enemies "Destroy (gameObject, source.clip.length)"
 - Check global audio logic (is the implementation of an audio manager worthwhile?)
 - The fixed duration for attack and throw should be set according to the animation clip length
-- Character state is not kept between scenes (life)
+- Character state is not kept between scenes (life, sWeapon)
 - Damage boost on enemy (jump while taking damage)
+- Hide UI during scene tansition?

@@ -11,7 +11,7 @@ public class SWeaponsControl : MonoBehaviour {
     }
 
     void SetWeaponType() {
-        // This method is called everytime an Sweapon is throw, should only set those once when changing subweapon except for flip?
+        // This method is called everytime an Sweapon is thrown, should only set those once when changing subweapon except for flip?
         name = name.Replace("(Clone)", "");
         bool playerFlip = GameObject.Find("Player").GetComponent<SpriteRenderer>().flipX;
         switch (name) {
