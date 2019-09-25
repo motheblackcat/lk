@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerSWeapons : MonoBehaviour {
-    public GameObject[] sWeapons;
+    public List<GameObject> sWeapons;
     public GameObject sWeapon;
     public bool throwWeapon = false;
     public float throwTimer = 0;
 
     void Start() {
+        // These Sweapons will be added elswhere (npc event or shop)
+        sWeapons.Add(Resources.Load("Sweapons/Axe")as GameObject);
+        sWeapons.Add(Resources.Load("Sweapons/Dagger")as GameObject);
         sWeapon = sWeapons[0];
     }
 
@@ -26,8 +29,7 @@ public class PlayerSWeapons : MonoBehaviour {
             }
         }
 
-        GameObject.Find("SWeaponIcon").GetComponent<Image>().sprite = sWeapon ? sWeapon.GetComponent<SpriteRenderer>().sprite : null;
-        GameObject.Find("SWeaponIcon").GetComponent<Image>().enabled = sWeapon;
+        SwitchWeapon();
     }
 
     // Lazy way of handling input > update / physics > fixedupdate
@@ -35,6 +37,22 @@ public class PlayerSWeapons : MonoBehaviour {
         if (throwWeapon) {
             ThrowWeapon();
         }
+    }
+
+    void SwitchWeapon() {
+        if (sWeapon) {
+            int index = sWeapons.FindIndex(s => s == sWeapon);
+            Debug.Log(sWeapons.Count);
+            if (Input.GetKeyDown("right")) {
+                sWeapon = (index + 1) > sWeapons.Count - 1 ? sWeapons[0] : sWeapons[index + 1];
+            }
+            if (Input.GetKeyDown("left")) {
+                sWeapon = (index - 1) < 0 ? sWeapons[sWeapons.Count - 1] : sWeapons[index - 1];
+            }
+        }
+
+        GameObject.Find("SWeaponIcon").GetComponent<Image>().enabled = sWeapon;
+        GameObject.Find("SWeaponIcon").GetComponent<Image>().sprite = sWeapon ? sWeapon.GetComponent<SpriteRenderer>().sprite : null;
     }
 
     void ThrowWeapon() {
