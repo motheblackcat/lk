@@ -17,6 +17,7 @@ What was done:
 Upcoming Features / Improvements:
 
 - Overhaul lighting with 2D Lights
+- Overhaul controls with new input system?
 - Fancy Start Menu
 - Options menu
 - Fancy stage start?
