@@ -12,7 +12,8 @@ You can test the current build here: https://motheblackcat.github.io
 
 What was done:
 
-- Dynamic SWeapon UI
+- Dynamic SWeapons UI
+- Dynamic selection of Sweapons (reflected on player and ui)
 
 Upcoming Features / Improvements:
 
