@@ -44,6 +44,9 @@ Known Bugs / Things to check:
 - Hide UI during scene tansition?
 - Sweapons have no "life timer" (dagger)
 - Sweapons call in Awake() at each instance to check
+- Fix dialog button
+- Remove sort layers
+- Add keys for change SubWeapon
 
 Notes on Sweapons and possible ineritance usage:
 
