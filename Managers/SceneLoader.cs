@@ -12,10 +12,12 @@ public class SceneLoader : MonoBehaviour {
 	float startTimer;
 
 	void Start() {
-		animator = GameObject.Find("Transition").GetComponent<Animator>();
-		animator.SetFloat("transitionSpeed", 1 / transitionTimer);
-		animator.SetTrigger("start" + transitionType);
-		playerControl = GameObject.Find("Player").GetComponent<PlayerControl>();
+		animator = GameObject.Find("Transition") ? GameObject.Find("Transition").GetComponent<Animator>() : null;
+		if (animator) {
+			animator.SetFloat("transitionSpeed", 1 / transitionTimer);
+			animator.SetTrigger("start" + transitionType);
+		}
+		playerControl = GameObject.Find("Player") ? GameObject.Find("Player").GetComponent<PlayerControl>() : null;
 		startTimer = transitionTimer;
 		startScene = true;
 	}
@@ -24,10 +26,10 @@ public class SceneLoader : MonoBehaviour {
 		bool introDone = Camera.main.GetComponent<IntroSceneManager>() ? Camera.main.GetComponent<IntroSceneManager>().introDone : true;
 		if (startScene) {
 			startTimer -= Time.deltaTime;
-			if (startTimer >= 0) {
+			if (startTimer >= 0 && playerControl) {
 				playerControl.canMove = false;
 			} else {
-				if (introDone) {
+				if (introDone && playerControl) {
 					playerControl.canMove = true;
 				}
 				startTimer = transitionTimer;
