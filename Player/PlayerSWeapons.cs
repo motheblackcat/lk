@@ -43,13 +43,14 @@ public class PlayerSWeapons : MonoBehaviour {
         }
     }
 
+    // Should this be in PlayerControl instead?
     void SwitchWeapon() {
         if (sWeapon) {
             int index = sWeapons.FindIndex(s => s == sWeapon);
-            if (Input.GetKeyDown("right")) {
+            if (Input.GetButtonDown("Right SW")) {
                 sWeapon = (index + 1) > sWeapons.Count - 1 ? sWeapons[0] : sWeapons[index + 1];
             }
-            if (Input.GetKeyDown("left")) {
+            if (Input.GetButtonDown("Left SW")) {
                 sWeapon = (index - 1) < 0 ? sWeapons[sWeapons.Count - 1] : sWeapons[index - 1];
             }
         }
