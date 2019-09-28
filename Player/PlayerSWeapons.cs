@@ -8,9 +8,11 @@ public class PlayerSWeapons : MonoBehaviour {
     public GameObject sWeapon;
     public bool throwWeapon = false;
     public float throwTimer = 0;
+    Image sWeaponsIcon;
 
     void Start() {
-        // These Sweapons will be added elswhere (npc event or shop)
+        sWeaponsIcon = GameObject.Find("SWeaponIcon").GetComponent<Image>();
+        // These Sweapons will be added from elswhere (npc event or shop)
         sWeapons.Add(Resources.Load("Sweapons/Axe")as GameObject);
         sWeapons.Add(Resources.Load("Sweapons/Dagger")as GameObject);
         sWeapon = sWeapons[0];
@@ -27,9 +29,11 @@ public class PlayerSWeapons : MonoBehaviour {
             if (!throwWeapon) {
                 throwTimer -= Time.fixedDeltaTime;
             }
-        }
 
-        SwitchWeapon();
+            SwitchWeapon();
+        }
+        GameObject.Find("SWeaponUI").GetComponent<Canvas>().enabled = sWeapon;
+        sWeaponsIcon.sprite = sWeapon ? sWeapon.GetComponent<SpriteRenderer>().sprite : null;
     }
 
     // Lazy way of handling input > update / physics > fixedupdate
@@ -42,7 +46,6 @@ public class PlayerSWeapons : MonoBehaviour {
     void SwitchWeapon() {
         if (sWeapon) {
             int index = sWeapons.FindIndex(s => s == sWeapon);
-            Debug.Log(sWeapons.Count);
             if (Input.GetKeyDown("right")) {
                 sWeapon = (index + 1) > sWeapons.Count - 1 ? sWeapons[0] : sWeapons[index + 1];
             }
@@ -50,9 +53,6 @@ public class PlayerSWeapons : MonoBehaviour {
                 sWeapon = (index - 1) < 0 ? sWeapons[sWeapons.Count - 1] : sWeapons[index - 1];
             }
         }
-
-        GameObject.Find("SWeaponIcon").GetComponent<Image>().enabled = sWeapon;
-        GameObject.Find("SWeaponIcon").GetComponent<Image>().sprite = sWeapon ? sWeapon.GetComponent<SpriteRenderer>().sprite : null;
     }
 
     void ThrowWeapon() {

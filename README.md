@@ -14,14 +14,13 @@ What was done:
 
 - Dynamic SWeapons UI
 - Dynamic selection of Sweapons (reflected on player and ui)
+- Switched to new 2D Lights
 
 Upcoming Features / Improvements:
 
-- Overhaul lighting with 2D Lights
 - Overhaul controls with new input system?
 - Fancy Start Menu
 - Options menu
-- Fancy stage start?
 - Inventory / Info Menu
 - Secondary weapon system remake:
   - Make animations for Sweapons on impact depending on type of weapon / col?
@@ -30,11 +29,11 @@ Upcoming Features / Improvements:
 - Bigger sword?
 - Multiple Swords / Armors (And other equipments speed boots, double jump necklace, etc)
 - Instantiate enemy cadavers for easier control / death animations
+- Use Tilemaps
 
 Known Bugs / Things to check:
 
 - Reintroduce jump attack animation
-- Audio levels needs to be adjusted (music too low, sfx too high)
 - Attack sound played with no animation when spamming (check if attack is registered)
 - Warning on animation param "watch" on npcs
 - Check audio logic for enemies "Destroy (gameObject, source.clip.length)"
@@ -44,7 +43,6 @@ Known Bugs / Things to check:
 - Damage boost on enemy (jump while taking damage)
 - Hide UI during scene tansition?
 - Sweapons have no "life timer" (dagger)
-- Missing arrows / keys on Sweapons UI
 - Sweapons call in Awake() at each instance to check
 
 Notes on Sweapons and possible ineritance usage:

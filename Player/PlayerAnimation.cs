@@ -30,7 +30,7 @@ public class PlayerAnimation : MonoBehaviour {
 		animator.SetBool("air", !playerControl.isGrounded);
 		// The fixed duration for attack and throw should be set according to the animation clip length
 		// Add air throw animation
-		animator.SetBool("throw", playerSWeapons.throwWeapon);
+		animator.SetBool("throw", playerSWeapons ? playerSWeapons.throwWeapon : false);
 		if (playerAttack && !GameObject.Find("DialogBox").GetComponent<Image>().enabled) { animator.SetBool("attack", playerAttack.isAttacking); }
 		if (playerHealth) { animator.SetBool("hurt", playerHealth.startInv && !playerHealth.isDead); }
 		if (playerHealth && playerHealth.isDead) { animator.SetTrigger("die"); }
