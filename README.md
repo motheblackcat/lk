@@ -8,13 +8,13 @@ Feel free to contribute in any way you wish!
 
 <img src="https://motheblackcat.github.io/assets/img/game.gif">
 
-You can test the current build here: https://motheblackcat.github.io
+You can test the current build in the releases.
 
-What was done:
+Latest additions v1.0.0:
 
-- Dynamic SWeapons UI
-- Dynamic selection of Sweapons (reflected on player and ui)
 - Switched to new 2D Lights
+- Dynamic selection of Sweapons + UI
+- Sweapons have life span (no more infinitely flying daggers)
 
 Upcoming Features / Improvements:
 
@@ -31,8 +31,9 @@ Upcoming Features / Improvements:
 - Instantiate enemy cadavers for easier control / death animations
 - Use Tilemaps
 
-Known Bugs / Things to check:
+Known Issues:
 
+- Player can attack while using an Sweapon
 - Reintroduce jump attack animation
 - Attack sound played with no animation when spamming (check if attack is registered)
 - Warning on animation param "watch" on npcs
@@ -42,7 +43,6 @@ Known Bugs / Things to check:
 - Character state is not kept between scenes (life, sWeapon)
 - Damage boost on enemy (jump while taking damage)
 - Hide UI during scene tansition?
-- Sweapons have no "life timer" (dagger)
 - Sweapons call in Awake() at each instance to check
 - Rain follows cam (move origin instead of transform?)
 - Rain impact on ground
