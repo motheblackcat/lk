@@ -5,9 +5,15 @@ public class SWeaponsControl : MonoBehaviour {
     public int throwForceY = 0;
     public int weaponDamage = 0;
     public float throwTimerCd = 0;
+    public float lifeSpan = 0;
 
     private void Awake() {
         SetWeaponType();
+    }
+
+    private void FixedUpdate() {
+        lifeSpan -= Time.fixedDeltaTime;
+        if (lifeSpan <= 0)Destroy(gameObject);
     }
 
     void SetWeaponType() {
@@ -21,6 +27,7 @@ public class SWeaponsControl : MonoBehaviour {
                 throwForceY = 20;
                 weaponDamage = 5;
                 throwTimerCd = 1f;
+                lifeSpan = 1f;
                 break;
 
             case "Dagger":
@@ -29,6 +36,7 @@ public class SWeaponsControl : MonoBehaviour {
                 throwForceY = 0;
                 weaponDamage = 1;
                 throwTimerCd = 0.5f;
+                lifeSpan = 0.4f;
                 break;
             default:
                 break;

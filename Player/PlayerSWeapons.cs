@@ -26,10 +26,6 @@ public class PlayerSWeapons : MonoBehaviour {
                 }
             }
 
-            if (!throwWeapon) {
-                throwTimer -= Time.fixedDeltaTime;
-            }
-
             SwitchWeapon();
         }
         GameObject.Find("SWeaponUI").GetComponent<Canvas>().enabled = sWeapon;
@@ -40,6 +36,8 @@ public class PlayerSWeapons : MonoBehaviour {
     void FixedUpdate() {
         if (throwWeapon) {
             ThrowWeapon();
+        } else {
+            throwTimer -= Time.fixedDeltaTime;
         }
     }
 
