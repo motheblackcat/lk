@@ -10,11 +10,9 @@ Feel free to contribute in any way you wish!
 
 You can test the current build in the releases.
 
-Latest additions v1.0.0:
+Latest additions v1.0.1:
 
-- Switched to new 2D Lights
-- Dynamic selection of Sweapons + UI
-- Sweapons have life span (no more infinitely flying daggers)
+- Character state is kept between scenes (life, sWeapon)
 
 Upcoming Features / Improvements:
 
@@ -34,20 +32,21 @@ Upcoming Features / Improvements:
 Known Issues:
 
 - Player can attack while using an Sweapon
-- Reintroduce jump attack animation
 - Attack sound played with no animation when spamming (check if attack is registered)
-- Warning on animation param "watch" on npcs
+- Damage boost on enemy (jump while taking damage)
+- Reintroduce jump attack animation
+- Reintroduce jump attack animation
+- Fix sweapons on scene change
+- Check auto dialogs
+
+Other Notes:
+
+- Hide UI during scene tansition?
+- The fixed duration for attack and throw should be set according to the animation clip length?
+- Rain follows cam (move origin instead of transform?)
 - Check audio logic for enemies "Destroy (gameObject, source.clip.length)"
 - Check global audio logic (is the implementation of an audio manager worthwhile?)
-- The fixed duration for attack and throw should be set according to the animation clip length?
-- Character state is not kept between scenes (life, sWeapon)
-- Damage boost on enemy (jump while taking damage)
-- Hide UI during scene tansition?
 - Sweapons call in Awake() at each instance to check
-- Rain follows cam (move origin instead of transform?)
+- Refactor player attack
+- Warning on animation param "watch" on npcs
 - Rain impact on ground
-
-Notes on Sweapons and possible ineritance usage:
-
-- Sweapons parent class properties shared with child classes such as Axe or Dagger (one script per parent / child class).
-- There could be more properties added (onHit animation clip, particule trail, etc) the single manager script will be bloated.
