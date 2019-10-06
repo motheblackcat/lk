@@ -20,11 +20,6 @@ public class PlayerHealth : MonoBehaviour {
 	float invTimerTemp;
 	public float invicibilityTimer = 1f;
 
-	void Awake() {
-		// TO FIX: Load level in loop and create duplicates
-		// DontDestroyOnLoad(gameObject);
-	}
-
 	void Start() {
 		weapon = GameObject.FindGameObjectsWithTag("Weapon")[0];
 		sprite = GetComponent<SpriteRenderer>();
