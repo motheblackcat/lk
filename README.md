@@ -32,7 +32,7 @@ Upcoming Features / Improvements:
 Known Issues:
 
 - Make auto start dialogs per npc instead of global from the UI
-- Can't use Sweapons after a change scene (only keep datas?)
+- Can't use Sweapons after a change scene (due to the scene in particular)
 - Player can attack while using an Sweapon
 - Attack sound played with no animation when spamming (check if attack is registered)
 - Damage boost on enemy (jump while taking damage)
