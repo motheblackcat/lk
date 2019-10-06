@@ -10,7 +10,7 @@ public class PlayerSWeapons : MonoBehaviour {
     public float throwTimer = 0;
 
     void Start() {
-        sWeaponsIcon = GameObject.Find("SWeaponIcon").GetComponent<Image>();
+        sWeaponsIcon = GameObject.Find("SWeaponIcon") ? GameObject.Find("SWeaponIcon").GetComponent<Image>() : null;
         // These Sweapons will be added from elswhere (npc event or shop)
         sWeapons.Add(Resources.Load("Sweapons/Axe")as GameObject);
         sWeapons.Add(Resources.Load("Sweapons/Dagger")as GameObject);
@@ -27,8 +27,10 @@ public class PlayerSWeapons : MonoBehaviour {
 
             SwitchWeapon();
         }
-        GameObject.Find("SWeaponUI").GetComponent<Canvas>().enabled = sWeapon;
-        sWeaponsIcon.sprite = sWeapon ? sWeapon.GetComponent<SpriteRenderer>().sprite : null;
+        if (GameObject.Find("SWeaponUI")) {
+            GameObject.Find("SWeaponUI").GetComponent<Canvas>().enabled = sWeapon;
+            sWeaponsIcon.sprite = sWeapon ? sWeapon.GetComponent<SpriteRenderer>().sprite : null;
+        }
     }
 
     // Lazy way of handling input > update / physics > fixedupdate

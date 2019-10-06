@@ -24,7 +24,7 @@ public class PlayerSound : MonoBehaviour {
     }
 
     void Update() {
-        if (!GameObject.Find("DialogBox").GetComponent<Image>().enabled) {
+        if (GameObject.Find("DialogBox") ? !GameObject.Find("DialogBox").GetComponent<Image>().enabled : true) {
             if (Input.GetButtonDown("Jump") && playerControl.isGrounded && playerControl.canMove) {
                 audioSource.PlayOneShot(jumpSound);
             }

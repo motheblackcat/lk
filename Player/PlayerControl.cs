@@ -19,11 +19,14 @@ public class PlayerControl : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         ghost = GameObject.Find("Ghost");
-        dialogManager = GameObject.Find("DialogBox").GetComponent<DialogManager>();
+        dialogManager = GameObject.Find("DialogBox") ? GameObject.Find("DialogBox").GetComponent<DialogManager>() : null;
     }
 
     void Update() {
-        if (canMove && !dialogManager.inDialog) {
+        // Refactor the inDialog bool usage on character controls
+        if (dialogManager)canMove = !dialogManager.inDialog;
+
+        if (canMove) {
             PlayerMove();
             Flip();
         }

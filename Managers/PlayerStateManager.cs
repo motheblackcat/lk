@@ -12,12 +12,14 @@ public class PlayerStateManager : MonoBehaviour {
         playerUI = GameObject.Find("Player UI");
 
         // Setting the ones we will keep between scenes
-        GameObject.DontDestroyOnLoad(player);
-        GameObject.DontDestroyOnLoad(playerUI);
+        if (player) {
+            GameObject.DontDestroyOnLoad(player);
+            GameObject.Find("CMCamera").GetComponent<CinemachineVirtualCamera>().Follow = player.transform;
+        }
+        if (playerUI)GameObject.DontDestroyOnLoad(playerUI);
 
-        GameObject.Find("CMCamera").GetComponent<CinemachineVirtualCamera>().Follow = player.transform;
-
-        if (SceneManager.GetActiveScene().buildIndex == 3) {
+        // TO DO: make a better way to set player start position (no dontdestroy?)
+        if (SceneManager.GetActiveScene().buildIndex == 3 && player) {
             player.transform.position = new Vector2(-12, 0.2f);
         }
     }
