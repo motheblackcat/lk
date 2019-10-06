@@ -55,13 +55,12 @@ public class PlayerSWeapons : MonoBehaviour {
 
     void ThrowWeapon() {
         if (throwTimer <= 0) {
-            // Get player sprite flip, position and velocity
+            // Get player's sprite flip and velocity
             bool playerFlip = GetComponent<SpriteRenderer>().flipX;
-            Vector2 playerPos = GetComponent<Transform>().position;
             Vector2 playerVel = GetComponent<Rigidbody2D>().velocity;
             // Instanciate clone
-            GameObject clone = Instantiate(sWeapon, playerPos, GetComponent<Transform>().rotation)as GameObject;
-            // Get reference to the clone's sSWeaponsControl script to set the object's values
+            GameObject clone = Instantiate(sWeapon, transform)as GameObject;
+            // Get reference to the clone's SWeaponsControl script to set the object's values
             SWeaponsControl sWeaponControl = clone.GetComponent<SWeaponsControl>();
             clone.GetComponent<Rigidbody2D>().AddForce(
                 new Vector2((playerFlip ? -sWeaponControl.throwForceX : sWeaponControl.throwForceX) + playerVel.x, sWeaponControl.throwForceY),

@@ -31,17 +31,16 @@ Upcoming Features / Improvements:
 
 Known Issues:
 
+- Make auto start dialogs per npc instead of global from the UI
 - Can't use Sweapons after a change scene (only keep datas?)
 - Player can attack while using an Sweapon
 - Attack sound played with no animation when spamming (check if attack is registered)
 - Damage boost on enemy (jump while taking damage)
 - Reintroduce jump attack animation
-- Reintroduce jump attack animation
-- Fix sweapons on scene change
-- Check auto dialogs
 
 Other Notes:
 
+- Check scriptable objects for SWeapons
 - Hide UI during scene tansition?
 - The fixed duration for attack and throw should be set according to the animation clip length?
 - Rain follows cam (move origin instead of transform?)
