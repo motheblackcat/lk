@@ -12,7 +12,7 @@ You can test the current build in the releases.
 
 Latest additions v1.0.1:
 
-- Character state is kept between scenes (life, sWeapon)
+- Character state is kept between scenes (life, sWeapon) (Alpha)
 
 Upcoming Features / Improvements:
 
@@ -31,6 +31,7 @@ Upcoming Features / Improvements:
 
 Known Issues:
 
+- Can't use Sweapons after a change scene (only keep datas?)
 - Player can attack while using an Sweapon
 - Attack sound played with no animation when spamming (check if attack is registered)
 - Damage boost on enemy (jump while taking damage)

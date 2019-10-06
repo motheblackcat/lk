@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class PlayerSWeapons : MonoBehaviour {
     public List<GameObject> sWeapons;
     public GameObject sWeapon;
+    public Image sWeaponsIcon;
     public bool throwWeapon = false;
     public float throwTimer = 0;
-    Image sWeaponsIcon;
 
     void Start() {
         sWeaponsIcon = GameObject.Find("SWeaponIcon").GetComponent<Image>();
@@ -55,10 +55,13 @@ public class PlayerSWeapons : MonoBehaviour {
 
     void ThrowWeapon() {
         if (throwTimer <= 0) {
+            // Get player sprite flip, position and velocity
             bool playerFlip = GetComponent<SpriteRenderer>().flipX;
             Vector2 playerPos = GetComponent<Transform>().position;
             Vector2 playerVel = GetComponent<Rigidbody2D>().velocity;
-            GameObject clone = Instantiate(sWeapon, playerPos, GetComponent<Transform>().rotation);
+            // Instanciate clone
+            GameObject clone = Instantiate(sWeapon, playerPos, GetComponent<Transform>().rotation)as GameObject;
+            // Get reference to the clone's sSWeaponsControl script to set the object's values
             SWeaponsControl sWeaponControl = clone.GetComponent<SWeaponsControl>();
             clone.GetComponent<Rigidbody2D>().AddForce(
                 new Vector2((playerFlip ? -sWeaponControl.throwForceX : sWeaponControl.throwForceX) + playerVel.x, sWeaponControl.throwForceY),
