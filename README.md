@@ -36,6 +36,7 @@ Known Issues:
 
 Other notes and things to check or test:
 
+- Add keys to Sweapon UI?
 - Add extra equipments such as speed boots, double jump necklace, etc?
 - Should SWeapons usage be limited? (Magic? Ammo?)
 - Different impact animations depending on type of weapon / target?
