@@ -16,37 +16,39 @@ Latest additions v1.0.1:
 
 Upcoming Features / Improvements:
 
-- Overhaul controls with new input system?
-- Fancy Start Menu
-- Options menu
-- Inventory / Info Menu
-- Secondary weapon system remake:
-  - Make animations for Sweapons on impact depending on type of weapon / col?
-  - Add air throw animation
-  - Should SWeapons usage be limited? (Magic?)
-- Bigger sword?
-- Multiple Swords / Armors (And other equipments speed boots, double jump necklace, etc)
-- Instantiate enemy cadavers for easier control / death animations
 - Use Tilemaps
+- Overhaul controls with new input system
+- Rain impact on ground
+- Fancier Start Menu (animated cursor, option choices, selection action)
+- Inventory / Info Menu
+- Reintroduce jump attack animation
+- Add animations for Sweapons on impact
+- Add air throw animation
+- Multiple Swords / Armors
+- Options Menu
 
 Known Issues:
 
-- Remove duplacte instance of gameobjects (player)
+- Remove duplicated instances of kept gameobjects (player, player UI)
 - Player can attack while using an Sweapon
 - Attack sound played with no animation when spamming (check if attack is registered)
 - Damage boost on enemy (jump while taking damage)
-- Reintroduce jump attack animation
 
-Other Notes:
+Other notes and things to check or test:
 
-- Make auto start dialogs per npc instead of global from the UI
-- Check scriptable objects for SWeapons
-- Hide UI during scene tansition?
+- Add keys to Sweapon UI?
+- Add extra equipments such as speed boots, double jump necklace, etc?
+- Should SWeapons usage be limited? (Magic? Ammo?)
+- Different impact animations depending on type of weapon / target?
+- Instantiate enemy corpses for easier control / death animations (simple animated sprite)?
+- Check enemy death mecanics as it sometimes seems delayed
+- Bigger sword to fix attack clunkiness?
+- Reduce life bar and daggers size in UI
+- Make auto start dialogs per npc instead of global from the UI (from player npc detection?)
+- Hide UI during scene tansitions?
 - The fixed duration for attack and throw should be set according to the animation clip length?
-- Rain follows cam (move origin instead of transform?)
-- Check audio logic for enemies "Destroy (gameObject, source.clip.length)"
+- Rain follows cam (move origin instead of transform? or make it global?)
+- Check audio logic for enemies ex: "Destroy (gameObject, source.clip.length)"
 - Check global audio logic (is the implementation of an audio manager worthwhile?)
-- Sweapons call in Awake() at each instance to check
-- Refactor player attack
+- Refactor player attack (add more control while making it simpler)
 - Warning on animation param "watch" on npcs
-- Rain impact on ground
