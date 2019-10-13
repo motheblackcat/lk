@@ -1,37 +1,34 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour {
 
     public GameObject npc;
-    DialogManager dialogManager;
+    DialogManager dialogBox;
     Rigidbody2D rb;
     SpriteRenderer sprite;
     GameObject ghost;
     public float runSpeed = 40;
     public float jumpSpeed = 600;
-    public bool canMove = true;
-    public bool isGrounded = false;
+    public bool canMove;
+    public bool isGrounded;
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         ghost = GameObject.Find("Ghost");
-        dialogManager = GameObject.Find("DialogBox") ? GameObject.Find("DialogBox").GetComponent<DialogManager>() : null;
     }
 
     void Update() {
-        // Refactor the inDialog bool usage on character controls
-        if (dialogManager)canMove = !dialogManager.inDialog;
-
+        if (GameObject.Find("DialogBox").GetComponent<Image>().enabled) {
+            canMove = false;
+        }
         if (canMove) {
             PlayerMove();
             Flip();
         }
     }
-
+    // Should move this to FixedUpdated()
     void PlayerMove() {
         if (Input.GetAxis("Horizontal") != 0) { rb.velocity = new Vector2(Input.GetAxis("Horizontal") * runSpeed, rb.velocity.y); }
         if (Input.GetButtonDown("Jump") && isGrounded) { rb.velocity = Vector2.up * jumpSpeed; }

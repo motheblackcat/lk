@@ -25,6 +25,19 @@ public class EnemyHealthControl : MonoBehaviour {
 		Stun();
 		Death();
 	}
+
+	// Private bool stun;
+	// Public bool isstunned
+	// {
+	// get
+	// {
+	// return stun;
+	// }
+	// set
+	// {
+	// stun= value;
+	// }
+	// }
 	void Stun() {
 		if (isStunned) {
 			stunTimer -= Time.deltaTime;
