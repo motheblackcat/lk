@@ -11,7 +11,7 @@ public class PlayerSWeapons : MonoBehaviour {
 
     void Start() {
         sWeaponsIcon = GameObject.Find("SWeaponIcon") ? GameObject.Find("SWeaponIcon").GetComponent<Image>() : null;
-        // TODO: Add these from elswhere (npc event or shop)
+        // TODO: Add these from elsewhere (npc event or shop)
         sWeapons.Add(Resources.Load("Sweapons/Axe")as GameObject);
         sWeapons.Add(Resources.Load("Sweapons/Dagger")as GameObject);
         sWeapon = sWeapons[0];

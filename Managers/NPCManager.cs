@@ -31,7 +31,7 @@ public class NPCManager : MonoBehaviour {
             if (tag == "NPC") {
                 GetComponent<SpriteRenderer>().flipX = other.gameObject.transform.position.x > transform.position.x;
             }
-            // This is specific to the door of the intro
+            // TODO: This is too specific to the door of the intro
             if (tag == "Door" && Input.GetAxis("Vertical") > 0) {
                 sceneLoader.loadScene = true;
             }

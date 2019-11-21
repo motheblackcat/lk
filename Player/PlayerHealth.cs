@@ -19,9 +19,21 @@ public class PlayerHealth : MonoBehaviour {
 	public float invicibilityTimer = 1f;
 	public int currentSceneIndex;
 
+	private void Awake() {
+		// TODO: Simple logic to keep the player health between scenes, will be expanded for weapons & items
+		if (!GameObject.Find("PlayerState")) {
+			GameObject playerState = Instantiate(Resources.Load("States/PlayerState")as GameObject);
+			playerState.name = playerState.name.Replace("(Clone)", "");
+			GameObject.Find("PlayerState").GetComponent<PlayerStateSave>().playerHealth = playerHealth;
+			DontDestroyOnLoad(playerState);
+		} else {
+			playerHealth = GameObject.Find("PlayerState").GetComponent<PlayerStateSave>().playerHealth;
+		}
+	}
+
 	void Start() {
-		weapon = GameObject.FindGameObjectsWithTag("Weapon")[0];
 		sprite = GetComponent<SpriteRenderer>();
+		weapon = GameObject.FindGameObjectsWithTag("Weapon")[0];
 		healthBar = GameObject.Find("Content") ? GameObject.Find("Content").GetComponent<Image>() : null;
 		invTimerTemp = invicibilityTimer;
 		currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
@@ -73,10 +85,12 @@ public class PlayerHealth : MonoBehaviour {
 			GetComponent<PlayerControl>().canMove = false;
 			restartLevelTimer -= Time.deltaTime;
 			if (restartLevelTimer <= 0) {
-				// TODO: Death should either reload current scene from start or a checkpoint in normal cases
+				// TODO: Death reload current scene from start or a checkpoint, need to make logic for special cases
+				// SceneManager.LoadScene(currentSceneIndex);
+				// Not using the sceneloader script prevent the transition from being played
 				GameObject.Find("SceneTransition").GetComponent<SceneLoader>().LoadScene(currentSceneIndex);
-				// TODO: Should make a safer reference or make the scene transition object stay at all time?
-				// GameObject.Find("SceneTransition").GetComponent<SceneLoader>().loadScene = true;
+				// TODO: Change this hard value for a maxHealth variable as it could grow
+				GameObject.Find("PlayerState").GetComponent<PlayerStateSave>().playerHealth = 100;
 			}
 		}
 	}

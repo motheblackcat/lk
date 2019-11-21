@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour {
 	Animator animator;
 	GameObject player;
-	GameObject playerUI;
 	PlayerControl playerControl;
+	PlayerHealth playerHealth;
 	public bool loadScene;
 	public int sceneIndex;
 	public float transitionTimer = 1.5f;
@@ -14,13 +14,13 @@ public class SceneLoader : MonoBehaviour {
 	public string transitionType = "box";
 	bool startScene;
 	float startTimer;
-	bool introDone;
 
 	void Start() {
-		// Make the scenetransition gameobject a child of the main camera and set its transform
+		// Makes the SceneTransition GameObject a child of the Main Camera and set its transform so the black screen stays centered
 		transform.parent = Camera.main.transform;
 		transform.position = new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.y);
 
+		// Start the transition animation
 		animator = GetComponent<Animator>();
 		animator.SetFloat("transitionSpeed", 1 / transitionTimer);
 		animator.SetTrigger("start" + transitionType);
@@ -30,22 +30,13 @@ public class SceneLoader : MonoBehaviour {
 
 		player = GameObject.Find("Player") ? GameObject.Find("Player") : null;
 		playerControl = player ? player.GetComponent<PlayerControl>() : null;
-		playerUI = player ? GameObject.Find("Player UI") : null;
-
-		// TODO: Check that line, logic might be simpler
-		introDone = Camera.main.GetComponent<IntroSceneManager>() ? Camera.main.GetComponent<IntroSceneManager>().introDone : true;
-
-		// if (player && introDone) {
-		// Shouldn't be necessary to set this every Start()
-		// DontDestroyOnLoad(player);
-		// Set the main camera to follow the player in general cases
-		// GameObject.Find("CMCamera").GetComponent<CinemachineVirtualCamera>().Follow = player.transform;
-		// }
-
-		// if (playerUI)DontDestroyOnLoad(playerUI);
+		playerHealth = player ? player.GetComponent<PlayerHealth>() : null;
 	}
 
 	void Update() {
+		// TODO: Check that line, logic might be simpler
+		bool introDone = Camera.main.GetComponent<IntroSceneManager>() ? Camera.main.GetComponent<IntroSceneManager>().introDone : true;
+
 		if (startScene) {
 			startTimer -= Time.deltaTime;
 			if (startTimer >= 0 && playerControl) {
@@ -64,6 +55,8 @@ public class SceneLoader : MonoBehaviour {
 	}
 
 	public void LoadScene(int sceneId) {
+		// Setting PlayerState life to the current player life before loading a new scene
+		GameObject.Find("PlayerState").GetComponent<PlayerStateSave>().playerHealth = playerHealth.playerHealth;
 		playerControl.canMove = false;
 		transitionTimer -= Time.deltaTime;
 		GetComponent<Animator>().SetTrigger("end" + transitionType);
