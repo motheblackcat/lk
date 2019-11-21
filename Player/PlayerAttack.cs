@@ -22,7 +22,7 @@ public class PlayerAttack : MonoBehaviour {
         atkPosX = atkPos.localPosition.x;
     }
 
-    // Refactor with fixedupdate for consitent timer?
+    // TODO: Refactor with fixedupdate for consitent timer?
     void Update() {
         Attack();
     }
@@ -31,7 +31,7 @@ public class PlayerAttack : MonoBehaviour {
         atkPos.localPosition = GetComponent<SpriteRenderer>().flipX ? new Vector2(-atkPosX, atkPos.localPosition.y) : new Vector2(atkPosX, atkPos.localPosition.y);
 
         if (timeBtwAttack <= 0) {
-            // Check if all those conditions are necessary
+            // TODO: Check if all those conditions are necessary
             if (Input.GetButtonDown("Attack") && !playerHealth.tookDamage && !playerHealth.isDead && GetComponent<PlayerControl>().canMove) {
                 isAttacking = true;
                 ennemiesToDamage = Physics2D.OverlapCircleAll(atkPos.position, atkRange, whatIsEnemies);

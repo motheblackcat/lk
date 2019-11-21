@@ -1,15 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class PlayerSound : MonoBehaviour {
     AudioSource audioSource;
-
     PlayerControl playerControl;
     PlayerHealth playerHealth;
     PlayerAttack playerAttack;
-
     public AudioClip jumpSound;
     public AudioClip attackSound;
     public AudioClip hurtSound;
@@ -24,23 +19,21 @@ public class PlayerSound : MonoBehaviour {
     }
 
     void Update() {
-        if (GameObject.Find("DialogBox") ? !GameObject.Find("DialogBox").GetComponent<Image>().enabled : true) {
-            if (Input.GetButtonDown("Jump") && playerControl.isGrounded && playerControl.canMove) {
-                audioSource.PlayOneShot(jumpSound);
-            }
+        if (Input.GetButtonDown("Jump") && playerControl.isGrounded && playerControl.canMove) {
+            audioSource.PlayOneShot(jumpSound);
+        }
 
-            if (playerAttack.isAttacking) {
-                audioSource.PlayOneShot(attackSound);
-            }
+        if (playerAttack.isAttacking) {
+            audioSource.PlayOneShot(attackSound);
+        }
 
-            if (playerHealth.isDead && !deathSoundPlayed) {
-                audioSource.PlayOneShot(deathSound);
-                deathSoundPlayed = true;
-            }
+        if (playerHealth.isDead && !deathSoundPlayed) {
+            audioSource.PlayOneShot(deathSound);
+            deathSoundPlayed = true;
+        }
 
-            if (playerHealth.tookDamage && !playerHealth.isDead) {
-                audioSource.PlayOneShot(hurtSound);
-            }
+        if (playerHealth.tookDamage && !playerHealth.isDead) {
+            audioSource.PlayOneShot(hurtSound);
         }
     }
 }

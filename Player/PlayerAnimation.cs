@@ -26,8 +26,7 @@ public class PlayerAnimation : MonoBehaviour {
 	}
 
 	void PlayerAnimate() {
-		if (!playerControl.canMove)animator.SetBool("run", false);
-		animator.SetBool("run", GetComponent<Rigidbody2D>().velocity.x != 0);
+		animator.SetBool("run", GetComponent<Rigidbody2D>().velocity.x != 0 && playerControl.canMove);
 		animator.SetBool("air", !playerControl.isGrounded);
 		// The fixed duration for attack and throw should be set according to the animation clip length
 		// Add air throw animation

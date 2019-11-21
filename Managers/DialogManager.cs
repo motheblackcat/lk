@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class DialogManager : MonoBehaviour {
     GameObject player;
     PlayerControl playerControl;
-    PlayerSound playerSound;
     public GameObject npc;
     public bool inDialog = false;
     public bool autoStartDialog = false;
@@ -13,7 +12,6 @@ public class DialogManager : MonoBehaviour {
     void Start() {
         player = GameObject.Find("Player");
         playerControl = player.GetComponent<PlayerControl>();
-        playerSound = player.GetComponent<PlayerSound>();
     }
 
     // Check if player is in contact with an NPC or if the Dialog box is opened
@@ -21,7 +19,6 @@ public class DialogManager : MonoBehaviour {
         npc = playerControl.npc;
         inDialog = GetComponent<Image>().enabled;
         CheckNpc(npc);
-        if (playerSound)playerSound.enabled = !inDialog;
     }
 
     // Check for an npc to get the dialogs and close the dialog box
@@ -33,7 +30,8 @@ public class DialogManager : MonoBehaviour {
             if (autoStartDialog) {
                 getDialog(npc);
                 autoStartDialog = false;
-            } else if (Input.GetAxis("Vertical") > 0) {
+            }
+            if (Input.GetAxis("Vertical") > 0) {
                 getDialog(npc);
             }
         }

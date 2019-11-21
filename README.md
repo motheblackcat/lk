@@ -29,6 +29,7 @@ Upcoming Features / Improvements:
 
 Known Issues:
 
+- Player can't move after a dialog outside of the intro
 - Player can attack while using an Sweapon
 - Attack sound played with no animation when spamming (check if attack is registered)
 - Damage boost on enemy (jump while taking damage)

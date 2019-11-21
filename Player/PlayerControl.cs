@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class PlayerControl : MonoBehaviour {
 
     public GameObject npc;
-    DialogManager dialogBox;
     Rigidbody2D rb;
     SpriteRenderer sprite;
     GameObject ghost;
@@ -20,7 +19,8 @@ public class PlayerControl : MonoBehaviour {
     }
 
     void Update() {
-        if (GameObject.Find("DialogBox") && GameObject.Find("DialogBox").GetComponent<Image>().enabled) {
+        // TOFIX: Dialog with Bob set canMove to false forever
+        if (GameObject.Find("PlayerUI") && GameObject.Find("DialogBox").GetComponent<DialogManager>().inDialog) {
             canMove = false;
         }
         if (canMove) {

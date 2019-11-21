@@ -1,14 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class NPCManager : MonoBehaviour {
     SpriteRenderer dialogArrow;
     Animator animator;
     SceneLoader sceneLoader;
-    bool dialogOpen = false;
+    bool inDialog;
 
     void Start() {
         animator = GetComponent<Animator>();
@@ -17,16 +13,16 @@ public class NPCManager : MonoBehaviour {
     }
 
     void Update() {
-        dialogOpen = GameObject.Find("DialogBox").GetComponent<Image>().enabled;
-        dialogArrow = GameObject.Find(this.name + "/ArrowUp").GetComponent<SpriteRenderer>();
+        inDialog = GameObject.Find("DialogBox").GetComponent<DialogManager>().inDialog;
+        dialogArrow = GameObject.Find(this.name + "/ArrowUp") ? GameObject.Find(this.name + "/ArrowUp").GetComponent<SpriteRenderer>() : null;
     }
 
     void OnTriggerStay2D(Collider2D other) {
-        if (other.gameObject.tag == "Player" && Camera.main.GetComponent<IntroSceneManager>().introDone) {
-            dialogArrow.enabled = !dialogOpen;
+        if (other.gameObject.tag == "Player" && Camera.main.GetComponent<IntroSceneManager>() ? Camera.main.GetComponent<IntroSceneManager>().introDone : true) {
+            if (dialogArrow)dialogArrow.enabled = !inDialog;
             if (animator) {
                 animator.SetBool("watch", true);
-                animator.SetBool("talk", dialogOpen);
+                animator.SetBool("talk", inDialog);
             }
             if (tag == "NPC") {
                 GetComponent<SpriteRenderer>().flipX = other.gameObject.transform.position.x > transform.position.x;
@@ -40,7 +36,7 @@ public class NPCManager : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D other) {
         if (other.gameObject.tag == "Player") {
-            dialogArrow.enabled = false;
+            if (dialogArrow)dialogArrow.enabled = false;
             if (animator) {
                 animator.SetBool("watch", false);
                 animator.SetBool("talk", false);

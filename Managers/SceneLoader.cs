@@ -56,7 +56,9 @@ public class SceneLoader : MonoBehaviour {
 
 	public void LoadScene(int sceneId) {
 		// Setting PlayerState life to the current player life before loading a new scene
-		GameObject.Find("PlayerState").GetComponent<PlayerStateSave>().playerHealth = playerHealth.playerHealth;
+		if (GameObject.Find("PlayerState") && player) {
+			GameObject.Find("PlayerState").GetComponent<PlayerStateSave>().playerHealth = playerHealth.playerHealth;
+		}
 		playerControl.canMove = false;
 		transitionTimer -= Time.deltaTime;
 		GetComponent<Animator>().SetTrigger("end" + transitionType);
