@@ -11,7 +11,7 @@ public class PlayerSWeapons : MonoBehaviour {
 
     void Start() {
         sWeaponsIcon = GameObject.Find("SWeaponIcon") ? GameObject.Find("SWeaponIcon").GetComponent<Image>() : null;
-        // These Sweapons will be added from elswhere (npc event or shop)
+        // TODO: Add these from elswhere (npc event or shop)
         sWeapons.Add(Resources.Load("Sweapons/Axe")as GameObject);
         sWeapons.Add(Resources.Load("Sweapons/Dagger")as GameObject);
         sWeapon = sWeapons[0];
@@ -46,10 +46,10 @@ public class PlayerSWeapons : MonoBehaviour {
     void SwitchWeapon() {
         if (sWeapon) {
             int index = sWeapons.FindIndex(s => s == sWeapon);
-            if (Input.GetButtonDown("Right SW")) {
+            if (Input.GetButtonDown("RB")) {
                 sWeapon = (index + 1) > sWeapons.Count - 1 ? sWeapons[0] : sWeapons[index + 1];
             }
-            if (Input.GetButtonDown("Left SW")) {
+            if (Input.GetButtonDown("LB")) {
                 sWeapon = (index - 1) < 0 ? sWeapons[sWeapons.Count - 1] : sWeapons[index - 1];
             }
         }

@@ -8,7 +8,8 @@ public class IntroSceneManager : MonoBehaviour {
 
 	void Start() {
 		player = GameObject.Find("Player");
-		sceneLoader = GameObject.Find("Transition").GetComponent<SceneLoader>();
+		// TODO: Get a safer reference
+		sceneLoader = GameObject.Find("SceneTransition").GetComponent<SceneLoader>();
 	}
 
 	void Update() {

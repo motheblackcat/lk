@@ -12,7 +12,8 @@ public class NPCManager : MonoBehaviour {
 
     void Start() {
         animator = GetComponent<Animator>();
-        sceneLoader = GameObject.Find("Transition").GetComponent<SceneLoader>();
+        // TODO: Get a safer reference
+        sceneLoader = GameObject.Find("SceneTransition").GetComponent<SceneLoader>();
     }
 
     void Update() {

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -19,12 +17,14 @@ public class PlayerHealth : MonoBehaviour {
 	public float flickTimer = 0.2f;
 	float invTimerTemp;
 	public float invicibilityTimer = 1f;
+	public int currentSceneIndex;
 
 	void Start() {
 		weapon = GameObject.FindGameObjectsWithTag("Weapon")[0];
 		sprite = GetComponent<SpriteRenderer>();
 		healthBar = GameObject.Find("Content") ? GameObject.Find("Content").GetComponent<Image>() : null;
 		invTimerTemp = invicibilityTimer;
+		currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 	}
 
 	void Update() {
@@ -73,7 +73,10 @@ public class PlayerHealth : MonoBehaviour {
 			GetComponent<PlayerControl>().canMove = false;
 			restartLevelTimer -= Time.deltaTime;
 			if (restartLevelTimer <= 0) {
-				GameObject.Find("Transition").GetComponent<SceneLoader>().loadScene = true;
+				// TODO: Death should either reload current scene from start or a checkpoint in normal cases
+				GameObject.Find("SceneTransition").GetComponent<SceneLoader>().LoadScene(currentSceneIndex);
+				// TODO: Should make a safer reference or make the scene transition object stay at all time?
+				// GameObject.Find("SceneTransition").GetComponent<SceneLoader>().loadScene = true;
 			}
 		}
 	}
