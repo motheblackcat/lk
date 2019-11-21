@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMoveControl : MonoBehaviour {
-    public bool canMove = false;
     public bool canSee = false;
     public float moveSpeed = 3;
     GameObject player;
@@ -20,17 +19,21 @@ public class EnemyMoveControl : MonoBehaviour {
     }
 
     void Update() {
-        canMove = !player.GetComponent<PlayerHealth>().isDead && !GetComponent<EnemyHealthControl>().isStunned;
         Move();
     }
 
     void Move() {
-        if (!GetComponent<EnemyHealthControl>().isDead) {
-            sprite.flipX = player.transform.position.x > transform.position.x ? true : false;
-        }
-        box.offset = sprite.flipX ? new Vector2(-boxOffsetX, box.offset.y) : new Vector2(boxOffsetX, box.offset.y);
-        if (canSee && canMove) {
-            GetComponent<Rigidbody2D>().velocity = player.transform.position.x > transform.position.x ? new Vector2(moveSpeed, 0) : new Vector2(-moveSpeed, 0);
+        if (player) {
+            bool canMove = !player.GetComponent<PlayerHealth>().isDead && !GetComponent<EnemyHealthControl>().isStunned;
+
+            if (canSee && canMove) {
+                GetComponent<Rigidbody2D>().velocity = player.transform.position.x > transform.position.x ? new Vector2(moveSpeed, 0) : new Vector2(-moveSpeed, 0);
+            }
+
+            if (!GetComponent<EnemyHealthControl>().isDead) {
+                sprite.flipX = player.transform.position.x > transform.position.x ? true : false;
+                box.offset = sprite.flipX ? new Vector2(-boxOffsetX, box.offset.y) : new Vector2(boxOffsetX, box.offset.y);
+            }
         }
     }
 

@@ -20,7 +20,7 @@ public class PlayerControl : MonoBehaviour {
     }
 
     void Update() {
-        if (GameObject.Find("DialogBox").GetComponent<Image>().enabled) {
+        if (GameObject.Find("DialogBox") && GameObject.Find("DialogBox").GetComponent<Image>().enabled) {
             canMove = false;
         }
         if (canMove) {
