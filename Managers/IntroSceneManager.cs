@@ -1,27 +1,24 @@
 ﻿using UnityEngine;
 
 public class IntroSceneManager : MonoBehaviour {
+	// TODO: This script could be included in the SceneLoader script
 	GameObject player;
-	SceneLoader sceneLoader;
 	public bool introDone = false;
 	public float startTimer = 5.0f;
 
 	void Start() {
 		player = GameObject.FindWithTag("Player");
-		// TODO: Get a safer reference
-		sceneLoader = GameObject.Find("SceneTransition").GetComponent<SceneLoader>();
 	}
 
 	void Update() {
 		startTimer -= Time.deltaTime;
-		if (startTimer <= 0 && !sceneLoader.loadScene) {
+		if (startTimer <= 0) {
 			FreePlayer();
 		}
 	}
 
 	void FreePlayer() {
 		introDone = true;
-		player.GetComponent<PlayerControl>().canMove = true;
 		player.GetComponent<Animator>().enabled = true;
 		player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
 		player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;

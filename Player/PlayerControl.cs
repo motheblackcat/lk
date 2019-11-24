@@ -19,15 +19,13 @@ public class PlayerControl : MonoBehaviour {
     }
 
     void Update() {
-        GameObject dialogBox = GameObject.FindWithTag("DialogBox");
-        bool inDialog = dialogBox ? dialogBox.GetComponent<DialogManager>().inDialog : false;
-
+        bool introDone = GameObject.Find("SceneTransition").GetComponent<IntroSceneManager>() ? GameObject.Find("SceneTransition").GetComponent<IntroSceneManager>().introDone : true;
+        bool inDialog = GameObject.FindWithTag("DialogBox") ? GameObject.FindWithTag("DialogBox").GetComponent<DialogManager>().inDialog : false;
         bool loadScene = GameObject.Find("SceneTransition").GetComponent<SceneLoader>().loadScene;
+        bool tookDamage = GetComponent<PlayerHealth>() ? GetComponent<PlayerHealth>().startInv : false;
+        bool isDead = GetComponent<PlayerHealth>() ? GetComponent<PlayerHealth>().isDead : false;
 
-        // TOFIX: Dialog with NPC set canMove to false forever
-        // if (inDialog) {
-        //     canMove = false;
-        // }
+        canMove = introDone && !inDialog && !loadScene && !tookDamage && !isDead;
 
         if (canMove) {
             PlayerMove();

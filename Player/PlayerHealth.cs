@@ -55,10 +55,7 @@ public class PlayerHealth : MonoBehaviour {
 			invicibilityTimer -= Time.deltaTime;
 			if (invicibilityTimer <= 0) {
 				sprite.enabled = true;
-				if (!isDead) {
-					GetComponent<PlayerControl>().canMove = true;
-					if (weapon) { wSprite.enabled = true; }
-				}
+				if (weapon) { wSprite.enabled = true; }
 				startInv = false;
 				invicibilityTimer = invTimerTemp;
 				CancelInvoke();
@@ -66,15 +63,16 @@ public class PlayerHealth : MonoBehaviour {
 		}
 	}
 
+	//TODO: The sprite flicking should just be an animation
 	void SpriteFlick() {
 		sprite.enabled = !sprite.enabled;
 		if (weapon) { wSprite.enabled = !wSprite.enabled; }
 	}
 
+	//TODO: Pushback strength sould be taken from the enemy
+	//TOFIX: Pushback is in the incorrect direction?
 	void PushBack(GameObject enemy) {
-		GetComponent<PlayerControl>().canMove = false;
 		bool pos = enemy.transform.position.x > transform.position.x;
-		// Push back strength sould be taken / set by the enemy?
 		GetComponent<Rigidbody2D>().AddForce(pos ? new Vector2(-pushX, pushY) : new Vector2(pushX, pushY), ForceMode2D.Impulse);
 	}
 
@@ -82,7 +80,6 @@ public class PlayerHealth : MonoBehaviour {
 		if (playerHealth <= 0) {
 			isDead = true;
 			GameObject.Find("MainCamera").GetComponent<AudioSource>().Stop();
-			GetComponent<PlayerControl>().canMove = false;
 			restartLevelTimer -= Time.deltaTime;
 			if (restartLevelTimer <= 0) {
 				// TODO: Death reload current scene from start or a checkpoint, need to make logic for special cases
