@@ -19,8 +19,9 @@ public class PlayerControl : MonoBehaviour {
     }
 
     void Update() {
-        // TOFIX: Dialog with Bob set canMove to false forever
-        bool inDialog = GameObject.Find("DialogBox") ? GameObject.Find("DialogBox").GetComponent<DialogManager>().inDialog : false;
+        // TOFIX: Dialog with NPC set canMove to false forever
+        GameObject dialogBox = GameObject.FindWithTag("DialogBox");
+        bool inDialog = dialogBox ? dialogBox.GetComponent<DialogManager>().inDialog : false;
         if (inDialog) {
             canMove = false;
         }

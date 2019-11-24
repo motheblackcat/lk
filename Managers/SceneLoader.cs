@@ -39,10 +39,10 @@ public class SceneLoader : MonoBehaviour {
 
 		if (startScene) {
 			startTimer -= Time.deltaTime;
-			if (startTimer >= 0 && playerControl) {
+			if (startTimer >= 0 && player) {
 				playerControl.canMove = false;
 			} else {
-				if (introDone && playerControl) {
+				if (introDone && player) {
 					playerControl.canMove = true;
 				}
 				startTimer = transitionTimer;

@@ -19,6 +19,7 @@ public class NPCManager : MonoBehaviour {
     }
 
     void OnTriggerStay2D(Collider2D other) {
+        // TODO: Check if all these conditions are necessary
         if (other.gameObject.tag == "Player" && Camera.main.GetComponent<IntroSceneManager>() ? Camera.main.GetComponent<IntroSceneManager>().introDone : true) {
             if (dialogArrow)dialogArrow.enabled = !inDialog;
             if (animator) {
