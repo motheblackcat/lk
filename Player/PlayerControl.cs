@@ -64,7 +64,7 @@ public class PlayerControl : MonoBehaviour {
     private void OnTriggerExit2D(Collider2D other) {
         npc = null;
         if (other.name == "Environment") {
-            // TODO: Should make a safer reference or make the scene transition object stay at all time
+            // TODO: Should make a safer reference
             GameObject.Find("SceneTransition").GetComponent<SceneLoader>().loadScene = true;
         }
     }
