@@ -12,7 +12,7 @@ public class PlayerHealth : MonoBehaviour {
 	public float playerHealth = 100f;
 	public bool isDead = false;
 	public bool tookDamage = false;
-	public bool startInv = false;
+	public bool isInv = false;
 	public float restartLevelTimer = 2f;
 	public float flickTimer = 0.2f;
 	float invTimerTemp;
@@ -48,15 +48,15 @@ public class PlayerHealth : MonoBehaviour {
 
 	void InvincibilityTimerStart() {
 		if (tookDamage) {
-			startInv = true;
+			isInv = true;
 			tookDamage = false;
 		}
-		if (startInv) {
+		if (isInv) {
 			invicibilityTimer -= Time.deltaTime;
 			if (invicibilityTimer <= 0) {
 				sprite.enabled = true;
 				if (weapon) { wSprite.enabled = true; }
-				startInv = false;
+				isInv = false;
 				invicibilityTimer = invTimerTemp;
 				CancelInvoke();
 			}
@@ -72,8 +72,9 @@ public class PlayerHealth : MonoBehaviour {
 	//TODO: Pushback strength sould be taken from the enemy
 	//TOFIX: Pushback is in the incorrect direction?
 	void PushBack(GameObject enemy) {
-		bool pos = enemy.transform.position.x > transform.position.x;
-		GetComponent<Rigidbody2D>().AddForce(pos ? new Vector2(-pushX, pushY) : new Vector2(pushX, pushY), ForceMode2D.Impulse);
+		bool enemyPos = enemy.transform.position.x > transform.position.x;
+		Vector2 pushDirection = enemyPos ? new Vector2(-pushX, pushY) : new Vector2(pushX, pushY);
+		GetComponent<Rigidbody2D>().AddForce(pushDirection, ForceMode2D.Impulse);
 	}
 
 	void Death() {
@@ -102,7 +103,7 @@ public class PlayerHealth : MonoBehaviour {
 
 	void OnCollisionStay2D(Collision2D col) {
 		if (col.gameObject.tag == "Enemy") {
-			if (!tookDamage && !startInv && !isDead) {
+			if (!tookDamage && !isInv && !isDead) {
 				TakeDamage(col.gameObject);
 			}
 		}

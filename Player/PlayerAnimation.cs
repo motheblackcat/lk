@@ -34,7 +34,7 @@ public class PlayerAnimation : MonoBehaviour {
 		if (playerAttack) {
 			animator.SetBool("attack", playerAttack.isAttacking);
 		}
-		if (playerHealth) { animator.SetBool("hurt", playerHealth.startInv && !playerHealth.isDead); }
+		if (playerHealth) { animator.SetBool("hurt", playerHealth.isInv && !playerHealth.isDead); }
 		if (playerHealth && playerHealth.isDead) { animator.SetTrigger("die"); }
 	}
 
