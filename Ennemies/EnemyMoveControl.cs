@@ -12,7 +12,7 @@ public class EnemyMoveControl : MonoBehaviour {
     bool isGrounded;
 
     void Start() {
-        player = GameObject.Find("Player");
+        player = GameObject.FindWithTag("Player");
         sprite = GetComponent<SpriteRenderer>();
         box = GetComponentsInChildren<BoxCollider2D>()[0];
         boxOffsetX = box.offset.x;

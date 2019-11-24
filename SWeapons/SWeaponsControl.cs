@@ -18,7 +18,7 @@ public class SWeaponsControl : MonoBehaviour {
     }
 
     void SetWeaponAnimType() {
-        bool playerFlip = GameObject.Find("Player").GetComponent<SpriteRenderer>().flipX;
+        bool playerFlip = GameObject.FindWithTag("Player").GetComponent<SpriteRenderer>().flipX;
         switch (animType) {
             case "speed":
                 GetComponent<Animator>().SetFloat("speed", playerFlip ? -1 : 1);

@@ -10,7 +10,7 @@ public class DialogManager : MonoBehaviour {
     public bool autoStartDialog = false;
 
     void Start() {
-        player = GameObject.Find("Player");
+        player = GameObject.FindWithTag("Player");
         playerControl = player.GetComponent<PlayerControl>();
     }
 

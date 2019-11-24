@@ -7,7 +7,7 @@ public class IntroSceneManager : MonoBehaviour {
 	public float startTimer = 5.0f;
 
 	void Start() {
-		player = GameObject.Find("Player");
+		player = GameObject.FindWithTag("Player");
 		// TODO: Get a safer reference
 		sceneLoader = GameObject.Find("SceneTransition").GetComponent<SceneLoader>();
 	}

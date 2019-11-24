@@ -13,7 +13,8 @@ public class NPCManager : MonoBehaviour {
     }
 
     void Update() {
-        inDialog = GameObject.Find("DialogBox").GetComponent<DialogManager>().inDialog;
+        GameObject dialogBox = GameObject.FindWithTag("DialogBox");
+        inDialog = dialogBox ? dialogBox.GetComponent<DialogManager>().inDialog : false;
         dialogArrow = GameObject.Find(this.name + "/ArrowUp") ? GameObject.Find(this.name + "/ArrowUp").GetComponent<SpriteRenderer>() : null;
     }
 

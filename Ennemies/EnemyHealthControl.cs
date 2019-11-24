@@ -56,7 +56,7 @@ public class EnemyHealthControl : MonoBehaviour {
 	}
 
 	void PushBack() {
-		bool pos = GameObject.Find("Player").transform.position.x > transform.position.x;
+		bool pos = GameObject.FindWithTag("Player").transform.position.x > transform.position.x;
 		GetComponent<Rigidbody2D>().AddForce(new Vector2(pos ? -pushX : pushX, pushY), ForceMode2D.Impulse);
 	}
 

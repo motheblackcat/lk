@@ -28,7 +28,7 @@ public class SceneLoader : MonoBehaviour {
 		startTimer = transitionTimer;
 		startScene = true;
 
-		player = GameObject.Find("Player") ? GameObject.Find("Player") : null;
+		player = GameObject.FindWithTag("Player");
 		playerControl = player ? player.GetComponent<PlayerControl>() : null;
 		playerHealth = player ? player.GetComponent<PlayerHealth>() : null;
 	}
