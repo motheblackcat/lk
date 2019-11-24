@@ -15,9 +15,9 @@ public class PlayerHealth : MonoBehaviour {
 	public bool isInv = false;
 	public float restartLevelTimer = 2f;
 	public float flickTimer = 0.2f;
-	float invTimerTemp;
 	public float invicibilityTimer = 1f;
 	public int currentSceneIndex;
+	float invTimerTemp;
 
 	private void Awake() {
 		// TODO: Simple logic to keep the player health between scenes, will be expanded for weapons & items

@@ -32,7 +32,7 @@ public class PlayerAttack : MonoBehaviour {
 
         if (timeBtwAttack <= 0) {
             // TODO: Check if all those conditions are necessary
-            if (Input.GetButtonDown("Attack") && !playerHealth.tookDamage && !playerHealth.isDead && GetComponent<PlayerControl>().canMove) {
+            if (Input.GetButtonDown("Attack") && GetComponent<PlayerControl>().canMove) {
                 isAttacking = true;
                 ennemiesToDamage = Physics2D.OverlapCircleAll(atkPos.position, atkRange, whatIsEnemies);
                 for (int i = 0; i < ennemiesToDamage.Length; i++) {
