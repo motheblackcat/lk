@@ -24,9 +24,9 @@ public class EnemyMoveControl : MonoBehaviour {
 
     void Move() {
         if (player) {
-            bool canMove = !player.GetComponent<PlayerHealth>().isDead && !GetComponent<EnemyHealthControl>().isStunned;
+            bool enemyCanMove = !player.GetComponent<PlayerHealth>().isDead && !GetComponent<EnemyHealthControl>().isStunned;
 
-            if (canSee && canMove) {
+            if (canSee && enemyCanMove) {
                 GetComponent<Rigidbody2D>().velocity = player.transform.position.x > transform.position.x ? new Vector2(moveSpeed, 0) : new Vector2(-moveSpeed, 0);
             }
 

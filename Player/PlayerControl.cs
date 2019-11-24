@@ -19,12 +19,16 @@ public class PlayerControl : MonoBehaviour {
     }
 
     void Update() {
-        // TOFIX: Dialog with NPC set canMove to false forever
         GameObject dialogBox = GameObject.FindWithTag("DialogBox");
         bool inDialog = dialogBox ? dialogBox.GetComponent<DialogManager>().inDialog : false;
-        if (inDialog) {
-            canMove = false;
-        }
+
+        bool loadScene = GameObject.Find("SceneTransition").GetComponent<SceneLoader>().loadScene;
+
+        // TOFIX: Dialog with NPC set canMove to false forever
+        // if (inDialog) {
+        //     canMove = false;
+        // }
+
         if (canMove) {
             PlayerMove();
             Flip();
