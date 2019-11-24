@@ -87,7 +87,7 @@ public class PlayerHealth : MonoBehaviour {
 			if (restartLevelTimer <= 0) {
 				// TODO: Death reload current scene from start or a checkpoint, need to make logic for special cases
 				GameObject.Find("SceneTransition").GetComponent<SceneLoader>().LoadScene(currentSceneIndex, false);
-				// TODO: This should be handled in the SceneLoader script
+				// TODO: This should be handled in the SceneLoader or it's own script
 				GameObject.Find("PlayerState").GetComponent<PlayerStateSave>().playerHealth = 100;
 			}
 		}
