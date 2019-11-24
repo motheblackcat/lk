@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour {
 
-    public GameObject npc;
     Rigidbody2D rb;
     SpriteRenderer sprite;
     GameObject ghost;
+    PlayerHealth playerHealth;
+    SceneLoader sceneLoader;
+    IntroSceneManager introSceneManager;
+    public GameObject npc;
     public float runSpeed = 40;
     public float jumpSpeed = 600;
     public bool canMove;
@@ -16,14 +18,18 @@ public class PlayerControl : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         ghost = GameObject.Find("Ghost");
+        playerHealth = GetComponent<PlayerHealth>();
+        introSceneManager = GameObject.Find("SceneTransition").GetComponent<IntroSceneManager>();
+        sceneLoader = GameObject.Find("SceneTransition").GetComponent<SceneLoader>();
     }
 
     void Update() {
-        bool introDone = GameObject.Find("SceneTransition").GetComponent<IntroSceneManager>() ? GameObject.Find("SceneTransition").GetComponent<IntroSceneManager>().introDone : true;
+        bool introDone = introSceneManager ? introSceneManager.introDone : true;
+        bool loadScene = sceneLoader.loadScene;
+        //TODO: Check if the dialogBox ref can be simplified overall
         bool inDialog = GameObject.FindWithTag("DialogBox") ? GameObject.FindWithTag("DialogBox").GetComponent<DialogManager>().inDialog : false;
-        bool loadScene = GameObject.Find("SceneTransition").GetComponent<SceneLoader>().loadScene;
-        bool tookDamage = GetComponent<PlayerHealth>() ? GetComponent<PlayerHealth>().startInv : false;
-        bool isDead = GetComponent<PlayerHealth>() ? GetComponent<PlayerHealth>().isDead : false;
+        bool tookDamage = playerHealth ? playerHealth.startInv : false;
+        bool isDead = playerHealth ? playerHealth.isDead : false;
 
         canMove = introDone && !inDialog && !loadScene && !tookDamage && !isDead;
     }
