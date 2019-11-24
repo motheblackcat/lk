@@ -26,19 +26,17 @@ public class PlayerControl : MonoBehaviour {
         bool isDead = GetComponent<PlayerHealth>() ? GetComponent<PlayerHealth>().isDead : false;
 
         canMove = introDone && !inDialog && !loadScene && !tookDamage && !isDead;
+    }
 
+    private void FixedUpdate() {
         if (canMove) {
             PlayerMove();
-            Flip();
         }
     }
-    // Should move this to FixedUpdated()
+
     void PlayerMove() {
         if (Input.GetAxis("Horizontal") != 0) { rb.velocity = new Vector2(Input.GetAxis("Horizontal") * runSpeed, rb.velocity.y); }
         if (Input.GetButtonDown("Jump") && isGrounded) { rb.velocity = Vector2.up * jumpSpeed; }
-    }
-
-    void Flip() {
         if (Input.GetAxis("Horizontal") > 0) { sprite.flipX = false; }
         if (Input.GetAxis("Horizontal") < 0) { sprite.flipX = true; }
         GetComponent<CapsuleCollider2D>().offset = sprite.flipX ? new Vector2(-0.06f, -0.04f) : new Vector2(0.06f, -0.04f);
