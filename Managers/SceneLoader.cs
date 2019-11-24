@@ -1,5 +1,4 @@
-﻿using Cinemachine;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour {
@@ -27,7 +26,6 @@ public class SceneLoader : MonoBehaviour {
 
 		// Temp value to reset transitionTimer
 		transitionTimerTemp = transitionTimer;
-
 		loadScene = true;
 	}
 
