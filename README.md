@@ -18,6 +18,7 @@ Patch notes v0.0.2:
 
 Currently Known Issues:
 
+- Pushback from enemies is in the wrong direction (it works only in the editor)
 - Attack sound can be heard without the animation when spamming attack (attack is registered though)
 - Jump sound can be heard without jumping when spamming it along using an Sweapon
 - Damage boost on enemy (Bigger jump while taking damage)
