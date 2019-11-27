@@ -1,38 +1,36 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour {
-    public bool isAttacking;
-    public float timeBtwAtk;
-    public float timeBtwAtkTemp;
+    public bool isAttacking = false;
+    public float timeBtwAtk = 0.3f;
+    float timeBtwAtkTemp;
     float atkPosX;
     public Transform atkPos;
-    public float atkRange;
+    public float atkRange = 0.7f;
     public LayerMask whatIsEnemies;
-    public int damage;
-    PlayerHealth playerHealth;
+    //TOFIX: damage should come from the player's weapon
+    public int damage = 1;
 
     public Collider2D[] ennemiesToDamage;
 
     void Start() {
-        playerHealth = GetComponent<PlayerHealth>();
         atkPos = GameObject.Find("AttackPos").GetComponent<Transform>();
         atkPosX = atkPos.localPosition.x;
+        timeBtwAtkTemp = timeBtwAtk;
     }
 
-    // TODO: Test atk detection with continus otherwise refactor with FixedUpdate()
+    // TODO: Atk detection seems better with continus but keep an eye on it
     void Update() {
         Attack();
     }
 
     void Attack() {
-        atkPos.localPosition = GetComponent<SpriteRenderer>().flipX ? new Vector2(-atkPosX, atkPos.localPosition.y) : new Vector2(atkPosX, atkPos.localPosition.y);
+        atkPos.localPosition = new Vector2(GetComponent<SpriteRenderer>().flipX ? -atkPosX : atkPosX, atkPos.localPosition.y);
 
         if (timeBtwAtk <= 0) {
             if (Input.GetButtonDown("Attack") && GetComponent<PlayerControl>().canMove) {
                 isAttacking = true;
+                //TODO: Check that this Array is correctly filled
                 ennemiesToDamage = Physics2D.OverlapCircleAll(atkPos.position, atkRange, whatIsEnemies);
                 for (int i = 0; i < ennemiesToDamage.Length; i++) {
                     ennemiesToDamage[i].GetComponent<EnemyHealthControl>().TakeDamage(damage);

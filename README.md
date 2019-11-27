@@ -17,6 +17,6 @@ Patch notes v0.0.2:
 
 Currently Known Issues:
 
-- Attack sound can be heard without the animation when spamming attack
+- Attack sound can be heard without the animation when spamming attack (attack is registered though)
 - Jump sound can be heard without jumping when spamming it along using an Sweapon
 - Damage boost on enemy (Bigger jump while taking damage)
