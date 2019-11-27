@@ -20,7 +20,8 @@ public class NPCManager : MonoBehaviour {
 
     void OnTriggerStay2D(Collider2D other) {
         // TODO: Check if all these conditions are necessary
-        if (other.gameObject.tag == "Player" && Camera.main.GetComponent<IntroSceneManager>() ? Camera.main.GetComponent<IntroSceneManager>().introDone : true) {
+        bool introDone = Camera.main.GetComponent<IntroSceneManager>() ? Camera.main.GetComponent<IntroSceneManager>().introDone : true;
+        if (other.gameObject.tag == "Player" && introDone) {
             if (dialogArrow)dialogArrow.enabled = !inDialog;
             if (animator) {
                 animator.SetBool("watch", true);
@@ -29,7 +30,7 @@ public class NPCManager : MonoBehaviour {
             if (tag == "NPC") {
                 GetComponent<SpriteRenderer>().flipX = other.gameObject.transform.position.x > transform.position.x;
             }
-            // TODO: This is too specific to the door of the intro
+            // TOFIX: This is too specific to the door of the intro
             if (tag == "Door" && Input.GetAxis("Vertical") > 0) {
                 sceneLoader.loadScene = true;
             }

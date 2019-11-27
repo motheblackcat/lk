@@ -5,6 +5,7 @@ public class SceneLoader : MonoBehaviour {
 	Animator animator;
 	GameObject player;
 	PlayerHealth playerHealth;
+	PlayerSWeapons playerSWeapons;
 	GameObject playerState;
 	PlayerStateSave playerStateSave;
 	public bool loadScene;
@@ -18,6 +19,7 @@ public class SceneLoader : MonoBehaviour {
 	void Start() {
 		player = GameObject.FindWithTag("Player");
 		playerHealth = player ? player.GetComponent<PlayerHealth>() : null;
+		playerSWeapons = player ? player.GetComponent<PlayerSWeapons>() : null;
 		playerState = GameObject.FindWithTag("PlayerState");
 		playerStateSave = playerState ? playerState.GetComponent<PlayerStateSave>() : null;
 
@@ -46,9 +48,10 @@ public class SceneLoader : MonoBehaviour {
 
 		if (transitionTimer <= 0) {
 			if (!starting) {
-				// TODO: Check these conditions (should be it's own script?)
+				// TODO: The state saving logic should be a method from a load/save script
 				if (playerState && player) {
 					playerStateSave.playerHealth = playerHealth.playerHealth;
+					playerStateSave.sWeapons = playerSWeapons.sWeapons;
 				}
 				SceneManager.LoadScene(sceneIndex);
 			}

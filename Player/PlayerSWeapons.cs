@@ -4,32 +4,35 @@ using UnityEngine.UI;
 
 public class PlayerSWeapons : MonoBehaviour {
     public List<GameObject> sWeapons;
-    public GameObject sWeapon;
-    public Image sWeaponsIcon;
+    int sWeaponsCount = 0;
+    GameObject sWeapon;
     public bool throwWeapon = false;
     public float throwTimer = 0;
 
     void Start() {
-        sWeaponsIcon = GameObject.Find("SWeaponIcon") ? GameObject.Find("SWeaponIcon").GetComponent<Image>() : null;
-        // TODO: Add these from elsewhere (npc event or shop)
-        sWeapons.Add(Resources.Load("Sweapons/Axe")as GameObject);
-        sWeapons.Add(Resources.Load("Sweapons/Dagger")as GameObject);
-        sWeapon = sWeapons[0];
+        // TODO: Move the savestate logic in it's own script
+        if (GameObject.Find("PlayerState")) {
+            if (sWeapons.Count < GameObject.Find("PlayerState").GetComponent<PlayerStateSave>().sWeapons.Count) {
+                sWeapons = GameObject.Find("PlayerState").GetComponent<PlayerStateSave>().sWeapons;
+            }
+        }
+        if (sWeapons.Count > 0)sWeapon = sWeapons[0];
     }
 
     void Update() {
-        if (sWeapon && GetComponent<PlayerControl>().canMove) {
-            if (Input.GetButtonDown("SWeapon")) {
-                if (throwTimer <= 0) {
-                    throwWeapon = true;
-                }
+        // TODO: Make a stable way to detect changes to the sWeapons list ingame
+        if (sWeapons.Count != sWeaponsCount)sWeapon = sWeapons[0];
+
+        GameObject.Find("SWeaponUI").GetComponent<Canvas>().enabled = sWeapon;
+
+        if (sWeapon) {
+            if (Input.GetButtonDown("SWeapon") && GetComponent<PlayerControl>().canMove && throwTimer <= 0) {
+                throwWeapon = true;
             }
 
+            GameObject.Find("SWeaponIcon").GetComponent<Image>().sprite = sWeapon.GetComponent<SpriteRenderer>().sprite;
+
             SwitchWeapon();
-        }
-        if (GameObject.Find("SWeaponUI")) {
-            GameObject.Find("SWeaponUI").GetComponent<Canvas>().enabled = sWeapon;
-            sWeaponsIcon.sprite = sWeapon ? sWeapon.GetComponent<SpriteRenderer>().sprite : null;
         }
     }
 
@@ -42,27 +45,21 @@ public class PlayerSWeapons : MonoBehaviour {
         }
     }
 
-    // Should this be in PlayerControl instead?
     void SwitchWeapon() {
-        if (sWeapon) {
-            int index = sWeapons.FindIndex(s => s == sWeapon);
-            if (Input.GetButtonDown("RB")) {
-                sWeapon = (index + 1) > sWeapons.Count - 1 ? sWeapons[0] : sWeapons[index + 1];
-            }
-            if (Input.GetButtonDown("LB")) {
-                sWeapon = (index - 1) < 0 ? sWeapons[sWeapons.Count - 1] : sWeapons[index - 1];
-            }
+        int index = sWeapons.FindIndex(s => s == sWeapon);
+        if (Input.GetButtonDown("RB")) {
+            sWeapon = (index + 1) > sWeapons.Count - 1 ? sWeapons[0] : sWeapons[index + 1];
+        }
+        if (Input.GetButtonDown("LB")) {
+            sWeapon = (index - 1) < 0 ? sWeapons[sWeapons.Count - 1] : sWeapons[index - 1];
         }
     }
 
     void ThrowWeapon() {
         if (throwTimer <= 0) {
-            // Get player's sprite flip and velocity
             bool playerFlip = GetComponent<SpriteRenderer>().flipX;
             Vector2 playerVel = GetComponent<Rigidbody2D>().velocity;
-            // Instanciate clone
             GameObject clone = Instantiate(sWeapon, transform)as GameObject;
-            // Get reference to the clone's SWeaponsControl script to set the object's values
             SWeaponsControl sWeaponControl = clone.GetComponent<SWeaponsControl>();
             clone.GetComponent<Rigidbody2D>().AddForce(
                 new Vector2((playerFlip ? -sWeaponControl.throwForceX : sWeaponControl.throwForceX) + playerVel.x, sWeaponControl.throwForceY),

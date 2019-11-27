@@ -16,7 +16,8 @@ public class PlayerHealth : MonoBehaviour {
 	float invTimerTemp = 0;
 
 	private void Awake() {
-		// TODO: Simple logic to keep the player health between scenes, will be expanded for weapons & items in it's own script
+		// TODO: Simple logic to keep the player health between scenes move and expand in its own script
+		// TODO: This should be a simple method to get the health from the saved state script
 		if (!GameObject.Find("PlayerState")) {
 			GameObject playerState = Instantiate(Resources.Load("States/PlayerState")as GameObject);
 			playerState.name = playerState.name.Replace("(Clone)", "");

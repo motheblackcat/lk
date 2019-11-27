@@ -22,7 +22,7 @@ public class DialogManager : MonoBehaviour {
     }
 
     // Check for an npc to get the dialogs and close the dialog box
-    // Auto start dialog apply TO ALL NPC
+    //TODO: Auto start dialog apply TO ALL NPC IN THE SCENE
     void CheckNpc(GameObject npc) {
         bool introDone = Camera.main.GetComponent<IntroSceneManager>() ? Camera.main.GetComponent<IntroSceneManager>().introDone : true;
 
