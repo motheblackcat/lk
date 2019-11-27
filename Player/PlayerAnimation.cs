@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour {
 	Animator animator;
@@ -22,20 +19,16 @@ public class PlayerAnimation : MonoBehaviour {
 
 	void Update() {
 		PlayerAnimate();
-		if (weapon) { SwordPosition(); }
+		if (weapon)SwordPosition();
 	}
 
 	void PlayerAnimate() {
 		animator.SetBool("run", GetComponent<Rigidbody2D>().velocity.x != 0 && playerControl.canMove);
 		animator.SetBool("air", !playerControl.isGrounded);
-		// The fixed duration for attack and throw should be set according to the animation clip length
-		// Add air throw animation
 		animator.SetBool("throw", playerSWeapons ? playerSWeapons.throwWeapon : false);
-		if (playerAttack) {
-			animator.SetBool("attack", playerAttack.isAttacking);
-		}
-		if (playerHealth) { animator.SetBool("hurt", playerHealth.isInv && !playerHealth.isDead); }
-		if (playerHealth && playerHealth.isDead) { animator.SetTrigger("die"); }
+		if (playerAttack)animator.SetBool("attack", playerAttack.isAttacking);
+		if (playerHealth)animator.SetBool("hurt", playerHealth.isInv);
+		if (playerHealth && playerHealth.isDead)animator.SetTrigger("die");
 	}
 
 	void SwordPosition() {
