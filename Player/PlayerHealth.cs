@@ -57,7 +57,7 @@ public class PlayerHealth : MonoBehaviour {
 	//TOFIX: Pushback is in the incorrect direction
 	void PushBack(GameObject enemy) {
 		bool enemyPos = enemy.transform.position.x > transform.position.x;
-		Vector2 pushDirection = enemyPos ? new Vector2(-pushX, pushY) : new Vector2(pushX, pushY);
+		Vector2 pushDirection = new Vector2(enemyPos ? -pushX : pushX, pushY);
 		GetComponent<Rigidbody2D>().AddForce(pushDirection, ForceMode2D.Impulse);
 	}
 
@@ -84,6 +84,7 @@ public class PlayerHealth : MonoBehaviour {
 		};
 	}
 
+	//TODO: Refactor the way damages are taken, take into account that pushback should be in FixedUpdate()
 	void OnCollisionStay2D(Collision2D col) {
 		if (col.gameObject.tag == "Enemy") {
 			if (!tookDamage && !isInv && !isDead) {

@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerAttack : MonoBehaviour {
     public bool isAttacking;
-    public float timeBtwAttack;
-    public float cdBtwAttack;
+    public float timeBtwAtk;
+    public float timeBtwAtkTemp;
     float atkPosX;
     public Transform atkPos;
     public float atkRange;
@@ -22,7 +22,7 @@ public class PlayerAttack : MonoBehaviour {
         atkPosX = atkPos.localPosition.x;
     }
 
-    // TODO: Refactor with fixedupdate for consitent timer?
+    // TODO: Test atk detection with continus otherwise refactor with FixedUpdate()
     void Update() {
         Attack();
     }
@@ -30,19 +30,18 @@ public class PlayerAttack : MonoBehaviour {
     void Attack() {
         atkPos.localPosition = GetComponent<SpriteRenderer>().flipX ? new Vector2(-atkPosX, atkPos.localPosition.y) : new Vector2(atkPosX, atkPos.localPosition.y);
 
-        if (timeBtwAttack <= 0) {
-            // TODO: Check if all those conditions are necessary
+        if (timeBtwAtk <= 0) {
             if (Input.GetButtonDown("Attack") && GetComponent<PlayerControl>().canMove) {
                 isAttacking = true;
                 ennemiesToDamage = Physics2D.OverlapCircleAll(atkPos.position, atkRange, whatIsEnemies);
                 for (int i = 0; i < ennemiesToDamage.Length; i++) {
                     ennemiesToDamage[i].GetComponent<EnemyHealthControl>().TakeDamage(damage);
                 }
-                timeBtwAttack = cdBtwAttack;
+                timeBtwAtk = timeBtwAtkTemp;
             }
         } else {
             isAttacking = false;
-            timeBtwAttack -= Time.deltaTime;
+            timeBtwAtk -= Time.deltaTime;
         }
     }
 

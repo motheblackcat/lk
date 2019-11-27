@@ -32,13 +32,18 @@ public class PlayerControl : MonoBehaviour {
         bool isDead = playerHealth ? playerHealth.isDead : false;
 
         canMove = introDone && !inDialog && !loadScene && !tookDamage && !isDead;
-    }
 
-    private void FixedUpdate() {
+        //TODO: Refactor PlayerHealth otherwise pushback will not work correctly with FixedUpdate()
         if (canMove) {
             PlayerMove();
         }
     }
+
+    // private void FixedUpdate() {
+    //     if (canMove) {
+    //         PlayerMove();
+    //     }
+    // }
 
     void PlayerMove() {
         if (Input.GetAxis("Horizontal") != 0) { rb.velocity = new Vector2(Input.GetAxis("Horizontal") * runSpeed, rb.velocity.y); }

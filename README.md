@@ -2,16 +2,21 @@
 
 Unity 2D heroic-fantasy adventure game demo.
 
-My first attempt at making a 2D game demo with the Unity engine, my goal is to acheive a small but satisfying action oriented first level before expanding toward a more complexe metroidvania game style.
-
-Feel free to contribute in any way you wish!
+A sandbox/pet project to learn 2D in Unity, advancing slowly due to work and life ofc.
 
 <img src="https://motheblackcat.github.io/assets/img/game.gif">
 
-You can test the current build at https://motheblackcat.github.io/assets/build/lk.rar.
+You can test the current build at https://motheblackcat.github.io/assets/build/lk.rar or in the releases.
 
-Latest additions v0.0.2:
+Patch notes v0.0.2:
 
-- Character's life is kept between scenes
-- Bug fix for dialog issue
-- Player move conditions refactoring
+- New Feature: Player's life is kept between scenes
+- Improvement: Player flicking when hurt made as an animation instead of programaticaly
+- Improvement: Scene transitions reworked for more stability and easier expansion
+- Fix: Player couldn't move after closing a dialog (Player move conditions refactored)
+
+Currently Known Issues:
+
+- Attack sound can be heard without the animation when spamming attack
+- Jump sound can be heard without jumping when spamming it along using an Sweapon
+- Damage boost on enemy (Bigger jump while taking damage)
