@@ -10,7 +10,8 @@ You can test the current build at https://motheblackcat.github.io/assets/build/l
 
 Patch notes v0.0.2:
 
-- New Feature: Player's life is kept between scenes
+- New Feature: Player's life and sWeapons state kept between scenes
+- WIP: New scene to get the Axe sub-weapon from Bob The Lumberjack
 - Improvement: Player flicking when hurt made as an animation instead of programaticaly
 - Improvement: Scene transitions reworked for more stability and easier expansion
 - Fix: Player couldn't move after closing a dialog (Player move conditions refactored)
