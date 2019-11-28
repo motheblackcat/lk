@@ -36,61 +36,49 @@ public class PlayerHealth : MonoBehaviour {
 
 	void Update() {
 		if (healthBar)healthBar.fillAmount = playerHealth / 100;
-		InvincibilityTimerStart();
+		if (isInv)StartInvTimer();
 		Death();
 	}
 
-	void InvincibilityTimerStart() {
-		if (tookDamage) {
+	void StartInvTimer() {
+		tookDamage = false;
+		invicibilityTimer -= Time.deltaTime;
+		if (invicibilityTimer <= 0) {
+			invicibilityTimer = invTimerTemp;
+			isInv = false;
+		}
+	}
+
+	//TODO: Prevent pushback on death and its strength sould be taken from the enemy
+	void TakeDamage(GameObject enemy) {
+		playerHealth -= enemy.GetComponent<EnemyHealthControl>().damage;
+		Death();
+		if (!isDead) {
+			bool enemyPos = enemy.transform.position.x > transform.position.x;
+			Vector2 pushDirection = new Vector2(enemyPos ? -pushX : pushX, pushY);
+			GetComponent<Rigidbody2D>().AddForce(pushDirection, ForceMode2D.Impulse);
 			isInv = true;
-			tookDamage = false;
-		}
-		if (isInv) {
-			invicibilityTimer -= Time.deltaTime;
-			if (invicibilityTimer <= 0) {
-				isInv = false;
-				invicibilityTimer = invTimerTemp;
-			}
+			tookDamage = true;
 		}
 	}
 
-	//TODO: Pushback strength sould be taken from the enemy
-	//TOFIX: Pushback is in the incorrect direction
-	void PushBack(GameObject enemy) {
-		bool enemyPos = enemy.transform.position.x > transform.position.x;
-		Vector2 pushDirection = new Vector2(enemyPos ? -pushX : pushX, pushY);
-		GetComponent<Rigidbody2D>().AddForce(pushDirection, ForceMode2D.Impulse);
-	}
-
+	// TODO: Logic to restart from checkpoint and special cases, and to reset playerstate health
 	void Death() {
 		if (playerHealth <= 0) {
 			isDead = true;
 			GameObject.Find("MainCamera").GetComponent<AudioSource>().Stop();
 			restartLevelTimer -= Time.deltaTime;
 			if (restartLevelTimer <= 0) {
-				// TODO: Death reload current scene from start or a checkpoint, need to make logic for special cases
 				GameObject.Find("SceneTransition").GetComponent<SceneLoader>().LoadScene(currentSceneIndex, false);
-				// TODO: This should be handled in the SceneLoader or it's own script
 				GameObject.Find("PlayerState").GetComponent<PlayerStateSave>().playerHealth = 100;
 			}
 		}
 	}
 
-	void TakeDamage(GameObject enemy) {
-		playerHealth -= enemy.GetComponent<EnemyHealthControl>().damage;
-		Death();
-		if (!isDead) {
-			tookDamage = true;
-			PushBack(enemy);
-		};
-	}
-
 	//TODO: Refactor the way damages are taken, take into account that pushback should be in FixedUpdate()
 	void OnCollisionStay2D(Collision2D col) {
-		if (col.gameObject.tag == "Enemy") {
-			if (!tookDamage && !isInv && !isDead) {
-				TakeDamage(col.gameObject);
-			}
+		if (col.gameObject.tag == "Enemy" && !isInv) {
+			TakeDamage(col.gameObject);
 		}
 	}
 }
