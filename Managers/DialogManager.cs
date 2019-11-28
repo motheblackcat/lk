@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogManager : MonoBehaviour {
+    GameObject sceneTransition;
     GameObject player;
     PlayerControl playerControl;
     public GameObject npc;
@@ -12,19 +13,18 @@ public class DialogManager : MonoBehaviour {
     void Start() {
         player = GameObject.FindWithTag("Player");
         playerControl = player.GetComponent<PlayerControl>();
+        sceneTransition = GameObject.Find("SceneTransition");
     }
 
-    // Check if player is in contact with an NPC or if the Dialog box is opened
     void Update() {
         npc = playerControl.npc;
         inDialog = GetComponent<Image>().enabled;
         CheckNpc(npc);
     }
 
-    // Check for an npc to get the dialogs and close the dialog box
     //TODO: Auto start dialog apply TO ALL NPC IN THE SCENE
     void CheckNpc(GameObject npc) {
-        bool introDone = Camera.main.GetComponent<IntroSceneManager>() ? Camera.main.GetComponent<IntroSceneManager>().introDone : true;
+        bool introDone = sceneTransition.GetComponent<IntroSceneManager>() ? sceneTransition.GetComponent<IntroSceneManager>().introDone : true;
 
         if (npc && introDone) {
             if (autoStartDialog) {
