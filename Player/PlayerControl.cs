@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 
 public class PlayerControl : MonoBehaviour {
-
+    public GameObject npc;
     Rigidbody2D rb;
     SpriteRenderer sprite;
     GameObject ghost;
     PlayerHealth playerHealth;
     SceneLoader sceneLoader;
     IntroSceneManager introSceneManager;
-    public GameObject npc;
+    GameObject dialogBox;
     public float runSpeed = 40;
     public float jumpSpeed = 600;
     public bool canMove;
@@ -21,12 +21,13 @@ public class PlayerControl : MonoBehaviour {
         playerHealth = GetComponent<PlayerHealth>();
         introSceneManager = GameObject.Find("SceneTransition").GetComponent<IntroSceneManager>();
         sceneLoader = GameObject.Find("SceneTransition").GetComponent<SceneLoader>();
+        dialogBox = GameObject.Find("DialogBox");
     }
 
     void Update() {
         bool introDone = introSceneManager ? introSceneManager.introDone : true;
         bool loadScene = sceneLoader.loadScene;
-        bool inDialog = GameObject.FindWithTag("DialogBox").GetComponent<DialogManager>().inDialog;
+        bool inDialog = dialogBox.GetComponent<DialogManager>().inDialog;
         bool tookDamage = playerHealth ? playerHealth.isInv : false;
         bool isDead = playerHealth ? playerHealth.isDead : false;
 

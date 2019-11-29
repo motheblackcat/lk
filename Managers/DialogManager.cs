@@ -31,7 +31,7 @@ public class DialogManager : MonoBehaviour {
                 getDialog(npc);
                 autoStartDialog = false;
             }
-            if (Input.GetAxis("Vertical") > 0) {
+            if (Input.GetButtonDown("Jump")) {
                 getDialog(npc);
             }
         }
@@ -39,7 +39,7 @@ public class DialogManager : MonoBehaviour {
         if (inDialog && Input.GetButtonDown("Jump")) {
             GetComponent<Image>().enabled = false;
             GameObject.Find("Text").GetComponent<Text>().text = "";
-            GameObject.Find("ButtonA").GetComponent<Image>().enabled = false;
+            GameObject.Find("DialogBox/ButtonA").GetComponent<Image>().enabled = false;
         }
     }
 
@@ -49,7 +49,7 @@ public class DialogManager : MonoBehaviour {
         StreamReader sr = new StreamReader(path);
         GetComponent<Image>().enabled = true;
         GameObject.Find("Text").GetComponent<Text>().text = sr.ReadToEnd();
-        GameObject.Find("ButtonA").GetComponent<Image>().enabled = true;
+        GameObject.Find("DialogBox/ButtonA").GetComponent<Image>().enabled = true;
         sr.Close();
     }
 }
