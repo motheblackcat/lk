@@ -22,7 +22,7 @@ public class DialogManager : MonoBehaviour {
         CheckNpc(npc);
     }
 
-    //TODO: Auto start dialog apply TO ALL NPC IN THE SCENE
+    // TODO: Auto start dialog apply TO ALL NPC IN THE SCENE
     void CheckNpc(GameObject npc) {
         bool introDone = sceneTransition.GetComponent<IntroSceneManager>() ? sceneTransition.GetComponent<IntroSceneManager>().introDone : true;
 

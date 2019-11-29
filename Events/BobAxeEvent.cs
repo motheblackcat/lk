@@ -11,7 +11,7 @@ public class BobAxeEvent : MonoBehaviour {
     }
 
     void Update() {
-        //TODO: Refactor this draft dialog closing detection (add a general way to change states from dialogs in DialogManager)
+        // TODO: Refactor this draft dialog closing detection (add a general way to change states from dialogs in DialogManager)
         if (dialogBox.enabled)opened = true;
         if (opened) {
             if (!dialogBox.enabled)closed = true;

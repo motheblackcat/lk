@@ -49,7 +49,7 @@ public class PlayerHealth : MonoBehaviour {
 		}
 	}
 
-	//TODO: Prevent pushback on death and its strength sould be taken from the enemy
+	// TODO: Prevent pushback on death and its strength sould be taken from the enemy
 	void TakeDamage(GameObject enemy) {
 		playerHealth -= enemy.GetComponent<EnemyHealthControl>().damage;
 		Death();
@@ -75,7 +75,7 @@ public class PlayerHealth : MonoBehaviour {
 		}
 	}
 
-	//TODO: Refactor the way damages are taken, take into account that pushback should be in FixedUpdate()
+	// TODO: Refactor the way damages are taken, take into account that pushback should be in FixedUpdate()
 	void OnCollisionStay2D(Collision2D col) {
 		if (col.gameObject.tag == "Enemy" && !isInv) {
 			TakeDamage(col.gameObject);

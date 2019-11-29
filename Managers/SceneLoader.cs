@@ -26,7 +26,6 @@ public class SceneLoader : MonoBehaviour {
 		animator = GetComponent<Animator>();
 		animator.SetFloat("transitionSpeed", 1 / transitionTimer);
 
-		// Temp value to reset transitionTimer
 		transitionTimerTemp = transitionTimer;
 		loadScene = true;
 	}
@@ -40,12 +39,12 @@ public class SceneLoader : MonoBehaviour {
 		}
 	}
 
+	// TOFIX: Scene load before end of transition
 	public void LoadScene(int sceneIndex, bool starting) {
 		string transitionName = (starting ? "start" : "end") + transitionType;
-		GetComponent<Animator>().SetTrigger(transitionName);
+		animator.SetTrigger(transitionName);
 
 		transitionTimer -= Time.deltaTime;
-
 		if (transitionTimer <= 0) {
 			if (!starting) {
 				// TODO: The state saving logic should be a method from a load/save script
