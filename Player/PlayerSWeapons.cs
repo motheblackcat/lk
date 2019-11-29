@@ -36,7 +36,6 @@ public class PlayerSWeapons : MonoBehaviour {
         }
     }
 
-    // Lazy way of handling input > update / physics > fixedupdate
     void FixedUpdate() {
         if (throwWeapon) {
             ThrowWeapon();
