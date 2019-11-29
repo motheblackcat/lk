@@ -26,8 +26,7 @@ public class PlayerControl : MonoBehaviour {
     void Update() {
         bool introDone = introSceneManager ? introSceneManager.introDone : true;
         bool loadScene = sceneLoader.loadScene;
-        // TODO: Check if the dialogBox ref can be simplified overall
-        bool inDialog = GameObject.FindWithTag("DialogBox") ? GameObject.FindWithTag("DialogBox").GetComponent<DialogManager>().inDialog : false;
+        bool inDialog = GameObject.FindWithTag("DialogBox").GetComponent<DialogManager>().inDialog;
         bool tookDamage = playerHealth ? playerHealth.isInv : false;
         bool isDead = playerHealth ? playerHealth.isDead : false;
 
