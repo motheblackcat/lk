@@ -44,6 +44,16 @@ public class SceneLoader : MonoBehaviour {
 		string transitionName = (starting ? "start" : "end") + transitionType;
 		animator.SetTrigger(transitionName);
 
+		// TODO: Simple horizontal scene navigation, add logic for vertical placed warps and player position
+		int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+		int nextSceneIndex = player.transform.position.x < GameObject.Find("Environment").GetComponent<Collider2D>().bounds.min.x ?
+			currentSceneIndex - 1 : currentSceneIndex + 1;
+		if (nextSceneIndex >= SceneManager.sceneCountInBuildSettings) {
+			sceneIndex = currentSceneIndex;
+		} else {
+			sceneIndex = nextSceneIndex;
+		}
+
 		transitionTimer -= Time.deltaTime;
 		if (transitionTimer <= 0) {
 			if (!starting) {

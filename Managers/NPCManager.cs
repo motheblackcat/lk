@@ -31,9 +31,9 @@ public class NPCManager : MonoBehaviour {
             if (tag == "NPC") {
                 GetComponent<SpriteRenderer>().flipX = other.gameObject.transform.position.x > transform.position.x;
             }
-            // TOFIX: This is too specific to the door of the intro
+            // TOFIX: This is too specific to the door of the intro (also detection seems clunky)
             if (tag == "Door" && Input.GetButtonDown("Jump")) {
-                Debug.Log("ON THE DOOR");
+                // TODO: sceneIndex should be the index of the first level (currenly road to tavern)
                 sceneLoader.sceneIndex = 2;
                 sceneLoader.loadScene = true;
             }
