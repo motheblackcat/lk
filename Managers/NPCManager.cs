@@ -4,12 +4,13 @@ public class NPCManager : MonoBehaviour {
     SpriteRenderer dialogArrow;
     Animator animator;
     SceneLoader sceneLoader;
+    IntroSceneManager introSceneManager;
     bool inDialog;
 
     void Start() {
         animator = GetComponent<Animator>();
-        // TODO: Get a safer reference
         sceneLoader = GameObject.Find("SceneTransition").GetComponent<SceneLoader>();
+        introSceneManager = GameObject.Find("SceneTransition").GetComponent<IntroSceneManager>();
     }
 
     void Update() {
@@ -20,7 +21,7 @@ public class NPCManager : MonoBehaviour {
 
     void OnTriggerStay2D(Collider2D other) {
         // TODO: Check if all these conditions are necessary
-        bool introDone = Camera.main.GetComponent<IntroSceneManager>() ? Camera.main.GetComponent<IntroSceneManager>().introDone : true;
+        bool introDone = introSceneManager ? introSceneManager.introDone : true;
         if (other.gameObject.tag == "Player" && introDone) {
             if (dialogArrow)dialogArrow.enabled = !inDialog;
             if (animator) {
@@ -32,6 +33,7 @@ public class NPCManager : MonoBehaviour {
             }
             // TOFIX: This is too specific to the door of the intro
             if (tag == "Door" && Input.GetAxis("Vertical") > 0) {
+                sceneLoader.sceneIndex = 2;
                 sceneLoader.loadScene = true;
             }
         }
