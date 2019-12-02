@@ -16,8 +16,8 @@ public class BobAxeEvent : MonoBehaviour {
         // TODO: Make a general way to manage quests states
         if (dialogBox.enabled)wasOpened = true;
         wasClosed = wasOpened && !dialogBox.enabled;
-        if (wasClosed && GameObject.FindWithTag("Player").GetComponent<PlayerSWeapons>().sWeapons.Count == 0) {
-            GameObject.FindWithTag("Player").GetComponent<PlayerSWeapons>().sWeapons.Add(axe);
+        if (wasClosed) {
+            GameObject.Find("Player").GetComponent<PlayerSWeapons>().sWeapons.Add(axe);
             wasOpened = false;
             wasClosed = false;
         }

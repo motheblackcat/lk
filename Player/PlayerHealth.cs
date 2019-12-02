@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
 	Image healthBar;
-	PlayerState playerState;
 	public float pushX = 10f;
 	public float pushY = 10f;
 	public float playerHealth = 100f;
@@ -59,6 +58,7 @@ public class PlayerHealth : MonoBehaviour {
 			if (restartLevelTimer <= 0) {
 				GameObject.Find("SceneTransition").GetComponent<SceneLoader>().sceneIndex = currentSceneIndex;
 				GameObject.Find("SceneTransition").GetComponent<SceneLoader>().loadScene = true;
+				GameObject.Find("PlayerState").GetComponent<PlayerState>().playerHealth = 100;
 			}
 		}
 	}
