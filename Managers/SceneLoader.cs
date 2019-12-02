@@ -4,10 +4,7 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour {
 	Animator animator;
 	GameObject player;
-	PlayerHealth playerHealth;
-	PlayerSWeapons playerSWeapons;
-	GameObject playerState;
-	PlayerStateSave playerStateSave;
+	PlayerState playerState;
 	public bool loadScene;
 	public int sceneIndex;
 	public float transitionTimer = 1.5f;
@@ -18,14 +15,9 @@ public class SceneLoader : MonoBehaviour {
 
 	void Start() {
 		player = GameObject.FindWithTag("Player");
-		playerHealth = player ? player.GetComponent<PlayerHealth>() : null;
-		playerSWeapons = player ? player.GetComponent<PlayerSWeapons>() : null;
-		playerState = GameObject.FindWithTag("PlayerState");
-		playerStateSave = playerState ? playerState.GetComponent<PlayerStateSave>() : null;
-
+		playerState = GameObject.Find("PlayerState") ? GameObject.Find("PlayerState").GetComponent<PlayerState>() : null;
 		animator = GetComponent<Animator>();
 		animator.SetFloat("transitionSpeed", 1 / transitionTimer);
-
 		transitionTimerTemp = transitionTimer;
 		loadScene = true;
 	}
@@ -44,7 +36,7 @@ public class SceneLoader : MonoBehaviour {
 		string transitionName = (starting ? "start" : "end") + transitionType;
 		animator.SetTrigger(transitionName);
 
-		// TODO: Simple horizontal scene navigation, add logic for vertical placed warps and player position
+		// TODO: Simple horizontal scene navigation, add logic for vertical placed warps and player position (move to its own method)
 		int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 		int nextSceneIndex = player.transform.position.x < GameObject.Find("Environment").GetComponent<Collider2D>().bounds.min.x ?
 			currentSceneIndex - 1 : currentSceneIndex + 1;
@@ -57,11 +49,7 @@ public class SceneLoader : MonoBehaviour {
 		transitionTimer -= Time.deltaTime;
 		if (transitionTimer <= 0) {
 			if (!starting) {
-				// TODO: The state saving logic should be a method from a load/save script
-				if (playerState && player) {
-					playerStateSave.playerHealth = playerHealth.playerHealth;
-					playerStateSave.sWeapons = playerSWeapons.sWeapons;
-				}
+				playerState.Save();
 				SceneManager.LoadScene(sceneIndex);
 			}
 			transitionTimer = transitionTimerTemp;

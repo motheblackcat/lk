@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
 	Image healthBar;
+	PlayerState playerState;
 	public float pushX = 10f;
 	public float pushY = 10f;
 	public float playerHealth = 100f;
@@ -15,23 +16,11 @@ public class PlayerHealth : MonoBehaviour {
 	public int currentSceneIndex = 0;
 	float invTimerTemp = 0;
 
-	private void Awake() {
-		// TODO: Simple logic to keep the player health between scenes move and expand in its own script
-		// TODO: This should be a simple method to get the health from the saved state script
-		if (!GameObject.Find("PlayerState")) {
-			GameObject playerState = Instantiate(Resources.Load("States/PlayerState")as GameObject);
-			playerState.name = playerState.name.Replace("(Clone)", "");
-			GameObject.Find("PlayerState").GetComponent<PlayerStateSave>().playerHealth = playerHealth;
-			DontDestroyOnLoad(playerState);
-		} else {
-			playerHealth = GameObject.Find("PlayerState").GetComponent<PlayerStateSave>().playerHealth;
-		}
-	}
-
 	void Start() {
 		healthBar = GameObject.Find("Content") ? GameObject.Find("Content").GetComponent<Image>() : null;
 		invTimerTemp = invicibilityTimer;
 		currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+		playerHealth = GameObject.Find("PlayerState").GetComponent<PlayerState>().playerHealth;
 	}
 
 	void Update() {
@@ -62,7 +51,6 @@ public class PlayerHealth : MonoBehaviour {
 		}
 	}
 
-	// TODO: Add logic to restart from checkpoint and special cases, and to reset playerstate health
 	void Death() {
 		if (playerHealth <= 0) {
 			isDead = true;
@@ -71,7 +59,6 @@ public class PlayerHealth : MonoBehaviour {
 			if (restartLevelTimer <= 0) {
 				GameObject.Find("SceneTransition").GetComponent<SceneLoader>().sceneIndex = currentSceneIndex;
 				GameObject.Find("SceneTransition").GetComponent<SceneLoader>().loadScene = true;
-				GameObject.Find("PlayerState").GetComponent<PlayerStateSave>().playerHealth = 100;
 			}
 		}
 	}

@@ -3,21 +3,23 @@ using UnityEngine.UI;
 
 public class BobAxeEvent : MonoBehaviour {
     Image dialogBox;
-    public bool opened = false;
-    public bool closed = false;
+    GameObject axe;
+    bool wasOpened = false;
+    bool wasClosed = false;
 
     void Start() {
         dialogBox = GameObject.Find("DialogBox").GetComponent<Image>();
+        axe = Resources.Load("Sweapons/Axe")as GameObject;
     }
 
     void Update() {
-        // TODO: Refactor this draft dialog closing detection (add a general way to change states from dialogs in DialogManager)
-        if (dialogBox.enabled)opened = true;
-        if (opened) {
-            if (!dialogBox.enabled)closed = true;
-        }
-        if (closed) {
-            GameObject.FindWithTag("Player").GetComponent<PlayerSWeapons>().sWeapons.Add(Resources.Load("Sweapons/Axe")as GameObject);
+        // TODO: Make a general way to manage quests states
+        if (dialogBox.enabled)wasOpened = true;
+        wasClosed = wasOpened && !dialogBox.enabled;
+        if (wasClosed && GameObject.FindWithTag("Player").GetComponent<PlayerSWeapons>().sWeapons.Count == 0) {
+            GameObject.FindWithTag("Player").GetComponent<PlayerSWeapons>().sWeapons.Add(axe);
+            wasOpened = false;
+            wasClosed = false;
         }
     }
 }

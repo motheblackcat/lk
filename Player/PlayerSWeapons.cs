@@ -4,24 +4,21 @@ using UnityEngine.UI;
 
 public class PlayerSWeapons : MonoBehaviour {
     public List<GameObject> sWeapons;
-    int sWeaponsCount = 0;
-    GameObject sWeapon;
+    public GameObject sWeapon;
     public bool throwWeapon = false;
     public float throwTimer = 0;
+    int sWeaponsCount = 0;
 
     void Start() {
-        // TODO: Move the savestate logic in it's own script
-        if (GameObject.Find("PlayerState")) {
-            if (sWeapons.Count < GameObject.Find("PlayerState").GetComponent<PlayerStateSave>().sWeapons.Count) {
-                sWeapons = GameObject.Find("PlayerState").GetComponent<PlayerStateSave>().sWeapons;
-            }
-        }
+        sWeapons = GameObject.Find("PlayerState").GetComponent<PlayerState>().sWeapons;
+        // TODO: SWeapon choice is reset between scenes
         if (sWeapons.Count > 0)sWeapon = sWeapons[0];
+        sWeaponsCount = sWeapons.Count;
     }
 
     void Update() {
         // TODO: Make a stable way to detect changes to the sWeapons list ingame
-        if (sWeapons.Count != sWeaponsCount)sWeapon = sWeapons[0];
+        if (sWeapons.Count > sWeaponsCount && sWeapons.Count < 2)sWeapon = sWeapons[0];
 
         GameObject.Find("SWeaponUI").GetComponent<Canvas>().enabled = sWeapon;
 
