@@ -7,7 +7,7 @@ public class IntroSceneManager : MonoBehaviour {
 	public float startTimer = 5.0f;
 
 	void Start() {
-		player = GameObject.FindWithTag("Player");
+		player = GameObject.Find("Player");
 	}
 
 	void Update() {

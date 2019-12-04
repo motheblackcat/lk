@@ -14,7 +14,7 @@ public class PauseMenu : MonoBehaviour {
     PlayerAttack playerAttack;
 
     void Start() {
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.Find("Player");
         playerControl = player.GetComponent<PlayerControl>();
         playerAnimation = player.GetComponent<PlayerAnimation>();
         playerAttack = player.GetComponent<PlayerAttack>();

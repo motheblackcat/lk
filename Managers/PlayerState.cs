@@ -2,20 +2,25 @@
 using UnityEngine;
 
 public class PlayerState : MonoBehaviour {
+    public static PlayerState Instance { get; private set; }
     public List<GameObject> sWeapons;
     PlayerHealth playerHealthScript;
     PlayerSWeapons playerSWeaponsScript;
     public float playerHealth = 100;
 
     private void Awake() {
-        GameObject[] instances = GameObject.FindGameObjectsWithTag("PlayerState");
-        if (instances.Length > 1)Destroy(instances[1]);
+        Debug.Log(Instance ? Instance.playerHealth : 0);
+        if (Instance == null) {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        } else {
+            Destroy(gameObject);
+        }
     }
 
     private void Start() {
         playerHealthScript = GameObject.Find("Player").GetComponent<PlayerHealth>();
         playerSWeaponsScript = GameObject.Find("Player").GetComponent<PlayerSWeapons>();
-        DontDestroyOnLoad(gameObject);
     }
 
     public void Save() {

@@ -14,7 +14,7 @@ public class PlayerAnimation : MonoBehaviour {
 		playerHealth = GetComponent<PlayerHealth>();
 		playerAttack = GetComponent<PlayerAttack>();
 		playerSWeapons = GetComponent<PlayerSWeapons>();
-		weapon = GameObject.FindGameObjectsWithTag("Weapon").Length > 0 ? GameObject.FindGameObjectsWithTag("Weapon")[0] : null;
+		weapon = GameObject.FindGameObjectWithTag("Weapon");
 	}
 
 	void Update() {

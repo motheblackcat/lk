@@ -14,7 +14,7 @@ public class SceneLoader : MonoBehaviour {
 	public bool isStarting = true;
 
 	void Start() {
-		player = GameObject.FindWithTag("Player");
+		player = GameObject.Find("Player");
 		playerState = GameObject.Find("PlayerState") ? GameObject.Find("PlayerState").GetComponent<PlayerState>() : null;
 		animator = GetComponent<Animator>();
 		animator.SetFloat("transitionSpeed", 1 / transitionTimer);
@@ -51,7 +51,6 @@ public class SceneLoader : MonoBehaviour {
 		transitionTimer -= Time.deltaTime;
 		if (transitionTimer <= 0) {
 			if (!starting) {
-				playerState.Save();
 				SceneManager.LoadScene(sceneIndex);
 			}
 			transitionTimer = transitionTimerTemp;

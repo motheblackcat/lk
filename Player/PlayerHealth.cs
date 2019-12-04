@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
 	Image healthBar;
+	PlayerState playerState;
 	public float pushX = 10f;
 	public float pushY = 10f;
 	public float playerHealth = 100f;
@@ -19,7 +20,8 @@ public class PlayerHealth : MonoBehaviour {
 		healthBar = GameObject.Find("Content") ? GameObject.Find("Content").GetComponent<Image>() : null;
 		invTimerTemp = invicibilityTimer;
 		currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-		playerHealth = GameObject.Find("PlayerState").GetComponent<PlayerState>().playerHealth;
+		// playerState = GameObject.Find("PlayerState").GetComponent<PlayerState>();
+		// playerHealth = playerState.playerHealth;
 	}
 
 	void Update() {
@@ -45,6 +47,7 @@ public class PlayerHealth : MonoBehaviour {
 			bool enemyPos = enemy.transform.position.x > transform.position.x;
 			Vector2 pushDirection = new Vector2(enemyPos ? -pushX : pushX, pushY);
 			GetComponent<Rigidbody2D>().AddForce(pushDirection, ForceMode2D.Impulse);
+			playerState.Save();
 			isInv = true;
 			tookDamage = true;
 		}
@@ -53,12 +56,12 @@ public class PlayerHealth : MonoBehaviour {
 	void Death() {
 		if (playerHealth <= 0) {
 			isDead = true;
+			playerState.playerHealth = 100;
 			GameObject.Find("MainCamera").GetComponent<AudioSource>().Stop();
 			restartLevelTimer -= Time.deltaTime;
 			if (restartLevelTimer <= 0) {
 				GameObject.Find("SceneTransition").GetComponent<SceneLoader>().sceneIndex = currentSceneIndex;
 				GameObject.Find("SceneTransition").GetComponent<SceneLoader>().loadScene = true;
-				GameObject.Find("PlayerState").GetComponent<PlayerState>().playerHealth = 100;
 			}
 		}
 	}

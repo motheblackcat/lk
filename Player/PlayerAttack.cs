@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour {
+    public Transform atkPos;
+    public LayerMask whatIsEnemies;
+    GameObject weapon;
     public bool isAttacking = false;
     public float timeBtwAtk = 0.3f;
-    float timeBtwAtkTemp;
-    float atkPosX;
-    public Transform atkPos;
     public float atkRange = 0.7f;
-    public LayerMask whatIsEnemies;
     // TOFIX: damage should come from the player's weapon
     public int damage = 1;
+    float timeBtwAtkTemp;
+    float atkPosX;
 
     public Collider2D[] ennemiesToDamage;
 
@@ -21,7 +22,8 @@ public class PlayerAttack : MonoBehaviour {
 
     // TODO: Atk detection seems better with continus but keep an eye on it
     void Update() {
-        Attack();
+        weapon = GameObject.FindWithTag("Weapon");
+        if (weapon)Attack();
     }
 
     void Attack() {

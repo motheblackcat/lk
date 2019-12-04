@@ -11,7 +11,7 @@ public class DialogManager : MonoBehaviour {
     public bool autoStartDialog = false;
 
     void Start() {
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.Find("Player");
         playerControl = player.GetComponent<PlayerControl>();
         sceneTransition = GameObject.Find("SceneTransition");
     }
