@@ -9,7 +9,6 @@ public class PlayerState : MonoBehaviour {
     public float playerHealth = 100;
 
     private void Awake() {
-        Debug.Log(Instance ? Instance.playerHealth : 0);
         if (Instance == null) {
             Instance = this;
             DontDestroyOnLoad(gameObject);
@@ -18,21 +17,8 @@ public class PlayerState : MonoBehaviour {
         }
     }
 
-    private void Start() {
-        playerHealthScript = GameObject.Find("Player").GetComponent<PlayerHealth>();
-        playerSWeaponsScript = GameObject.Find("Player").GetComponent<PlayerSWeapons>();
-    }
-
     public void Save() {
-        playerHealth = playerHealthScript.playerHealth;
-        sWeapons = playerSWeaponsScript.sWeapons;
-    }
-
-    // TOFIX: This method is not working (PlayerHealth.Start() always executes last)
-    public void Load() {
-        playerHealthScript.playerHealth = playerHealth;
-        if (sWeapons.Count > playerSWeaponsScript.sWeapons.Count) {
-            playerSWeaponsScript.sWeapons = sWeapons;
-        }
+        playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>().playerHealth;
+        sWeapons = GameObject.Find("Player").GetComponent<PlayerSWeapons>().sWeapons;
     }
 }

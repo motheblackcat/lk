@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour {
 	Animator animator;
 	GameObject player;
-	PlayerState playerState;
 	public bool loadScene;
 	public int sceneIndex;
 	public float transitionTimer = 1.5f;
@@ -15,7 +14,6 @@ public class SceneLoader : MonoBehaviour {
 
 	void Start() {
 		player = GameObject.Find("Player");
-		playerState = GameObject.Find("PlayerState") ? GameObject.Find("PlayerState").GetComponent<PlayerState>() : null;
 		animator = GetComponent<Animator>();
 		animator.SetFloat("transitionSpeed", 1 / transitionTimer);
 		transitionTimerTemp = transitionTimer;

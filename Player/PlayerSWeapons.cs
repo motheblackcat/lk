@@ -10,7 +10,7 @@ public class PlayerSWeapons : MonoBehaviour {
     int sWeaponsCount = 0;
 
     void Start() {
-        sWeapons = GameObject.Find("PlayerState").GetComponent<PlayerState>().sWeapons;
+        sWeapons = PlayerState.Instance.sWeapons;
         // TODO: SWeapon choice is reset between scenes
         if (sWeapons.Count > 0)sWeapon = sWeapons[0];
         sWeaponsCount = sWeapons.Count;
@@ -28,7 +28,6 @@ public class PlayerSWeapons : MonoBehaviour {
             }
 
             GameObject.Find("SWeaponIcon").GetComponent<Image>().sprite = sWeapon.GetComponent<SpriteRenderer>().sprite;
-
             SwitchWeapon();
         }
     }
