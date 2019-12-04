@@ -35,7 +35,7 @@ public class SceneLoader : MonoBehaviour {
 		animator.SetTrigger(transitionName);
 
 		// TODO: Simple horizontal scene navigation, add logic for vertical placed warps and player position (move to its own method)
-		if (!player.GetComponent<PlayerHealth>().isDead) {
+		if (player.GetComponent<PlayerHealth>() && !player.GetComponent<PlayerHealth>().isDead) {
 			int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 			int nextSceneIndex = player.transform.position.x < GameObject.Find("Environment").GetComponent<Collider2D>().bounds.min.x ?
 				currentSceneIndex - 1 : currentSceneIndex + 1;
