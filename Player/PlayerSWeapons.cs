@@ -17,7 +17,7 @@ public class PlayerSWeapons : MonoBehaviour {
     }
 
     void Update() {
-        // TODO: Make a stable way to detect changes to the sWeapons list ingame
+        // TODO: Make a stable way to detect changes to the sWeapons list at runtime
         if (sWeapons.Count > sWeaponsCount && sWeapons.Count < 2)sWeapon = sWeapons[0];
 
         GameObject.Find("SWeaponUI").GetComponent<Canvas>().enabled = sWeapon;
