@@ -34,9 +34,8 @@ public class PlayerControl : MonoBehaviour {
         canMove = introDone && !inDialog && !loadScene && !tookDamage && !isDead;
 
         // TODO: Move to FixedUpdate()
-        if (canMove) {
-            PlayerMove();
-        }
+        if (canMove)PlayerMove();
+        if (inDialog)GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
     }
 
     void PlayerMove() {
@@ -66,7 +65,6 @@ public class PlayerControl : MonoBehaviour {
         }
     }
 
-    // TODO: Add logic to switch scenes on directions and special cases
     private void OnTriggerExit2D(Collider2D other) {
         npc = null;
         if (other.name == "Environment") {

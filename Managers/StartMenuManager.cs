@@ -10,9 +10,13 @@ public class StartMenuManager : MonoBehaviour {
     bool startGame;
     bool quitGame;
 
-    void Start() {
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
+    static void OnBeforeSplashScreen() {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    void Start() {
         lastSelect = new GameObject("lastSelect");
         audioSource = GetComponent<AudioSource>();
         audioTimer = audioSource.clip.length;

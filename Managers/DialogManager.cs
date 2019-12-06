@@ -1,4 +1,3 @@
-using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -45,11 +44,10 @@ public class DialogManager : MonoBehaviour {
 
     // Get the text asset according to the npc name and open the dialog box
     void getDialog(GameObject npc) {
-        string path = "Assets/Text/" + npc.name + "Dialog.txt";
-        StreamReader sr = new StreamReader(path);
+        string path = "Text/" + npc.name + "Dialog";
+        TextAsset text = Resources.Load<TextAsset>(path);
         GetComponent<Image>().enabled = true;
-        GameObject.Find("Text").GetComponent<Text>().text = sr.ReadToEnd();
+        GetComponentInChildren<Text>().text = text.text;
         GameObject.Find("DialogBox/ButtonA").GetComponent<Image>().enabled = true;
-        sr.Close();
     }
 }
