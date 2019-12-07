@@ -3,7 +3,7 @@
 public class PlayerControl : MonoBehaviour {
     public GameObject npc;
     GameObject ghost;
-    GameObject dialogBox;
+    GameObject playerUI;
     Rigidbody2D rb;
     SpriteRenderer sprite;
     SceneLoader sceneLoader;
@@ -19,9 +19,9 @@ public class PlayerControl : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         playerHealth = GetComponent<PlayerHealth>();
-        dialogBox = GameObject.Find("DialogBox");
+        playerUI = GameObject.Find("PlayerUI");
         ghost = GameObject.Find("Ghost");
-        introSceneManager = FindObjectsOfType<IntroSceneManager>().Length > 0 ? FindObjectsOfType<IntroSceneManager>()[0] : null;
+        introSceneManager = GameObject.Find("GameManager").GetComponent<IntroSceneManager>();
         sceneLoader = GameObject.Find("SceneTransition").GetComponent<SceneLoader>();
         pauseMenuManager = GameObject.Find("PlayerUI").GetComponent<PauseMenuManager>();
     }
@@ -29,7 +29,7 @@ public class PlayerControl : MonoBehaviour {
     void Update() {
         bool introDone = introSceneManager ? introSceneManager.introDone : true;
         bool loadScene = sceneLoader.loadScene;
-        bool inDialog = dialogBox.GetComponent<DialogManager>().inDialog;
+        bool inDialog = playerUI.GetComponent<DialogManager>().inDialog;
         bool tookDamage = playerHealth ? playerHealth.isInv : false;
         bool isDead = playerHealth ? playerHealth.isDead : false;
         bool isPaused = pauseMenuManager.paused;

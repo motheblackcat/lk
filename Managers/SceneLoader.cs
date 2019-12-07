@@ -29,7 +29,6 @@ public class SceneLoader : MonoBehaviour {
 		}
 	}
 
-	// TOFIX: Scene load before end of transition
 	public void LoadScene(int sceneIndex, bool starting) {
 		string transitionName = (starting ? "start" : "end") + transitionType;
 		animator.SetTrigger(transitionName);
