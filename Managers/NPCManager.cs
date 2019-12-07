@@ -16,8 +16,30 @@ public class NPCManager : MonoBehaviour {
 
     void Update() {
         introDone = introSceneManager ? introSceneManager.introDone : true;
-        dialogButton = GameObject.Find(this.name + "/ButtonA") ? GameObject.Find(this.name + "/ButtonA").GetComponent<SpriteRenderer>() : null;
-        if (!introDone && dialogButton)dialogButton.enabled = false;
+        setDialogButton();
+    }
+
+    public bool checkGamepad() {
+        bool isGamepad = false;
+        foreach (string gamepad in Input.GetJoystickNames()) {
+            isGamepad = gamepad != "" ? true : false;
+        }
+        return isGamepad;
+    }
+
+    // TODO: Check if there is a better syntax / way
+    void setDialogButton() {
+        SpriteRenderer joyButton = GameObject.Find(this.name + "/ButtonA").GetComponent<SpriteRenderer>();
+        SpriteRenderer keyButton = GameObject.Find(this.name + "/ButtonA/SpaceBar").GetComponent<SpriteRenderer>();
+        dialogButton = checkGamepad() ? joyButton : keyButton;
+        if (!introDone) {
+            joyButton.enabled = false;
+            keyButton.enabled = false;
+        } else if (checkGamepad()) {
+            keyButton.enabled = false;
+        } else {
+            joyButton.enabled = false;
+        }
     }
 
     void OnTriggerStay2D(Collider2D other) {
@@ -31,9 +53,8 @@ public class NPCManager : MonoBehaviour {
             if (tag == "NPC") {
                 GetComponent<SpriteRenderer>().flipX = other.gameObject.transform.position.x > transform.position.x;
             }
-            // TOFIX: This is too specific to the door of the intro (also detection seems clunky)
+            // TOFIX: This is too specific to the door of the intro
             if (tag == "Door" && Input.GetButtonDown("Jump")) {
-                // TODO: sceneIndex should be the index of the first level (currenly road to tavern)
                 sceneLoader.sceneIndex = 2;
                 sceneLoader.loadScene = true;
             }

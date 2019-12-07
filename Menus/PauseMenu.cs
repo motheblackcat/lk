@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour {
@@ -32,6 +30,7 @@ public class PauseMenu : MonoBehaviour {
         PauseDetection();
     }
 
+    // TODO: Refactor to use globally
     void GamepadDetection() {
         foreach (string gamePad in Input.GetJoystickNames()) {
             joyCon.enabled = gamePad == "" ? false : true;
