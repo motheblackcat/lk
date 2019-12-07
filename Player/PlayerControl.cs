@@ -23,7 +23,7 @@ public class PlayerControl : MonoBehaviour {
         ghost = GameObject.Find("Ghost");
         introSceneManager = FindObjectsOfType<IntroSceneManager>().Length > 0 ? FindObjectsOfType<IntroSceneManager>()[0] : null;
         sceneLoader = GameObject.Find("SceneTransition").GetComponent<SceneLoader>();
-        pauseMenuManager = GameObject.Find("PauseUI").GetComponent<PauseMenuManager>();
+        pauseMenuManager = GameObject.Find("PlayerUI").GetComponent<PauseMenuManager>();
     }
 
     void Update() {
@@ -32,9 +32,9 @@ public class PlayerControl : MonoBehaviour {
         bool inDialog = dialogBox.GetComponent<DialogManager>().inDialog;
         bool tookDamage = playerHealth ? playerHealth.isInv : false;
         bool isDead = playerHealth ? playerHealth.isDead : false;
-        bool isPaussed = pauseMenuManager.paused;
+        bool isPaused = pauseMenuManager.paused;
 
-        canMove = introDone && !isPaussed && !inDialog && !loadScene && !tookDamage && !isDead;
+        canMove = introDone && !isPaused && !inDialog && !loadScene && !tookDamage && !isDead;
 
         // TODO: Move to FixedUpdate()
         if (canMove)PlayerMove();

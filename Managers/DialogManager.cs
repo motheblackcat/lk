@@ -27,16 +27,16 @@ public class DialogManager : MonoBehaviour {
         bool introDone = sceneTransition.GetComponent<IntroSceneManager>() ? sceneTransition.GetComponent<IntroSceneManager>().introDone : true;
         inDialog = GetComponent<Image>().enabled;
         if (npcManager) {
-            Image inDialogButton = npcManager.checkGamepad() ? GameObject.Find("DialogBox/ButtonA").GetComponent<Image>() : GameObject.Find("DialogBox/ButtonA/SpaceBar").GetComponent<Image>();
-            inDialogButton.enabled = inDialog;
-            Image joyButton = GameObject.Find("DialogBox/ButtonA").GetComponent<Image>();
-            Image keyButton = GameObject.Find("DialogBox/ButtonA/SpaceBar").GetComponent<Image>();
+            // Image inDialogButton = npcManager.checkGamepad() ? GameObject.Find("DialogBox/ButtonA").GetComponent<Image>() : GameObject.Find("DialogBox/ButtonA/SpaceBar").GetComponent<Image>();
+            // inDialogButton.enabled = inDialog;
+            // Image joyButton = GameObject.Find("DialogBox/ButtonA").GetComponent<Image>();
+            // Image keyButton = GameObject.Find("DialogBox/ButtonA/SpaceBar").GetComponent<Image>();
 
-            if (npcManager.checkGamepad()) {
-                keyButton.enabled = false;
-            } else {
-                joyButton.enabled = false;
-            }
+            // if (npcManager.checkGamepad()) {
+            //     keyButton.enabled = false;
+            // } else {
+            //     joyButton.enabled = false;
+            // }
         }
 
         if (npc && introDone) {

@@ -16,31 +16,22 @@ public class NPCManager : MonoBehaviour {
 
     void Update() {
         introDone = introSceneManager ? introSceneManager.introDone : true;
-        setDialogButton();
+        // setDialogButton();
     }
 
-    public bool checkGamepad() {
-        bool isGamepad = false;
-        foreach (string gamepad in Input.GetJoystickNames()) {
-            isGamepad = gamepad != "" ? true : false;
-        }
-        return isGamepad;
-    }
-
-    // TODO: Check if there is a better syntax / way
-    void setDialogButton() {
-        SpriteRenderer joyButton = GameObject.Find(this.name + "/ButtonA").GetComponent<SpriteRenderer>();
-        SpriteRenderer keyButton = GameObject.Find(this.name + "/ButtonA/SpaceBar").GetComponent<SpriteRenderer>();
-        dialogButton = checkGamepad() ? joyButton : keyButton;
-        if (!introDone) {
-            joyButton.enabled = false;
-            keyButton.enabled = false;
-        } else if (checkGamepad()) {
-            keyButton.enabled = false;
-        } else {
-            joyButton.enabled = false;
-        }
-    }
+    // void setDialogButton() {
+    //     SpriteRenderer joyButton = GameObject.Find(this.name + "/ButtonA").GetComponent<SpriteRenderer>();
+    //     SpriteRenderer keyButton = GameObject.Find(this.name + "/ButtonA/SpaceBar").GetComponent<SpriteRenderer>();
+    //     dialogButton = checkGamepad() ? joyButton : keyButton;
+    //     if (!introDone) {
+    //         joyButton.enabled = false;
+    //         keyButton.enabled = false;
+    //     } else if (checkGamepad()) {
+    //         keyButton.enabled = false;
+    //     } else {
+    //         joyButton.enabled = false;
+    //     }
+    // }
 
     void OnTriggerStay2D(Collider2D other) {
         bool inDialog = dialogBox.GetComponent<DialogManager>().inDialog;
