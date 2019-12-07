@@ -3,14 +3,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class BobAxeEvent : MonoBehaviour {
-    Image DialogUI;
+    Canvas DialogUI;
     GameObject axe;
     List<GameObject> sWeapons;
     bool wasOpened = false;
     bool wasClosed = false;
 
     void Start() {
-        DialogUI = GameObject.Find("DialogUI").GetComponent<Image>();
+        DialogUI = GameObject.Find("DialogUI").GetComponent<Canvas>();
         axe = Resources.Load("Sweapons/Axe")as GameObject;
     }
 

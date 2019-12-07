@@ -24,19 +24,17 @@ public class DialogManager : MonoBehaviour {
         bool isGamepad = globalManager.isGamepad;
 
         if (npc && introDone) {
-            if (autoStartDialog) {
-                getDialog();
+            if (autoStartDialog || Input.GetButtonDown("Jump")) {
+                if (playerControl.isGrounded)getDialog();
                 autoStartDialog = false;
-            }
-            if (Input.GetButtonDown("Jump")) {
-                getDialog();
+            } else {
+                GameObject.Find(npc.name + "/ButtonA").GetComponent<SpriteRenderer>().enabled = !inDialog && isGamepad;
+                GameObject.Find(npc.name + "/SpaceBar").GetComponent<SpriteRenderer>().enabled = !inDialog && !isGamepad;
             }
             if (inDialog && Input.GetButtonDown("Jump")) {
                 GameObject.Find("DialogText").GetComponent<Text>().text = "";
                 dialogUI.enabled = false;
             }
-            GameObject.Find(npc.name + "/ButtonA").GetComponent<SpriteRenderer>().enabled = !inDialog && isGamepad;
-            GameObject.Find(npc.name + "/SpaceBar").GetComponent<SpriteRenderer>().enabled = !inDialog && !isGamepad;
         } else {
             GameObject[] buttons = GameObject.FindGameObjectsWithTag("NPCButton");
             foreach (GameObject button in buttons)button.GetComponent<SpriteRenderer>().enabled = false;
