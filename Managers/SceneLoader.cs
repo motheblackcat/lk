@@ -25,15 +25,27 @@ public class SceneLoader : MonoBehaviour {
 		transform.position = new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.y);
 
 		if (loadScene) {
-			LoadScene(sceneIndex, isStarting);
+			LoadScene();
 		}
 	}
 
-	public void LoadScene(int sceneIndex, bool starting) {
-		string transitionName = (starting ? "start" : "end") + transitionType;
+	void LoadScene() {
+		PlayerNavigation();
+		string transitionName = (isStarting ? "start" : "end") + transitionType;
 		animator.SetTrigger(transitionName);
+		transitionTimer -= Time.deltaTime;
+		if (transitionTimer <= 0) {
+			if (!isStarting) {
+				SceneManager.LoadScene(sceneIndex);
+			}
+			transitionTimer = transitionTimerTemp;
+			isStarting = false;
+			loadScene = false;
+		}
+	}
 
-		// TODO: Simple horizontal scene navigation, add logic for vertical placed warps and player position (move to its own method)
+	// TODO: Make a scene navigation script to handle advanced logic (multiple entry/exit points, player position, etc)
+	void PlayerNavigation() {
 		if (player.GetComponent<PlayerHealth>() && !player.GetComponent<PlayerHealth>().isDead) {
 			int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 			int nextSceneIndex = player.transform.position.x < GameObject.Find("Environment").GetComponent<Collider2D>().bounds.min.x ?
@@ -43,16 +55,6 @@ public class SceneLoader : MonoBehaviour {
 			} else {
 				sceneIndex = nextSceneIndex;
 			}
-		}
-
-		transitionTimer -= Time.deltaTime;
-		if (transitionTimer <= 0) {
-			if (!starting) {
-				SceneManager.LoadScene(sceneIndex);
-			}
-			transitionTimer = transitionTimerTemp;
-			isStarting = false;
-			loadScene = false;
 		}
 	}
 }
