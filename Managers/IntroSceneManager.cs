@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
 public class IntroSceneManager : MonoBehaviour {
-	// TODO: This script could be included in the SceneLoader script
 	GameObject player;
 	public bool introDone = false;
 	public float startTimer = 5.0f;

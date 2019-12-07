@@ -2,13 +2,14 @@
 
 public class PlayerControl : MonoBehaviour {
     public GameObject npc;
+    GameObject ghost;
+    GameObject dialogBox;
     Rigidbody2D rb;
     SpriteRenderer sprite;
-    GameObject ghost;
-    PlayerHealth playerHealth;
     SceneLoader sceneLoader;
     IntroSceneManager introSceneManager;
-    GameObject dialogBox;
+    PauseMenuManager pauseMenuManager;
+    PlayerHealth playerHealth;
     public float runSpeed = 40;
     public float jumpSpeed = 600;
     public bool canMove;
@@ -17,11 +18,12 @@ public class PlayerControl : MonoBehaviour {
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
-        ghost = GameObject.Find("Ghost");
         playerHealth = GetComponent<PlayerHealth>();
-        introSceneManager = GameObject.Find("SceneTransition").GetComponent<IntroSceneManager>();
-        sceneLoader = GameObject.Find("SceneTransition").GetComponent<SceneLoader>();
         dialogBox = GameObject.Find("DialogBox");
+        ghost = GameObject.Find("Ghost");
+        introSceneManager = FindObjectsOfType<IntroSceneManager>().Length > 0 ? FindObjectsOfType<IntroSceneManager>()[0] : null;
+        sceneLoader = GameObject.Find("SceneTransition").GetComponent<SceneLoader>();
+        pauseMenuManager = GameObject.Find("PauseUI").GetComponent<PauseMenuManager>();
     }
 
     void Update() {
@@ -30,8 +32,9 @@ public class PlayerControl : MonoBehaviour {
         bool inDialog = dialogBox.GetComponent<DialogManager>().inDialog;
         bool tookDamage = playerHealth ? playerHealth.isInv : false;
         bool isDead = playerHealth ? playerHealth.isDead : false;
+        bool isPaussed = pauseMenuManager.paused;
 
-        canMove = introDone && !inDialog && !loadScene && !tookDamage && !isDead;
+        canMove = introDone && !isPaussed && !inDialog && !loadScene && !tookDamage && !isDead;
 
         // TODO: Move to FixedUpdate()
         if (canMove)PlayerMove();
