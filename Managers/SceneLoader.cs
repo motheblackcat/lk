@@ -1,46 +1,40 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum TransitionTypes { box, fade }
 public class SceneLoader : MonoBehaviour {
 	Animator animator;
 	GameObject player;
-	public bool loadScene;
-	public int sceneIndex;
-	public float transitionTimer = 1.5f;
-	float transitionTimerTemp;
-	// TODO: all transition types should be imported as const from a class (could maybe include start / end)
-	public string transitionType = "box";
-	public bool isStarting = true;
+	public TransitionTypes transitionType = TransitionTypes.box;
+	public bool loadScene = false;
+	public bool sceneLoaded = false;
+	public int sceneIndex = 0;
+	public float transitionDuration = 1f;
+	float transitionTimerTemp = 0;
 
 	void Start() {
 		player = GameObject.Find("Player");
 		animator = GetComponent<Animator>();
-		animator.SetFloat("transitionSpeed", 1 / transitionTimer);
-		transitionTimerTemp = transitionTimer;
+		transitionTimerTemp = transitionDuration;
 		loadScene = true;
+		sceneLoaded = false;
 	}
 
 	void Update() {
-		// Make the transition gameobject follow the camera
-		transform.position = new Vector2(Camera.main.transform.position.x, Camera.main.transform.position.y);
-
 		if (loadScene) {
 			LoadScene();
 		}
 	}
 
+	// TODO: Negative speed used with two clips instead of negative multiplier
 	void LoadScene() {
-		PlayerNavigation();
-		string transitionName = (isStarting ? "start" : "end") + transitionType;
-		animator.SetTrigger(transitionName);
-		transitionTimer -= Time.deltaTime;
-		if (transitionTimer <= 0) {
-			if (!isStarting) {
-				SceneManager.LoadScene(sceneIndex);
-			}
-			transitionTimer = transitionTimerTemp;
-			isStarting = false;
+		animator.Play(sceneLoaded ? "BoxTransitionR" : "BoxTransition");
+		transitionDuration -= Time.deltaTime;
+		if (transitionDuration <= 0) {
 			loadScene = false;
+			transitionDuration = transitionTimerTemp;
+			if (sceneLoaded)SceneManager.LoadScene(sceneIndex);
+			sceneLoaded = true;
 		}
 	}
 
