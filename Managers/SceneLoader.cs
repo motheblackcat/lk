@@ -17,6 +17,10 @@ public class SceneLoader : MonoBehaviour {
 		animator.Play(transitionType + "Transition");
 	}
 
+	void Update() {
+		isLoading = animator.GetCurrentAnimatorStateInfo(0).IsName(transitionType + "Transition");
+	}
+
 	public void StartLoadScene(bool reload) {
 		if (!reload)SetNextSceneIndex();
 		StartCoroutine(LoadScene(reload));
