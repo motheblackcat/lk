@@ -58,8 +58,9 @@ public class PlayerHealth : MonoBehaviour {
 			GameObject.Find("MainCamera").GetComponent<AudioSource>().Stop();
 			restartLevelTimer -= Time.deltaTime;
 			if (restartLevelTimer <= 0) {
+				// TODO: Cleaner refs
 				GameObject.Find("SceneTransition").GetComponent<SceneLoader>().sceneIndex = currentSceneIndex;
-				GameObject.Find("SceneTransition").GetComponent<SceneLoader>().loadScene = true;
+				GameObject.Find("SceneTransition").GetComponent<SceneLoader>().StartLoadScene();
 			}
 		}
 	}

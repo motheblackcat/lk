@@ -28,6 +28,7 @@ public class DialogManager : MonoBehaviour {
                 if (playerControl.isGrounded)getDialog();
                 autoStartDialog = false;
             } else {
+                // TODO: Can be simplified?
                 GameObject.Find(npc.name + "/ButtonA").GetComponent<SpriteRenderer>().enabled = !inDialog && isGamepad;
                 GameObject.Find(npc.name + "/SpaceBar").GetComponent<SpriteRenderer>().enabled = !inDialog && !isGamepad;
             }

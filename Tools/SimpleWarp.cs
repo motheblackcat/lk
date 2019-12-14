@@ -13,12 +13,12 @@ public class SimpleWarp : MonoBehaviour {
         if (other.tag == "Player") {
             SpriteRenderer[] buttons = GetComponentsInChildren<SpriteRenderer>();
             foreach (SpriteRenderer button in buttons) {
-                button.enabled = button.name == "ButtonA" && globalManager.isGamepad || button.name == "SpaceBar" && !globalManager.isGamepad;
+                button.enabled = button.name == (globalManager.isGamepad ? "ButtonA" : "SpaceBar");
             }
 
             if (Input.GetButtonDown("Jump")) {
                 sceneLoader.sceneIndex = 2;
-                sceneLoader.loadScene = true;
+                sceneLoader.StartLoadScene();
             }
         }
     }

@@ -1,45 +1,35 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum TransitionTypes { box, fade }
+public enum TransitionTypes { Box, Fade }
 public class SceneLoader : MonoBehaviour {
 	Animator animator;
 	GameObject player;
-	public TransitionTypes transitionType = TransitionTypes.box;
-	public bool loadScene = false;
-	public bool sceneLoaded = false;
+	public TransitionTypes transitionType;
 	public int sceneIndex = 0;
-	public float transitionDuration = 1f;
-	float transitionTimerTemp = 0;
+	public bool loadScene = false;
 
 	void Start() {
 		player = GameObject.Find("Player");
 		animator = GetComponent<Animator>();
-		transitionTimerTemp = transitionDuration;
-		loadScene = true;
-		sceneLoaded = false;
+		animator.Play(transitionType + "Transition");
 	}
 
-	void Update() {
-		if (loadScene) {
-			LoadScene();
-		}
+	public void StartLoadScene() {
+		StartCoroutine(LoadScene());
 	}
 
-	// TODO: Negative speed used with two clips instead of negative multiplier
-	void LoadScene() {
-		animator.Play(sceneLoaded ? "BoxTransitionR" : "BoxTransition");
-		transitionDuration -= Time.deltaTime;
-		if (transitionDuration <= 0) {
-			loadScene = false;
-			transitionDuration = transitionTimerTemp;
-			if (sceneLoaded)SceneManager.LoadScene(sceneIndex);
-			sceneLoaded = true;
-		}
+	public IEnumerator LoadScene() {
+		SetNextSceneIndex();
+		animator.SetFloat("direction", -1f);
+		animator.Play(transitionType + "Transition", 0, 1);
+		yield return new WaitForSeconds(1);
+		SceneManager.LoadScene(sceneIndex);
 	}
 
 	// TODO: Make a scene navigation script to handle advanced logic (multiple entry/exit points, player position, etc)
-	void PlayerNavigation() {
+	void SetNextSceneIndex() {
 		if (player.GetComponent<PlayerHealth>() && !player.GetComponent<PlayerHealth>().isDead) {
 			int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 			int nextSceneIndex = player.transform.position.x < GameObject.Find("Environment").GetComponent<Collider2D>().bounds.min.x ?

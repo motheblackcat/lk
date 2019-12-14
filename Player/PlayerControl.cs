@@ -71,7 +71,7 @@ public class PlayerControl : MonoBehaviour {
     private void OnTriggerExit2D(Collider2D other) {
         npc = null;
         if (other.name == "Environment") {
-            sceneLoader.loadScene = true;
+            sceneLoader.StartLoadScene();
         }
     }
 }
