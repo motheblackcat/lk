@@ -7,21 +7,22 @@ public class SceneLoader : MonoBehaviour {
 	Animator animator;
 	GameObject player;
 	public TransitionTypes transitionType;
+	public bool isLoading = false;
 	public int sceneIndex = 0;
-	public bool loadScene = false;
 
 	void Start() {
 		player = GameObject.Find("Player");
+		sceneIndex = SceneManager.GetActiveScene().buildIndex;
 		animator = GetComponent<Animator>();
 		animator.Play(transitionType + "Transition");
 	}
 
-	public void StartLoadScene() {
-		StartCoroutine(LoadScene());
+	public void StartLoadScene(bool reload) {
+		if (!reload)SetNextSceneIndex();
+		StartCoroutine(LoadScene(reload));
 	}
 
-	public IEnumerator LoadScene() {
-		SetNextSceneIndex();
+	public IEnumerator LoadScene(bool reload) {
 		animator.SetFloat("direction", -1f);
 		animator.Play(transitionType + "Transition", 0, 1);
 		yield return new WaitForSeconds(1);
@@ -30,15 +31,8 @@ public class SceneLoader : MonoBehaviour {
 
 	// TODO: Make a scene navigation script to handle advanced logic (multiple entry/exit points, player position, etc)
 	void SetNextSceneIndex() {
-		if (player.GetComponent<PlayerHealth>() && !player.GetComponent<PlayerHealth>().isDead) {
-			int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-			int nextSceneIndex = player.transform.position.x < GameObject.Find("Environment").GetComponent<Collider2D>().bounds.min.x ?
-				currentSceneIndex - 1 : currentSceneIndex + 1;
-			if (nextSceneIndex >= SceneManager.sceneCountInBuildSettings) {
-				sceneIndex = currentSceneIndex;
-			} else {
-				sceneIndex = nextSceneIndex;
-			}
-		}
+		bool goBack = player.transform.position.x < GameObject.Find("Environment").GetComponent<Collider2D>().bounds.min.x;
+		sceneIndex = goBack ? --sceneIndex : ++sceneIndex;
+		sceneIndex = sceneIndex >= SceneManager.sceneCountInBuildSettings ? --sceneIndex : sceneIndex;
 	}
 }

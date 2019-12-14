@@ -12,13 +12,11 @@ public class PlayerHealth : MonoBehaviour {
 	public bool isInv = false;
 	public float restartLevelTimer = 2f;
 	public float invicibilityTimer = 0.5f;
-	public int currentSceneIndex = 0;
 	float invTimerTemp = 0;
 
 	void Start() {
 		healthBar = GameObject.Find("Content") ? GameObject.Find("Content").GetComponent<Image>() : null;
 		invTimerTemp = invicibilityTimer;
-		currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
 		playerHealth = PlayerState.Instance.playerHealth;
 	}
 
@@ -58,9 +56,7 @@ public class PlayerHealth : MonoBehaviour {
 			GameObject.Find("MainCamera").GetComponent<AudioSource>().Stop();
 			restartLevelTimer -= Time.deltaTime;
 			if (restartLevelTimer <= 0) {
-				// TODO: Cleaner refs
-				GameObject.Find("SceneTransition").GetComponent<SceneLoader>().sceneIndex = currentSceneIndex;
-				GameObject.Find("SceneTransition").GetComponent<SceneLoader>().StartLoadScene();
+				GameObject.Find("SceneTransition").GetComponent<SceneLoader>().StartLoadScene(true);
 			}
 		}
 	}

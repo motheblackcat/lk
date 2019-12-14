@@ -28,13 +28,13 @@ public class PlayerControl : MonoBehaviour {
 
     void Update() {
         bool introDone = introSceneManager ? introSceneManager.introDone : true;
-        bool loadScene = sceneLoader.loadScene;
+        bool isLoading = sceneLoader.isLoading;
         bool inDialog = playerUI.GetComponent<DialogManager>().inDialog;
         bool tookDamage = playerHealth ? playerHealth.isInv : false;
         bool isDead = playerHealth ? playerHealth.isDead : false;
         bool isPaused = pauseMenuManager.paused;
 
-        canMove = introDone && !isPaused && !inDialog && !loadScene && !tookDamage && !isDead;
+        canMove = introDone && !isPaused && !inDialog && !isLoading && !tookDamage && !isDead;
 
         // TODO: Move to FixedUpdate()
         if (canMove)PlayerMove();
@@ -71,7 +71,7 @@ public class PlayerControl : MonoBehaviour {
     private void OnTriggerExit2D(Collider2D other) {
         npc = null;
         if (other.name == "Environment") {
-            sceneLoader.StartLoadScene();
+            sceneLoader.StartLoadScene(false);
         }
     }
 }
