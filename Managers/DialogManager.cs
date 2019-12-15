@@ -35,11 +35,12 @@ public class DialogManager : MonoBehaviour {
         }
     }
 
+    // TODO: Fix autostart
     void OpenCloseDialog() {
         bool autoStartDialog = npc ? npc.GetComponent<NpcAnimation>().autoStart : false;
         if ((autoStartDialog || Input.GetButtonDown("Jump")) && playerControl.isGrounded) {
             if (!inDialog) {
-                getDialog();
+                GetDialog();
                 autoStartDialog = false;
             } else {
                 dialogUI.enabled = false;
@@ -47,7 +48,7 @@ public class DialogManager : MonoBehaviour {
         }
     }
 
-    void getDialog() {
+    void GetDialog() {
         string path = "Text/" + npc.name + "Dialog";
         TextAsset text = Resources.Load<TextAsset>(path);
         GameObject.Find("DialogText").GetComponent<Text>().text = text.text;

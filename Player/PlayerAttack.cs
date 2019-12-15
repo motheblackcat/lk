@@ -25,6 +25,7 @@ public class PlayerAttack : MonoBehaviour {
         if (weapon)Attack();
     }
 
+    // TODO: Check animation as it doesn't seems synchronous
     void Attack() {
         atkPos.localPosition = new Vector2(GetComponent<SpriteRenderer>().flipX ? -atkPosX : atkPosX, atkPos.localPosition.y);
 

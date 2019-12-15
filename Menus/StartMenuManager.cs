@@ -42,7 +42,6 @@ public class StartMenuManager : MonoBehaviour {
         if (startGame || quitGame) {
             audioTimer -= Time.deltaTime;
             if (audioTimer <= 0) {
-                // TOCHECK: Could use the name of the intro scene to load it regarless of the scene index
                 if (startGame) { SceneManager.LoadScene(1); } else { Application.Quit(); }
             }
         }
