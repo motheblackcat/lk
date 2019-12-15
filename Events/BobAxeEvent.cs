@@ -15,7 +15,7 @@ public class BobAxeEvent : MonoBehaviour {
     }
 
     void Update() {
-        // TODO: Make a general way to manage quests states
+        // TODO: Make a general way to manage quests states (check brackeys)
         sWeapons = GameObject.Find("Player").GetComponent<PlayerSWeapons>().sWeapons;
         if (DialogUI.enabled)wasOpened = true;
         wasClosed = wasOpened && !DialogUI.enabled;

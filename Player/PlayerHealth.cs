@@ -20,7 +20,7 @@ public class PlayerHealth : MonoBehaviour {
 		playerHealth = PlayerState.Instance.playerHealth;
 	}
 
-	// TODO: Move healthbar?
+	// TODO: Move healthbar? Use Coroutines?
 	void Update() {
 		if (healthBar)healthBar.fillAmount = playerHealth / 100;
 		if (isInv)StartInvTimer();

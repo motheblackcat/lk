@@ -8,7 +8,7 @@ public class PlayerState : MonoBehaviour {
     PlayerSWeapons playerSWeaponsScript;
     public float playerHealth = 100;
 
-    // TODO: Starting values will be take from PlayerPrefs (or a custom source to encrypt saves)
+    // TODO: Starting values will be taken from PlayerPrefs (or a custom sript to encrypt saves like Brackeys?)
     private void Awake() {
         if (Instance == null) {
             Instance = this;

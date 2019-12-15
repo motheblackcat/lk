@@ -7,7 +7,7 @@ public class PlayerAttack : MonoBehaviour {
     public bool isAttacking = false;
     public float timeBtwAtk = 0.3f;
     public float atkRange = 0.7f;
-    // TOFIX: damage should come from the player's weapon
+    // TODO: damage should come from the player's weapon (by type with tags or script)
     public int damage = 1;
     float timeBtwAtkTemp;
     float atkPosX;
@@ -20,7 +20,6 @@ public class PlayerAttack : MonoBehaviour {
         timeBtwAtkTemp = timeBtwAtk;
     }
 
-    // TODO: Atk detection seems better with continus but keep an eye on it
     void Update() {
         weapon = GameObject.FindWithTag("Weapon");
         if (weapon)Attack();
@@ -32,7 +31,6 @@ public class PlayerAttack : MonoBehaviour {
         if (timeBtwAtk <= 0) {
             if (Input.GetButtonDown("Attack") && GetComponent<PlayerControl>().canMove) {
                 isAttacking = true;
-                // TODO: Check that this Array is correctly filled
                 ennemiesToDamage = Physics2D.OverlapCircleAll(atkPos.position, atkRange, whatIsEnemies);
                 for (int i = 0; i < ennemiesToDamage.Length; i++) {
                     ennemiesToDamage[i].GetComponent<EnemyHealthControl>().TakeDamage(damage);

@@ -36,42 +36,34 @@ public class PlayerControl : MonoBehaviour {
 
         canMove = introDone && !isPaused && !inDialog && !isLoading && !tookDamage && !isDead;
 
-        // TODO: Move to FixedUpdate()
+        // TODO: Moving to FixedUpdate() messes pushback
         if (canMove)PlayerMove();
         if (inDialog)GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
     }
 
     void PlayerMove() {
-        if (Input.GetAxis("Horizontal") != 0) { rb.velocity = new Vector2(Input.GetAxis("Horizontal") * runSpeed, rb.velocity.y); }
-        if (Input.GetButtonDown("Jump") && isGrounded) { rb.velocity = Vector2.up * jumpSpeed; }
-        if (Input.GetAxis("Horizontal") > 0) { sprite.flipX = false; }
-        if (Input.GetAxis("Horizontal") < 0) { sprite.flipX = true; }
-        GetComponent<CapsuleCollider2D>().offset = sprite.flipX ? new Vector2(-0.06f, -0.04f) : new Vector2(0.06f, -0.04f);
-        if (ghost) { ghost.GetComponent<SpriteRenderer>().flipX = sprite.flipX; }
+        GetComponent<CapsuleCollider2D>().offset = new Vector2(sprite.flipX ? -0.06f : 0.06f, -0.04f);
+        rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * runSpeed, rb.velocity.y);
+        if (Input.GetButtonDown("Jump") && isGrounded)rb.velocity = Vector2.up * jumpSpeed;
+        if (rb.velocity.x > 0)sprite.flipX = false;
+        if (rb.velocity.x < 0)sprite.flipX = true;
+        if (ghost)ghost.GetComponent<SpriteRenderer>().flipX = sprite.flipX;
     }
 
     void OnCollisionStay2D(Collision2D other) {
-        if (other.gameObject.tag == "Ground") {
-            isGrounded = true;
-        }
+        if (other.gameObject.tag == "Ground")isGrounded = true;
     }
 
     void OnCollisionExit2D(Collision2D other) {
-        if (other.gameObject.tag == "Ground") {
-            isGrounded = false;
-        }
+        if (other.gameObject.tag == "Ground")isGrounded = false;
     }
 
     private void OnTriggerStay2D(Collider2D other) {
-        if (other.gameObject.tag == "NPC" || other.gameObject.tag == "StaticNPC") {
-            npc = other.gameObject;
-        }
+        if (other.gameObject.tag == "NPC" || other.gameObject.tag == "StaticNPC")npc = other.gameObject;
     }
 
     private void OnTriggerExit2D(Collider2D other) {
         npc = null;
-        if (other.name == "Environment") {
-            sceneLoader.StartLoadScene(false);
-        }
+        if (other.name == "Environment")sceneLoader.StartLoadScene(false);
     }
 }
