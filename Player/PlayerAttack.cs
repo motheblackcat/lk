@@ -2,7 +2,7 @@
 
 public class PlayerAttack : MonoBehaviour {
     public Transform atkPos;
-    public LayerMask whatIsEnemies;
+    public LayerMask enemyLayer;
     GameObject weapon;
     public bool isAttacking = false;
     public float timeBtwAtk = 0.3f;
@@ -12,7 +12,7 @@ public class PlayerAttack : MonoBehaviour {
     float timeBtwAtkTemp;
     float atkPosX;
 
-    public Collider2D[] ennemiesToDamage;
+    public Collider2D[] enemyHits;
 
     void Start() {
         atkPos = GameObject.Find("AttackPos").GetComponent<Transform>();
@@ -20,24 +20,19 @@ public class PlayerAttack : MonoBehaviour {
         timeBtwAtkTemp = timeBtwAtk;
     }
 
+    // TODO: Check animation as it doesn't seems synchronous and refactor this (button detection in Update)
     void Update() {
         weapon = GameObject.FindWithTag("Weapon");
         if (weapon)Attack();
     }
 
-    // TODO: Check animation as it doesn't seems synchronous
     void Attack() {
         atkPos.localPosition = new Vector2(GetComponent<SpriteRenderer>().flipX ? -atkPosX : atkPosX, atkPos.localPosition.y);
-
-        if (timeBtwAtk <= 0) {
-            if (Input.GetButtonDown("Attack") && GetComponent<PlayerControl>().canMove) {
-                isAttacking = true;
-                ennemiesToDamage = Physics2D.OverlapCircleAll(atkPos.position, atkRange, whatIsEnemies);
-                for (int i = 0; i < ennemiesToDamage.Length; i++) {
-                    ennemiesToDamage[i].GetComponent<EnemyHealthControl>().TakeDamage(damage);
-                }
-                timeBtwAtk = timeBtwAtkTemp;
-            }
+        if (timeBtwAtk <= 0 && Input.GetButtonDown("Attack") && GetComponent<PlayerControl>().canMove) {
+            isAttacking = true;
+            enemyHits = Physics2D.OverlapCircleAll(atkPos.position, atkRange, enemyLayer);
+            foreach (Collider2D enemy in enemyHits)enemy.GetComponent<EnemyHealthControl>().TakeDamage(damage);
+            timeBtwAtk = timeBtwAtkTemp;
         } else {
             isAttacking = false;
             timeBtwAtk -= Time.deltaTime;

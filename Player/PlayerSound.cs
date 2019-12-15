@@ -20,21 +20,15 @@ public class PlayerSound : MonoBehaviour {
 
     void Update() {
         // TODO: Jump sound can be heard without jumping when spamming with Sweapons
-        if (Input.GetButtonDown("Jump") && playerControl.isGrounded && playerControl.canMove) {
-            audioSource.PlayOneShot(jumpSound);
-        }
+        if (Input.GetButtonDown("Jump") && playerControl.isGrounded && playerControl.canMove)audioSource.PlayOneShot(jumpSound);
 
-        if (playerAttack.isAttacking) {
-            audioSource.PlayOneShot(attackSound);
-        }
+        if (playerAttack.isAttacking)audioSource.PlayOneShot(attackSound);
+
+        if (playerHealth.tookDamage)audioSource.PlayOneShot(hurtSound);
 
         if (playerHealth.isDead && !deathSoundPlayed) {
             audioSource.PlayOneShot(deathSound);
             deathSoundPlayed = true;
-        }
-
-        if (playerHealth.tookDamage && !playerHealth.isDead) {
-            audioSource.PlayOneShot(hurtSound);
         }
     }
 }

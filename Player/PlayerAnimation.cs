@@ -26,9 +26,9 @@ public class PlayerAnimation : MonoBehaviour {
 		animator.SetBool("run", GetComponent<Rigidbody2D>().velocity.x != 0 && playerControl.canMove);
 		animator.SetBool("air", !playerControl.isGrounded);
 		animator.SetBool("throw", playerSWeapons ? playerSWeapons.throwWeapon : false);
-		if (playerAttack)animator.SetBool("attack", playerAttack.isAttacking);
-		if (playerHealth)animator.SetBool("hurt", playerHealth.isInv);
-		if (playerHealth && playerHealth.isDead)animator.SetTrigger("die");
+		animator.SetBool("attack", playerAttack.isAttacking);
+		animator.SetBool("hurt", playerHealth.isInv);
+		if (playerHealth.isDead)animator.SetTrigger("die");
 	}
 
 	void SwordPosition() {
