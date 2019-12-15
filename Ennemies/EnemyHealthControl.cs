@@ -1,20 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyHealthControl : MonoBehaviour {
 
+	SpriteRenderer sprite;
 	public float enemyHealth = 2;
 	public bool isDead = false;
 	public bool isStunned = false;
 	public float stunTimer = 0.5f;
-	float stunTimerReset;
 	public float pushX = 10f;
 	public float pushY = 0f;
 	public float destroyTimer = 1.0f;
 	public float flickTimer = 0.1f;
-	SpriteRenderer sprite;
 	public int damage = 25;
+	float stunTimerReset;
 
 	void Start() {
 		stunTimerReset = stunTimer;
@@ -26,18 +24,6 @@ public class EnemyHealthControl : MonoBehaviour {
 		Death();
 	}
 
-	// Private bool stun;
-	// Public bool isstunned
-	// {
-	// get
-	// {
-	// return stun;
-	// }
-	// set
-	// {
-	// stun= value;
-	// }
-	// }
 	void Stun() {
 		if (isStunned) {
 			stunTimer -= Time.deltaTime;

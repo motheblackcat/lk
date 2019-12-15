@@ -20,6 +20,7 @@ public class PlayerHealth : MonoBehaviour {
 		playerHealth = PlayerState.Instance.playerHealth;
 	}
 
+	// TODO: Move healthbar?
 	void Update() {
 		if (healthBar)healthBar.fillAmount = playerHealth / 100;
 		if (isInv)StartInvTimer();
@@ -35,18 +36,22 @@ public class PlayerHealth : MonoBehaviour {
 		}
 	}
 
-	// TODO: Refactor the preventing of pushback on death and its strength sould be taken from the enemy
 	void TakeDamage(GameObject enemy) {
 		playerHealth -= enemy.GetComponent<EnemyHealthControl>().damage;
 		Death();
 		if (!isDead) {
-			bool enemyPos = enemy.transform.position.x > transform.position.x;
-			Vector2 pushDirection = new Vector2(enemyPos ? -pushX : pushX, pushY);
-			GetComponent<Rigidbody2D>().AddForce(pushDirection, ForceMode2D.Impulse);
+			PushBack(enemy);
 			PlayerState.Instance.Save();
 			isInv = true;
 			tookDamage = true;
 		}
+	}
+
+	// TODO: Pushback strength taken from the enemy?
+	void PushBack(GameObject enemy) {
+		bool enemyPos = enemy.transform.position.x > transform.position.x;
+		Vector2 pushDirection = new Vector2(enemyPos ? -pushX : pushX, pushY);
+		GetComponent<Rigidbody2D>().AddForce(pushDirection, ForceMode2D.Impulse);
 	}
 
 	void Death() {
@@ -55,15 +60,11 @@ public class PlayerHealth : MonoBehaviour {
 			PlayerState.Instance.playerHealth = 100;
 			GameObject.Find("MainCamera").GetComponent<AudioSource>().Stop();
 			restartLevelTimer -= Time.deltaTime;
-			if (restartLevelTimer <= 0) {
-				GameObject.Find("SceneTransition").GetComponent<SceneLoader>().StartLoadScene(true);
-			}
+			if (restartLevelTimer <= 0)GameObject.Find("SceneTransition").GetComponent<SceneLoader>().StartLoadScene(true);
 		}
 	}
 
 	void OnCollisionStay2D(Collision2D col) {
-		if (col.gameObject.tag == "Enemy" && !isInv) {
-			TakeDamage(col.gameObject);
-		}
+		if (col.gameObject.tag == "Enemy" && !isInv)TakeDamage(col.gameObject);
 	}
 }
