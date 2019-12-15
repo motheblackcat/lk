@@ -19,26 +19,31 @@ public class DialogManager : MonoBehaviour {
     void Update() {
         npc = playerControl.npc;
         inDialog = dialogUI.enabled;
-        bool autoStartDialog = npc ? npc.GetComponent<NpcAnimation>().autoStart : false;
         bool introDone = introSceneManager ? introSceneManager.introDone : true;
         bool isGamepad = globalManager.isGamepad;
 
         if (npc && introDone) {
-            if (autoStartDialog || Input.GetButtonDown("Jump")) {
-                if (playerControl.isGrounded)getDialog();
-                autoStartDialog = false;
-            } else {
-                // TODO: Can be simplified?
-                GameObject.Find(npc.name + "/ButtonA").GetComponent<SpriteRenderer>().enabled = !inDialog && isGamepad;
-                GameObject.Find(npc.name + "/SpaceBar").GetComponent<SpriteRenderer>().enabled = !inDialog && !isGamepad;
-            }
-            if (inDialog && Input.GetButtonDown("Jump")) {
-                GameObject.Find("DialogText").GetComponent<Text>().text = "";
-                dialogUI.enabled = false;
-            }
-        } else {
+            OpenCloseDialog();
+            SpriteRenderer[] buttons = npc.GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer button in buttons)
+                if (button.name != npc.name)button.enabled = button.name == (globalManager.isGamepad ? "ButtonA" : "SpaceBar");
+        }
+
+        if (!npc || inDialog) {
             GameObject[] buttons = GameObject.FindGameObjectsWithTag("NPCButton");
             foreach (GameObject button in buttons)button.GetComponent<SpriteRenderer>().enabled = false;
+        }
+    }
+
+    void OpenCloseDialog() {
+        bool autoStartDialog = npc ? npc.GetComponent<NpcAnimation>().autoStart : false;
+        if ((autoStartDialog || Input.GetButtonDown("Jump")) && playerControl.isGrounded) {
+            if (!inDialog) {
+                getDialog();
+                autoStartDialog = false;
+            } else {
+                dialogUI.enabled = false;
+            }
         }
     }
 

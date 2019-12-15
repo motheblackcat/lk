@@ -11,9 +11,7 @@ public class SimpleWarp : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetButtonDown("Jump") && canWarp) {
-            sceneLoader.StartLoadScene(false);
-        }
+        if (Input.GetButtonDown("Jump") && canWarp)sceneLoader.StartLoadScene(false);
     }
 
     private void OnTriggerStay2D(Collider2D other) {
