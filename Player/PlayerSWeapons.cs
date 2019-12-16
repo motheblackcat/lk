@@ -5,11 +5,13 @@ using UnityEngine.UI;
 public class PlayerSWeapons : MonoBehaviour {
     public List<GameObject> sWeapons;
     public GameObject sWeapon;
+    GlobalManager globalManager;
     public bool throwWeapon = false;
     public float throwTimer = 0;
     int sWeaponsCount = 0;
 
     void Start() {
+        globalManager = GameObject.Find("GameManager").GetComponent<GlobalManager>();
         sWeapons = PlayerState.Instance.sWeapons;
         // TODO: SWeapon choice is reset between scenes
         if (sWeapons.Count > 0)sWeapon = sWeapons[0];
@@ -26,6 +28,10 @@ public class PlayerSWeapons : MonoBehaviour {
             if (Input.GetButtonDown("SWeapon") && GetComponent<PlayerControl>().canMove && throwTimer <= 0) {
                 throwWeapon = true;
             }
+            // TODO: Provide graphics for SWeapon UI buttons
+            Image[] buttons = GameObject.Find("SWeaponUI").GetComponentsInChildren<Image>();
+            foreach (Image button in buttons)
+                if (button.name != "SWeaponIcon")button.enabled = button.name == (globalManager.isGamepad ? "Buttons" : "Keys");
 
             GameObject.Find("SWeaponIcon").GetComponent<Image>().sprite = sWeapon.GetComponent<SpriteRenderer>().sprite;
             SwitchWeapon();
