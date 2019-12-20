@@ -29,9 +29,9 @@ public class PlayerSWeapons : MonoBehaviour {
                 throwWeapon = true;
             }
             // TODO: Provide graphics for SWeapon UI buttons
-            Image[] buttons = GameObject.Find("SWeaponUI").GetComponentsInChildren<Image>();
-            foreach (Image button in buttons)
-                if (button.name != "SWeaponIcon")button.enabled = button.name == (globalManager.isGamepad ? "Buttons" : "Keys");
+            Canvas[] buttons = GameObject.Find("SWeaponUI").GetComponentsInChildren<Canvas>();
+            foreach (Canvas button in buttons)
+                if (button.name != "SWeaponUI")button.GetComponent<Canvas>().enabled = button.name == (globalManager.isGamepad ? "Buttons" : "Keys");
 
             GameObject.Find("SWeaponIcon").GetComponent<Image>().sprite = sWeapon.GetComponent<SpriteRenderer>().sprite;
             SwitchWeapon();
