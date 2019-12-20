@@ -9,6 +9,7 @@ public class PlayerControl : MonoBehaviour {
     SceneLoader sceneLoader;
     IntroSceneManager introSceneManager;
     PauseMenuManager pauseMenuManager;
+    PlayerControl playerControl;
     PlayerHealth playerHealth;
     public float runSpeed = 40;
     public float jumpSpeed = 600;
@@ -18,6 +19,7 @@ public class PlayerControl : MonoBehaviour {
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+        playerControl = GetComponent<PlayerControl>();
         playerHealth = GetComponent<PlayerHealth>();
         playerUI = GameObject.Find("PlayerUI");
         ghost = GameObject.Find("Ghost");
@@ -44,7 +46,7 @@ public class PlayerControl : MonoBehaviour {
     void PlayerMove() {
         GetComponent<CapsuleCollider2D>().offset = new Vector2(sprite.flipX ? -0.06f : 0.06f, -0.04f);
         rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * runSpeed, rb.velocity.y);
-        if (Input.GetButtonDown("Jump") && isGrounded)rb.velocity = Vector2.up * jumpSpeed;
+        if (Input.GetButtonDown("Jump") && !playerControl.npc && isGrounded)rb.velocity = Vector2.up * jumpSpeed;
         if (rb.velocity.x > 0)sprite.flipX = false;
         if (rb.velocity.x < 0)sprite.flipX = true;
         if (ghost)ghost.GetComponent<SpriteRenderer>().flipX = sprite.flipX;
@@ -58,7 +60,7 @@ public class PlayerControl : MonoBehaviour {
         if (other.gameObject.tag == "Ground")isGrounded = false;
     }
 
-    private void OnTriggerStay2D(Collider2D other) {
+    private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "NPC" || other.gameObject.tag == "StaticNPC")npc = other.gameObject;
     }
 

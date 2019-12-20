@@ -11,10 +11,10 @@ You can test the current build at https://motheblackcat.github.io/assets/build/l
 Patch notes v0.0.3:
 
 - New Feature: Player state kept between scenes (life and sWeapons)
-- WIP: Simple backtracking / scenes navigation
+- WIP: Simple scenes navigation
 - WIP: New scene to get the Axe sub-weapon from Bob The Lumberjack
 - Improvement: The jump button (space bar / A button) is now also used for dialogs opening
-- Improvement: The UI on the npcs reflect the controls (gamepad / keyboard)
+- Improvement: The UI reflects the control type (gamepad / keyboard)
 - Fix: Text assets not loaded after game relaunch
 
 Currently Known Issues:
@@ -23,4 +23,4 @@ Currently Known Issues:
 - Attack sound can be heard without the animation when spamming attack (attack is registered though)
 - Jump sound can be heard without jumping when spamming it along using an Sweapon
 - Damage boost on enemy (Bigger jump while taking damage)
-- Check that the lifebar ui is correctly handled by playerhealth script
+- Missing graphics for SWeapons UI (RB / LB Icons)

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BobAxeEvent : MonoBehaviour {
     Canvas DialogUI;
@@ -15,7 +14,7 @@ public class BobAxeEvent : MonoBehaviour {
     }
 
     void Update() {
-        // TODO: Make a general way to manage quests states (check brackeys)
+        // TODO: Make a general way to manage quests states (check brackeys and enums)
         sWeapons = GameObject.Find("Player").GetComponent<PlayerSWeapons>().sWeapons;
         if (DialogUI.enabled)wasOpened = true;
         wasClosed = wasOpened && !DialogUI.enabled;

@@ -33,15 +33,17 @@ public class DialogManager : MonoBehaviour {
             GameObject[] buttons = GameObject.FindGameObjectsWithTag("NPCButton");
             foreach (GameObject button in buttons)button.GetComponent<SpriteRenderer>().enabled = false;
         }
+
+        if (!npc)dialogUI.enabled = false;
     }
 
-    // TODO: Fix autostart
+    // TODO: autoStartDialog ref do not allow to easily change its state
     void OpenCloseDialog() {
-        bool autoStartDialog = npc ? npc.GetComponent<NpcAnimation>().autoStart : false;
+        bool autoStartDialog = npc.GetComponent<NpcAnimation>().autoStart;
         if ((autoStartDialog || Input.GetButtonDown("Jump")) && playerControl.isGrounded) {
             if (!inDialog) {
                 GetDialog();
-                autoStartDialog = false;
+                npc.GetComponent<NpcAnimation>().autoStart = false;
             } else {
                 dialogUI.enabled = false;
             }
