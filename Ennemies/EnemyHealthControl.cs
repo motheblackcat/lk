@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class EnemyHealthControl : MonoBehaviour {
 
@@ -10,54 +11,29 @@ public class EnemyHealthControl : MonoBehaviour {
 	public float pushX = 10f;
 	public float pushY = 0f;
 	public float destroyTimer = 1.0f;
-	public float flickTimer = 0.1f;
 	public int damage = 25;
-	float stunTimerReset;
 
 	void Start() {
-		stunTimerReset = stunTimer;
 		sprite = GetComponent<SpriteRenderer>();
 	}
 
 	void Update() {
-		Stun();
 		Death();
 	}
 
-	void Stun() {
-		if (isStunned) {
-			stunTimer -= Time.deltaTime;
-			if (stunTimer <= 0) {
-				isStunned = false;
-				CancelInvoke();
-				sprite.enabled = true;
-				stunTimer = stunTimerReset;
-			}
-		}
-
-	}
-
-	void SpriteFlick() {
-		sprite.enabled = !sprite.enabled;
-	}
-
-	void PushBack() {
+	public IEnumerator TakeDamage(int damage) {
+		isStunned = true;
+		enemyHealth -= damage;
+		GetComponent<EnemyAudioControl>().PlayHitSound();
 		bool pos = GameObject.Find("Player").transform.position.x > transform.position.x;
 		GetComponent<Rigidbody2D>().AddForce(new Vector2(pos ? -pushX : pushX, pushY), ForceMode2D.Impulse);
+		yield return new WaitForSeconds(stunTimer);
+		isStunned = false;
 	}
 
-	public void TakeDamage(int damage) {
-		enemyHealth -= damage;
-		isStunned = true;
-		GetComponent<EnemyAudioControl>().PlayHitSound();
-		PushBack();
-		InvokeRepeating("SpriteFlick", 0, flickTimer);
-	}
-
+	//	TODO: destroyTimer should be death animation length
 	void Death() {
 		if (enemyHealth <= 0) {
-			CancelInvoke();
-			sprite.enabled = true;
 			isDead = true;
 			GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
 			GetComponent<Collider2D>().enabled = false;

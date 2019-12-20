@@ -1,27 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyAudioControl : MonoBehaviour {
-	AudioSource audioS;
-	EnemyHealthControl enemyHealth;
-	bool wasPlayed = false;
 	public AudioClip hit;
 	public AudioClip death;
+	AudioSource audioSource;
+	EnemyHealthControl enemyHealth;
+	bool wasPlayed = false;
 
 	void Start() {
-		audioS = GetComponent<AudioSource>();
+		audioSource = GetComponent<AudioSource>();
 		enemyHealth = GetComponent<EnemyHealthControl>();
 	}
 
 	void Update() {
 		if (enemyHealth.isDead && !wasPlayed) {
-			audioS.PlayOneShot(death);
+			audioSource.PlayOneShot(death);
 			wasPlayed = true;
 		}
 	}
 
 	public void PlayHitSound() {
-		audioS.PlayOneShot(hit);
+		audioSource.PlayOneShot(hit);
 	}
 }

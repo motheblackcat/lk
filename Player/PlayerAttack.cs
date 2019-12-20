@@ -31,7 +31,7 @@ public class PlayerAttack : MonoBehaviour {
         if (timeBtwAtk <= 0 && Input.GetButtonDown("Attack") && GetComponent<PlayerControl>().canMove) {
             isAttacking = true;
             enemyHits = Physics2D.OverlapCircleAll(atkPos.position, atkRange, enemyLayer);
-            foreach (Collider2D enemy in enemyHits)enemy.GetComponent<EnemyHealthControl>().TakeDamage(damage);
+            foreach (Collider2D enemy in enemyHits)StartCoroutine(enemy.GetComponent<EnemyHealthControl>().TakeDamage(damage));
             timeBtwAtk = timeBtwAtkTemp;
         } else {
             isAttacking = false;
