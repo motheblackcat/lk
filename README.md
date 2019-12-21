@@ -8,15 +8,9 @@ A sandbox/pet project to learn 2D in Unity, advancing slowly due to work and lif
 
 You can test the current build at https://motheblackcat.github.io/assets/build/lk.rar or in the releases.
 
-Patch notes v0.0.3:
+Patch notes v0.0.5:
 
-- New Feature: Player state kept between scenes (life and sWeapons)
-- New Feature: Simple scenes navigation
-- WIP: Added a new NPC: Juke The Menstrel
-- WIP: New scene to get the Axe sub-weapon from Bob The Lumberjack
-- Improvement: The jump button (space bar / A button) is now also used for dialogs opening
-- Improvement: The UI reflects the control type (gamepad / keyboard)
-- Fix: Text assets not loaded after game relaunch
+- WIP: Added a new NPC: Juke The Menstrel (temp sprite / no animations / logic)
 
 Currently Known Issues:
 
