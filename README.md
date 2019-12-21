@@ -12,6 +12,7 @@ Patch notes v0.0.3:
 
 - New Feature: Player state kept between scenes (life and sWeapons)
 - New Feature: Simple scenes navigation
+- WIP: Added a new NPC: Juke The Menstrel
 - WIP: New scene to get the Axe sub-weapon from Bob The Lumberjack
 - Improvement: The jump button (space bar / A button) is now also used for dialogs opening
 - Improvement: The UI reflects the control type (gamepad / keyboard)
