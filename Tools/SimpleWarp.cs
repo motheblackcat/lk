@@ -11,14 +11,20 @@ public class SimpleWarp : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetButtonDown("Jump") && canWarp)sceneLoader.StartLoadScene(false);
+        if (Input.GetButtonDown("Jump") && canWarp) {
+            canWarp = false;
+            sceneLoader.StartLoadScene(false);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        canWarp = true;
     }
 
     private void OnTriggerStay2D(Collider2D other) {
         if (other.tag == "Player") {
             SpriteRenderer[] buttons = GetComponentsInChildren<SpriteRenderer>();
             foreach (SpriteRenderer button in buttons)button.enabled = button.name == (globalManager.isGamepad ? "ButtonA" : "SpaceBar");
-            canWarp = true;
         }
     }
 
