@@ -26,7 +26,7 @@ public class DialogManager : MonoBehaviour {
             OpenCloseDialog();
             SpriteRenderer[] buttons = npc.GetComponentsInChildren<SpriteRenderer>();
             foreach (SpriteRenderer button in buttons)
-                if (button.name != npc.name)button.enabled = button.name == (globalManager.isGamepad ? "ButtonA" : "SpaceBar");
+                if (button.name != npc.name && button.tag == "NPCButton")button.enabled = button.name == (globalManager.isGamepad ? "ButtonA" : "SpaceBar");
         }
 
         if (!npc || inDialog) {
@@ -37,7 +37,6 @@ public class DialogManager : MonoBehaviour {
         if (!npc)dialogUI.enabled = false;
     }
 
-    // TODO: autoStartDialog ref do not allow to easily change its state
     void OpenCloseDialog() {
         bool autoStartDialog = npc.GetComponent<NpcAnimation>().autoStart;
         if ((autoStartDialog || Input.GetButtonDown("Jump")) && playerControl.isGrounded) {
