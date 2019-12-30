@@ -39,7 +39,7 @@ public class SWeaponsControl : MonoBehaviour {
         }
 
         if (other.gameObject.tag == "Enemy") {
-            other.GetComponent<EnemyHealthControl>().TakeDamage(weaponDamage);
+            StartCoroutine(other.GetComponent<EnemyHealthControl>().TakeDamage(weaponDamage));
             Destroy(gameObject);
         }
     }
