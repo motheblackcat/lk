@@ -7,6 +7,7 @@ public class PlayerAnimation : MonoBehaviour {
 	PlayerAttack playerAttack;
 	PlayerSWeapons playerSWeapons;
 	GameObject weapon;
+	public float swordOffsetX = 0.74f;
 
 	void Start() {
 		animator = GetComponent<Animator>();
@@ -35,6 +36,7 @@ public class PlayerAnimation : MonoBehaviour {
 		bool flipX = GetComponent<SpriteRenderer>().flipX;
 		weapon.GetComponent<SpriteRenderer>().flipX = flipX;
 		float y = weapon.transform.localPosition.y;
-		weapon.transform.localPosition = flipX ? new Vector2(-0.74f, y) : new Vector2(0.74f, y);
+		Debug.Log(weapon.transform.localPosition);
+		weapon.transform.localPosition = flipX ? new Vector2(-swordOffsetX, y) : new Vector2(swordOffsetX, y);
 	}
 }
