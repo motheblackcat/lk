@@ -11,6 +11,8 @@ public class PlayerControl : MonoBehaviour {
     PauseMenuManager pauseMenuManager;
     PlayerControl playerControl;
     PlayerHealth playerHealth;
+    public float colliderOffsetX = 0.06f;
+    public float colliderOffsetY = 0.04f;
     public float runSpeed = 40;
     public float jumpSpeed = 600;
     public bool canMove;
@@ -44,7 +46,7 @@ public class PlayerControl : MonoBehaviour {
     }
 
     void PlayerMove() {
-        GetComponent<CapsuleCollider2D>().offset = new Vector2(sprite.flipX ? -0.06f : 0.06f, -0.04f);
+        GetComponent<CapsuleCollider2D>().offset = new Vector2(sprite.flipX ? -colliderOffsetX : colliderOffsetX, colliderOffsetY);
         rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * runSpeed, rb.velocity.y);
         if (Input.GetButtonDown("Jump") && !playerControl.npc && isGrounded)rb.velocity = Vector2.up * jumpSpeed;
         if (rb.velocity.x > 0)sprite.flipX = false;
