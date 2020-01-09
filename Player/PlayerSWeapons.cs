@@ -31,7 +31,6 @@ public class PlayerSWeapons : MonoBehaviour {
             if (Input.GetButtonDown("SWeapon") && GetComponent<PlayerControl>().canMove && throwTimer <= 0) {
                 throwWeapon = true;
             }
-            // TODO: Provide graphics for SWeapon UI buttons
             Canvas[] buttons = GameObject.Find("SWeaponUI").GetComponentsInChildren<Canvas>();
             foreach (Canvas button in buttons)
                 if (button.name != "SWeaponUI")button.GetComponent<Canvas>().enabled = button.name == (globalManager.isGamepad ? "Buttons" : "Keys");
