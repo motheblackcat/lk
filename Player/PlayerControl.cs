@@ -25,18 +25,18 @@ public class PlayerControl : MonoBehaviour {
         playerHealth = GetComponent<PlayerHealth>();
         playerUI = GameObject.Find("PlayerUI");
         ghost = GameObject.Find("Ghost");
-        introSceneManager = GameObject.Find("GameManager").GetComponent<IntroSceneManager>();
-        sceneLoader = GameObject.Find("SceneTransition").GetComponent<SceneLoader>();
-        pauseMenuManager = GameObject.Find("PlayerUI").GetComponent<PauseMenuManager>();
+        introSceneManager = GameObject.Find("GameManager") ? GameObject.Find("GameManager").GetComponent<IntroSceneManager>() : null;
+        sceneLoader = GameObject.Find("SceneTransition") ? GameObject.Find("SceneTransition").GetComponent<SceneLoader>() : null;
+        pauseMenuManager = GameObject.Find("PlayerUI") ? GameObject.Find("PlayerUI").GetComponent<PauseMenuManager>() : null;
     }
 
     void Update() {
         bool introDone = introSceneManager ? introSceneManager.introDone : true;
-        bool isLoading = sceneLoader.isLoading;
-        bool inDialog = playerUI.GetComponent<DialogManager>().inDialog;
+        bool isLoading = sceneLoader ? sceneLoader.isLoading : false;
+        bool inDialog = playerUI ? playerUI.GetComponent<DialogManager>().inDialog : false;
         bool tookDamage = playerHealth ? playerHealth.isInv : false;
         bool isDead = playerHealth ? playerHealth.isDead : false;
-        bool isPaused = pauseMenuManager.paused;
+        bool isPaused = pauseMenuManager? pauseMenuManager.paused : false;
 
         canMove = introDone && !isPaused && !inDialog && !isLoading && !tookDamage && !isDead;
 

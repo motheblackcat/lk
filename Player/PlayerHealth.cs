@@ -17,7 +17,7 @@ public class PlayerHealth : MonoBehaviour {
 	void Start() {
 		healthBar = GameObject.Find("Content") ? GameObject.Find("Content").GetComponent<Image>() : null;
 		invTimerTemp = invicibilityTimer;
-		playerHealth = PlayerState.Instance.playerHealth;
+		playerHealth = PlayerState.Instance ? PlayerState.Instance.playerHealth : 100;
 	}
 
 	// TODO: Move healthbar? Use Coroutines?

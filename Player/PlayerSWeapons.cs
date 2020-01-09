@@ -11,18 +11,21 @@ public class PlayerSWeapons : MonoBehaviour {
     int sWeaponsCount = 0;
 
     void Start() {
-        globalManager = GameObject.Find("GameManager").GetComponent<GlobalManager>();
-        sWeapons = PlayerState.Instance.sWeapons;
+        globalManager = GameObject.Find("GameManager") ? GameObject.Find("GameManager").GetComponent<GlobalManager>() : null;
+        sWeapons = PlayerState.Instance ? PlayerState.Instance.sWeapons : null;
         // TODO: SWeapon choice is reset between scenes
-        if (sWeapons.Count > 0)sWeapon = sWeapons[0];
-        sWeaponsCount = sWeapons.Count;
+        if (sWeapons != null) {
+            if (sWeapons.Count > 0)sWeapon = sWeapons[0];
+            sWeaponsCount = sWeapons != null ? sWeapons.Count : 0;
+        }
     }
 
     void Update() {
         // TODO: Make a stable way to detect changes to the sWeapons list at runtime
-        if (sWeapons.Count > sWeaponsCount && sWeapons.Count < 2)sWeapon = sWeapons[0];
-
-        GameObject.Find("SWeaponUI").GetComponent<Canvas>().enabled = sWeapon;
+        if (sWeapons != null) {
+            if (sWeapons.Count > sWeaponsCount && sWeapons.Count < 2)sWeapon = sWeapons[0];
+            GameObject.Find("SWeaponUI").GetComponent<Canvas>().enabled = sWeapon ? sWeapon : false;
+        }
 
         if (sWeapon) {
             if (Input.GetButtonDown("SWeapon") && GetComponent<PlayerControl>().canMove && throwTimer <= 0) {
