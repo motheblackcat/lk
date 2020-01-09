@@ -16,12 +16,11 @@ public class PlayerAnimation : MonoBehaviour {
 		playerAttack = GetComponent<PlayerAttack>();
 		playerSWeapons = GetComponent<PlayerSWeapons>();
 		weapon = GameObject.FindGameObjectWithTag("Weapon");
-		swordPositionX = weapon.transform.localPosition.x;
+		if (weapon)swordPositionX = weapon.transform.localPosition.x;
 	}
 
 	void Update() {
 		PlayerAnimate();
-		if (weapon)SwordPosition();
 	}
 
 	void PlayerAnimate() {
@@ -31,6 +30,7 @@ public class PlayerAnimation : MonoBehaviour {
 		if (playerAttack)animator.SetBool("attack", playerAttack.isAttacking);
 		if (playerHealth)animator.SetBool("hurt", playerHealth.isInv);
 		if (playerHealth && playerHealth.isDead)animator.SetTrigger("die");
+		if (weapon)SwordPosition();
 	}
 
 	void SwordPosition() {

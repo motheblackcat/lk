@@ -7,8 +7,7 @@ public class PlayerAttack : MonoBehaviour {
     public bool isAttacking = false;
     public float timeBtwAtk = 0.3f;
     public float atkRange = 0.7f;
-    // TODO: damage should come from the player's weapon (by type with tags or script)
-    public int damage = 1;
+    public int damage = 0;
     float timeBtwAtkTemp;
     float atkPosX;
 
@@ -19,11 +18,20 @@ public class PlayerAttack : MonoBehaviour {
         atkPos = GameObject.Find("AttackPos").GetComponent<Transform>();
         atkPosX = atkPos.localPosition.x;
         timeBtwAtkTemp = timeBtwAtk;
+        CheckWeaponDamage(weapon);
     }
 
     // TODO: Check animation as it doesn't seems synchronous and refactor this (button detection in Update)
     void Update() {
         if (weapon)Attack();
+    }
+
+    void CheckWeaponDamage(GameObject weapon) {
+        switch (weapon.name) {
+            case "Sword":
+                damage = 1;
+                break;
+        }
     }
 
     void Attack() {
