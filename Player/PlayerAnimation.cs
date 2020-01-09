@@ -7,7 +7,7 @@ public class PlayerAnimation : MonoBehaviour {
 	PlayerAttack playerAttack;
 	PlayerSWeapons playerSWeapons;
 	GameObject weapon;
-	public float swordOffsetX = 0.74f;
+	float swordPositionX;
 
 	void Start() {
 		animator = GetComponent<Animator>();
@@ -16,6 +16,7 @@ public class PlayerAnimation : MonoBehaviour {
 		playerAttack = GetComponent<PlayerAttack>();
 		playerSWeapons = GetComponent<PlayerSWeapons>();
 		weapon = GameObject.FindGameObjectWithTag("Weapon");
+		swordPositionX = weapon.transform.localPosition.x;
 	}
 
 	void Update() {
@@ -34,8 +35,8 @@ public class PlayerAnimation : MonoBehaviour {
 
 	void SwordPosition() {
 		bool flipX = GetComponent<SpriteRenderer>().flipX;
-		weapon.GetComponent<SpriteRenderer>().flipX = flipX;
 		float y = weapon.transform.localPosition.y;
-		weapon.transform.localPosition = flipX ? new Vector2(-swordOffsetX, y) : new Vector2(swordOffsetX, y);
+		weapon.GetComponent<SpriteRenderer>().flipX = flipX;
+		weapon.transform.localPosition = new Vector2(flipX ? -swordPositionX : swordPositionX, y);
 	}
 }

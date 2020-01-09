@@ -15,6 +15,7 @@ public class PlayerAttack : MonoBehaviour {
     public Collider2D[] enemyHits;
 
     void Start() {
+        weapon = GameObject.FindWithTag("Weapon");
         atkPos = GameObject.Find("AttackPos").GetComponent<Transform>();
         atkPosX = atkPos.localPosition.x;
         timeBtwAtkTemp = timeBtwAtk;
@@ -22,7 +23,6 @@ public class PlayerAttack : MonoBehaviour {
 
     // TODO: Check animation as it doesn't seems synchronous and refactor this (button detection in Update)
     void Update() {
-        weapon = GameObject.FindWithTag("Weapon");
         if (weapon)Attack();
     }
 
