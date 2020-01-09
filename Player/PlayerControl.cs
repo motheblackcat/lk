@@ -9,25 +9,26 @@ public class PlayerControl : MonoBehaviour {
     SceneLoader sceneLoader;
     IntroSceneManager introSceneManager;
     PauseMenuManager pauseMenuManager;
-    PlayerControl playerControl;
     PlayerHealth playerHealth;
-    public float colliderOffsetX = 0.06f;
-    public float colliderOffsetY = 0.04f;
     public float runSpeed = 40;
     public float jumpSpeed = 600;
     public bool canMove;
     public bool isGrounded;
+    float colliderOffsetX;
+    float colliderOffsetY;
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
-        playerControl = GetComponent<PlayerControl>();
         playerHealth = GetComponent<PlayerHealth>();
         playerUI = GameObject.Find("PlayerUI");
         ghost = GameObject.Find("Ghost");
         introSceneManager = GameObject.Find("GameManager") ? GameObject.Find("GameManager").GetComponent<IntroSceneManager>() : null;
         sceneLoader = GameObject.Find("SceneTransition") ? GameObject.Find("SceneTransition").GetComponent<SceneLoader>() : null;
         pauseMenuManager = GameObject.Find("PlayerUI") ? GameObject.Find("PlayerUI").GetComponent<PauseMenuManager>() : null;
+
+        colliderOffsetX = GetComponent<CapsuleCollider2D>().offset.x;
+        colliderOffsetY = GetComponent<CapsuleCollider2D>().offset.y;
     }
 
     void Update() {
@@ -48,7 +49,7 @@ public class PlayerControl : MonoBehaviour {
     void PlayerMove() {
         GetComponent<CapsuleCollider2D>().offset = new Vector2(sprite.flipX ? -colliderOffsetX : colliderOffsetX, colliderOffsetY);
         rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * runSpeed, rb.velocity.y);
-        if (Input.GetButtonDown("Jump") && !playerControl.npc && isGrounded)rb.velocity = Vector2.up * jumpSpeed;
+        if (Input.GetButtonDown("Jump") && isGrounded)rb.velocity = Vector2.up * jumpSpeed;
         if (rb.velocity.x > 0)sprite.flipX = false;
         if (rb.velocity.x < 0)sprite.flipX = true;
         if (ghost)ghost.GetComponent<SpriteRenderer>().flipX = sprite.flipX;

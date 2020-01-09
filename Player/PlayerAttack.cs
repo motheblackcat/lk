@@ -21,7 +21,6 @@ public class PlayerAttack : MonoBehaviour {
         CheckWeaponDamage(weapon);
     }
 
-    // TODO: Check animation as it doesn't seems synchronous and refactor this (button detection in Update)
     void Update() {
         if (weapon)Attack();
     }
