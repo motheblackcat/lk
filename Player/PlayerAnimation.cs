@@ -33,9 +33,9 @@ public class PlayerAnimation : MonoBehaviour {
 	}
 
 	void SwordPosition() {
-		weapon.GetComponent<SpriteRenderer>().flipX = GetComponent<SpriteRenderer>().flipX;
-		// float y = weapon.transform.localPosition.y;
-		// Debug.Log(weapon.transform.localPosition);
-		// weapon.transform.localPosition = flipX ? new Vector2(-swordOffsetX, y) : new Vector2(swordOffsetX, y);
+		bool flipX = GetComponent<SpriteRenderer>().flipX;
+		weapon.GetComponent<SpriteRenderer>().flipX = flipX;
+		float y = weapon.transform.localPosition.y;
+		weapon.transform.localPosition = flipX ? new Vector2(-swordOffsetX, y) : new Vector2(swordOffsetX, y);
 	}
 }

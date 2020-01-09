@@ -4,8 +4,6 @@ using UnityEngine;
 public class PlayerState : MonoBehaviour {
     public static PlayerState Instance { get; private set; }
     public List<GameObject> sWeapons;
-    PlayerHealth playerHealthScript;
-    PlayerSWeapons playerSWeaponsScript;
     public float playerHealth = 100;
 
     // TODO: Starting values will be taken from PlayerPrefs (or a custom sript to encrypt saves like Brackeys?)
