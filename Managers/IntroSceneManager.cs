@@ -1,12 +1,17 @@
 ﻿using UnityEngine;
 
 public class IntroSceneManager : MonoBehaviour {
+	PlayerState playerState;
 	GameObject player;
-	public bool introDone = false;
 	public float startTimer = 5.0f;
 
 	void Start() {
+		playerState = PlayerState.Instance;
 		player = GameObject.Find("Player");
+
+		if (playerState.introDone) {
+			FreePlayer();
+		}
 	}
 
 	void Update() {
@@ -17,7 +22,7 @@ public class IntroSceneManager : MonoBehaviour {
 	}
 
 	void FreePlayer() {
-		introDone = true;
+		playerState.introDone = true;
 		player.GetComponent<Animator>().enabled = true;
 		player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
 		player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;

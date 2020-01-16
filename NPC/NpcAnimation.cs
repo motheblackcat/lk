@@ -2,19 +2,17 @@
 
 public class NpcAnimation : MonoBehaviour {
     Animator animator;
-    IntroSceneManager introSceneManager;
+    PlayerState playerState;
     DialogManager dialogManager;
     public bool autoStart = false;
     bool introDone;
 
     void Start() {
         animator = GetComponent<Animator>();
-        introSceneManager = GameObject.Find("GameManager").GetComponent<IntroSceneManager>();
+        playerState = PlayerState.Instance;
         dialogManager = GameObject.Find("PlayerUI").GetComponent<DialogManager>();
-    }
 
-    void Update() {
-        introDone = introSceneManager ? introSceneManager.introDone : true;
+        introDone = playerState.introDone;
     }
 
     void OnTriggerStay2D(Collider2D other) {

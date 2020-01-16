@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
 public class SimpleWarp : MonoBehaviour {
-    GlobalManager globalManager;
+    PlayerState playerState;
     SceneLoader sceneLoader;
     bool canWarp = false;
 
     private void Start() {
-        globalManager = GameObject.Find("GameManager").GetComponent<GlobalManager>();
+        playerState = GameObject.Find("PlayerState").GetComponent<PlayerState>();
         sceneLoader = GameObject.Find("SceneTransition").GetComponent<SceneLoader>();
     }
 
@@ -24,14 +24,14 @@ public class SimpleWarp : MonoBehaviour {
     private void OnTriggerStay2D(Collider2D other) {
         if (other.tag == "Player") {
             SpriteRenderer[] buttons = GetComponentsInChildren<SpriteRenderer>();
-            foreach (SpriteRenderer button in buttons)button.enabled = button.name == (globalManager.isGamepad ? "ButtonA" : "SpaceBar");
+            foreach (SpriteRenderer button in buttons) button.enabled = button.name == (playerState.isGamepad ? "ButtonA" : "SpaceBar");
         }
     }
 
     private void OnTriggerExit2D(Collider2D other) {
         if (other.tag == "Player") {
             SpriteRenderer[] buttons = GetComponentsInChildren<SpriteRenderer>();
-            foreach (SpriteRenderer button in buttons)button.enabled = false;
+            foreach (SpriteRenderer button in buttons) button.enabled = false;
             canWarp = false;
         }
     }

@@ -15,15 +15,14 @@ public class PlayerHealth : MonoBehaviour {
 	float invTimerTemp = 0;
 
 	void Start() {
-		healthBar = GameObject.Find("Content") ? GameObject.Find("Content").GetComponent<Image>() : null;
+		healthBar = GameObject.Find("Content").GetComponent<Image>();
 		invTimerTemp = invicibilityTimer;
 		playerHealth = PlayerState.Instance ? PlayerState.Instance.playerHealth : 100;
 	}
 
-	// TODO: Move healthbar? Use Coroutines?
 	void Update() {
-		if (healthBar)healthBar.fillAmount = playerHealth / 100;
-		if (isInv)StartInvTimer();
+		if (healthBar) healthBar.fillAmount = playerHealth / 100;
+		if (isInv) StartInvTimer();
 		Death();
 	}
 
@@ -60,11 +59,11 @@ public class PlayerHealth : MonoBehaviour {
 			PlayerState.Instance.playerHealth = 100;
 			GameObject.Find("MainCamera").GetComponent<AudioSource>().Stop();
 			restartLevelTimer -= Time.deltaTime;
-			if (restartLevelTimer <= 0)GameObject.Find("SceneTransition").GetComponent<SceneLoader>().StartLoadScene(true);
+			if (restartLevelTimer <= 0) GameObject.Find("SceneTransition").GetComponent<SceneLoader>().StartLoadScene(true);
 		}
 	}
 
 	void OnCollisionStay2D(Collision2D col) {
-		if (col.gameObject.tag == "Enemy" && !isInv)TakeDamage(col.gameObject);
+		if (col.gameObject.tag == "Enemy" && !isInv) TakeDamage(col.gameObject);
 	}
 }

@@ -31,7 +31,7 @@ public class EnemyHealthControl : MonoBehaviour {
 		isStunned = false;
 	}
 
-	//	TODO: destroyTimer should be death animation length
+	// TODO: destroyTimer should be death animation length
 	void Death() {
 		if (enemyHealth <= 0) {
 			isDead = true;
