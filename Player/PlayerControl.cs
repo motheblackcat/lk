@@ -34,14 +34,13 @@ public class PlayerControl : MonoBehaviour {
     }
 
     void Update() {
-        bool introDone = playerState.introDone;
         bool isLoading = sceneLoader ? sceneLoader.isLoading : false;
         bool inDialog = playerUI ? playerUI.GetComponent<DialogManager>().inDialog : false;
         bool tookDamage = playerHealth ? playerHealth.isInv : false;
         bool isDead = playerHealth ? playerHealth.isDead : false;
         bool isPaused = pauseMenuManager? pauseMenuManager.paused : false;
 
-        canMove = introDone && !isPaused && !inDialog && !isLoading && !tookDamage && !isDead;
+        canMove = !isPaused && !inDialog && !isLoading && !tookDamage && !isDead;
 
         // TODO: Moving to FixedUpdate() messes pushback
         if (canMove) PlayerMove();

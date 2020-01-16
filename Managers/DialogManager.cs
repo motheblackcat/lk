@@ -17,10 +17,9 @@ public class DialogManager : MonoBehaviour {
     void Update() {
         npc = playerControl.npc;
         inDialog = dialogUI.enabled;
-        bool introDone = playerState.introDone;
         bool isGamepad = playerState.isGamepad;
 
-        if (npc && introDone) {
+        if (npc && playerControl.isGrounded) {
             OpenCloseDialog();
             SpriteRenderer[] buttons = npc.GetComponentsInChildren<SpriteRenderer>();
             foreach (SpriteRenderer button in buttons)

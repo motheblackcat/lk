@@ -4,7 +4,6 @@ using UnityEngine;
 public class PlayerState : MonoBehaviour {
     public static PlayerState Instance { get; private set; }
     public bool isGamepad = false;
-    public bool introDone = false;
     public float playerHealth = 100;
     public List<GameObject> sWeapons;
 
