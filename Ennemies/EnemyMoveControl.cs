@@ -15,7 +15,7 @@ public class EnemyMoveControl : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         enemyHealthControl = GetComponent<EnemyHealthControl>();
-        box = GetComponentsInChildren<BoxCollider2D>()[0];
+        box = GetComponentsInChildren<BoxCollider2D>() [0];
         boxOffsetX = box.offset.x;
     }
 
@@ -26,7 +26,7 @@ public class EnemyMoveControl : MonoBehaviour {
     void Move() {
         bool enemyCanMove = canSee && !enemyHealthControl.isStunned && !player.GetComponent<PlayerHealth>().isDead;
 
-        if (enemyCanMove)rb.velocity = new Vector2(player.transform.position.x > transform.position.x ? moveSpeed : -moveSpeed, 0);
+        if (enemyCanMove) rb.velocity = new Vector2(player.transform.position.x > transform.position.x ? moveSpeed : -moveSpeed, 0);
 
         if (!enemyHealthControl.isDead) {
             sprite.flipX = player.transform.position.x > transform.position.x;
@@ -35,10 +35,10 @@ public class EnemyMoveControl : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        if (other.gameObject.tag == "Player")canSee = true;
+        if (other.gameObject.tag == "Player") canSee = true;
     }
 
     void OnTriggerExit2D(Collider2D other) {
-        if (other.gameObject.tag == "Player")canSee = false;
+        if (other.gameObject.tag == "Player") canSee = false;
     }
 }

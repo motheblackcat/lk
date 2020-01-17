@@ -6,6 +6,7 @@ public class PlayerState : MonoBehaviour {
     public bool isGamepad = false;
     public float playerHealth = 100;
     public List<GameObject> sWeapons;
+    public bool bobQuest = false;
 
     private void Awake() {
         if (Instance == null) {

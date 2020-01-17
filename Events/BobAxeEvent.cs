@@ -5,24 +5,22 @@ public class BobAxeEvent : MonoBehaviour {
     Canvas DialogUI;
     GameObject axe;
     List<GameObject> sWeapons;
-    bool wasOpened = false;
-    bool wasClosed = false;
+    enum QuestState { DIALOG_IDLE, DIALOG_STARTED }
+    QuestState questState;
 
     void Start() {
         DialogUI = GameObject.Find("DialogUI").GetComponent<Canvas>();
-        axe = Resources.Load("Sweapons/Axe")as GameObject;
+        axe = Resources.Load("Sweapons/Axe") as GameObject;
+        questState = QuestState.DIALOG_IDLE;
     }
 
     void Update() {
-        // TODO: Make a general way to manage quests states (check brackeys and enums)
         sWeapons = GameObject.Find("Player").GetComponent<PlayerSWeapons>().sWeapons;
-        if (DialogUI.enabled)wasOpened = true;
-        wasClosed = wasOpened && !DialogUI.enabled;
-        if (wasClosed) {
-            if (sWeapons.Count == 0)sWeapons.Add(axe);
+        if (DialogUI.enabled) questState = QuestState.DIALOG_STARTED;
+        if (questState == QuestState.DIALOG_STARTED && !DialogUI.enabled) {
+            if (sWeapons.Count == 0) sWeapons.Add(axe);
             GetComponent<Collider2D>().enabled = false;
-            wasOpened = false;
-            wasClosed = false;
-        }
+            PlayerState.Instance.bobQuest = true;
+        };
     }
 }

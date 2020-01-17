@@ -21,9 +21,6 @@ public class DialogManager : MonoBehaviour {
 
         if (npc && playerControl.isGrounded) {
             OpenCloseDialog();
-            SpriteRenderer[] buttons = npc.GetComponentsInChildren<SpriteRenderer>();
-            foreach (SpriteRenderer button in buttons)
-                if (button.name != npc.name && button.tag == "NPCButton") button.enabled = button.name == (playerState.isGamepad ? "ButtonA" : "SpaceBar");
         }
 
         if (!npc || inDialog) {
@@ -36,6 +33,13 @@ public class DialogManager : MonoBehaviour {
 
     void OpenCloseDialog() {
         bool autoStartDialog = npc.GetComponent<NpcAnimation>().autoStart;
+        if (!autoStartDialog) {
+            SpriteRenderer[] buttons = npc.GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer button in buttons)
+                if (button.name != npc.name && button.tag == "NPCButton") button.enabled = button.name == (playerState.isGamepad ? "ButtonA" : "SpaceBar");
+        }
+
+        // TODO: Track quests dialogs / states to fetch correct dialog / action
         if ((autoStartDialog || Input.GetButtonDown("Jump")) && playerControl.isGrounded) {
             if (!inDialog) {
                 GetDialog();
