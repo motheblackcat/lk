@@ -13,6 +13,7 @@ public class IntroSceneManager : MonoBehaviour {
 		if (startTimer <= 0) {
 			FreePlayer();
 		} else {
+			player.GetComponent<SpriteRenderer>().flipX = false;
 			GameObject.Find("Bartender").GetComponent<Animator>().SetBool("watch", false);
 		}
 	}
