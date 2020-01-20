@@ -44,7 +44,7 @@ public class PlayerControl : MonoBehaviour {
 
         // TODO: Moving to FixedUpdate() messes pushback
         if (canMove) PlayerMove();
-        if (inDialog) GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
+        if (inDialog || isLoading) GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
     }
 
     void PlayerMove() {

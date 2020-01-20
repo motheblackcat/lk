@@ -9,12 +9,16 @@ public class IntroSceneManager : MonoBehaviour {
 	}
 
 	void Update() {
-		startTimer -= Time.deltaTime;
-		if (startTimer <= 0) {
-			FreePlayer();
-		} else {
-			player.GetComponent<SpriteRenderer>().flipX = false;
-			GameObject.Find("Bartender").GetComponent<Animator>().SetBool("watch", false);
+		if (PlayerState.Instance.introDone) FreePlayer();
+		else {
+			startTimer -= Time.deltaTime;
+			if (startTimer <= 0) {
+				PlayerState.Instance.introDone = true;
+				FreePlayer();
+			} else {
+				player.GetComponent<SpriteRenderer>().flipX = false;
+				GameObject.Find("Bartender").GetComponent<Animator>().SetBool("watch", false);
+			}
 		}
 	}
 

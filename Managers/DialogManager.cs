@@ -42,8 +42,18 @@ public class DialogManager : MonoBehaviour {
         // TODO: Track quests dialogs / states to fetch correct dialog / action
         if ((autoStartDialog || Input.GetButtonDown("Jump")) && playerControl.isGrounded) {
             if (!inDialog) {
-                GetDialog();
-                npc.GetComponent<NpcAnimation>().autoStart = false;
+                switch (npc.name) {
+                    case "Bob":
+                        if (!PlayerState.Instance.bobQuest) {
+                            GetDialog();
+                            npc.GetComponent<NpcAnimation>().autoStart = false;
+                        }
+                        break;
+                    default:
+                        GetDialog();
+                        npc.GetComponent<NpcAnimation>().autoStart = false;
+                        break;
+                }
             } else {
                 dialogUI.enabled = false;
             }
