@@ -3,16 +3,25 @@ using UnityEngine;
 
 public class PlayerState : MonoBehaviour {
     public static PlayerState Instance { get; private set; }
-    public List<GameObject> sWeapons;
+    public bool isGamepad = false;
     public float playerHealth = 100;
+    public List<GameObject> sWeapons;
+    public bool introDone = false;
+    public bool bobQuest = false;
+    public int lastSceneInex = 0;
 
-    // TODO: Starting values will be taken from PlayerPrefs (or a custom sript to encrypt saves like Brackeys?)
     private void Awake() {
         if (Instance == null) {
             Instance = this;
             DontDestroyOnLoad(gameObject);
         } else {
             Destroy(gameObject);
+        }
+    }
+
+    void Update() {
+        foreach (string gamepad in Input.GetJoystickNames()) {
+            isGamepad = gamepad != "" ? true : false;
         }
     }
 

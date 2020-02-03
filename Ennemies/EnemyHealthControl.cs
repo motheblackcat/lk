@@ -4,6 +4,10 @@ using UnityEngine;
 public class EnemyHealthControl : MonoBehaviour {
 
 	SpriteRenderer sprite;
+	Animator animator;
+	Rigidbody2D rb;
+	Collider2D col;
+	EnemyAudioControl enemyAudio;
 	public float enemyHealth = 2;
 	public bool isDead = false;
 	public bool isStunned = false;
@@ -15,6 +19,10 @@ public class EnemyHealthControl : MonoBehaviour {
 
 	void Start() {
 		sprite = GetComponent<SpriteRenderer>();
+		animator = GetComponent<Animator>();
+		rb = GetComponent<Rigidbody2D>();
+		col = GetComponent<Collider2D>();
+		enemyAudio = GetComponent<EnemyAudioControl>();
 	}
 
 	void Update() {
@@ -24,19 +32,19 @@ public class EnemyHealthControl : MonoBehaviour {
 	public IEnumerator TakeDamage(int damage) {
 		isStunned = true;
 		enemyHealth -= damage;
-		GetComponent<EnemyAudioControl>().PlayHitSound();
+		enemyAudio.PlayHitSound();
 		bool pos = GameObject.Find("Player").transform.position.x > transform.position.x;
-		GetComponent<Rigidbody2D>().AddForce(new Vector2(pos ? -pushX : pushX, pushY), ForceMode2D.Impulse);
+		rb.AddForce(new Vector2(pos ? -pushX : pushX, pushY), ForceMode2D.Impulse);
 		yield return new WaitForSeconds(stunTimer);
 		isStunned = false;
 	}
 
-	//	TODO: destroyTimer should be death animation length
 	void Death() {
 		if (enemyHealth <= 0) {
+			if (animator.GetCurrentAnimatorStateInfo(0).IsName("Death") && !isDead) destroyTimer = animator.GetCurrentAnimatorStateInfo(0).length;
 			isDead = true;
-			GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-			GetComponent<Collider2D>().enabled = false;
+			rb.constraints = RigidbodyConstraints2D.FreezeAll;
+			col.enabled = false;
 			destroyTimer -= Time.deltaTime;
 			if (destroyTimer <= 0) {
 				Destroy(gameObject);

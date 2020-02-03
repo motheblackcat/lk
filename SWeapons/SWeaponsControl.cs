@@ -14,7 +14,7 @@ public class SWeaponsControl : MonoBehaviour {
 
     private void FixedUpdate() {
         lifeSpan -= Time.fixedDeltaTime;
-        if (lifeSpan <= 0)Destroy(gameObject);
+        if (lifeSpan <= 0) Destroy(gameObject);
     }
 
     void SetWeaponAnimType() {
@@ -32,7 +32,6 @@ public class SWeaponsControl : MonoBehaviour {
         }
     }
 
-    // TODO: Sweapon impact animations here
     private void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Ground" || other.gameObject.tag == "Wall") {
             Destroy(gameObject);

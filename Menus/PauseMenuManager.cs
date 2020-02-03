@@ -6,23 +6,23 @@ public class PauseMenuManager : MonoBehaviour {
     Image keyboardUI;
     Canvas pauseUI;
     AudioSource audioSource;
-    GlobalManager globalManager;
+    PlayerState playerState;
     public bool paused = false;
 
     void Start() {
         gamepadUI = GameObject.Find("GamepadUI").GetComponent<Image>();
         keyboardUI = GameObject.Find("KeyboardUI").GetComponent<Image>();
-        globalManager = GameObject.Find("GameManager").GetComponent<GlobalManager>();
+        playerState = GameObject.Find("PlayerState").GetComponent<PlayerState>();
         pauseUI = GameObject.Find("PauseUI").GetComponent<Canvas>();
         audioSource = GetComponent<AudioSource>();
         audioSource.ignoreListenerPause = true;
     }
 
     void Update() {
-        if (Input.GetButtonDown("Start"))Pause();
-        if (paused && Input.GetButtonDown("Select"))Application.Quit();
-        gamepadUI.enabled = globalManager.isGamepad;
-        keyboardUI.enabled = !globalManager.isGamepad;
+        if (Input.GetButtonDown("Start")) Pause();
+        if (paused && Input.GetButtonDown("Select")) Application.Quit();
+        gamepadUI.enabled = playerState.isGamepad;
+        keyboardUI.enabled = !playerState.isGamepad;
     }
 
     void Pause() {
