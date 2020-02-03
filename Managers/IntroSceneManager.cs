@@ -6,6 +6,7 @@ public class IntroSceneManager : MonoBehaviour {
 
 	void Start() {
 		player = GameObject.Find("Player");
+		if (PlayerState.Instance.lastSceneIndex != 0) PlayerState.Instance.introDone = true;
 	}
 
 	void Update() {

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public enum TransitionTypes { Box, Fade }
-public class SceneLoader : MonoBehaviour {
+public class SceneTransition : MonoBehaviour {
 	Animator animator;
 	GameObject player;
 	public TransitionTypes transitionType;
@@ -15,6 +15,9 @@ public class SceneLoader : MonoBehaviour {
 		animator = GetComponent<Animator>();
 		animator.Play(transitionType + "Transition");
 		sceneIndex = SceneManager.GetActiveScene().buildIndex;
+		Debug.Log(SceneManager.GetActiveScene().buildIndex);
+		Scene scene = SceneManager.GetActiveScene();
+        Debug.Log("Active Scene is '" + scene.name + "'.");
 		SetPlayerStartPosition();
 	}
 
@@ -23,7 +26,7 @@ public class SceneLoader : MonoBehaviour {
 	}
 
 	public void StartLoadScene(bool reload) {
-		PlayerState.Instance.lastSceneInex = sceneIndex;
+		PlayerState.Instance.lastSceneIndex = sceneIndex;
 		if (!reload) SetNextSceneIndex();
 		StartCoroutine(LoadScene(reload));
 	}
@@ -38,7 +41,7 @@ public class SceneLoader : MonoBehaviour {
 	// TODO: Handle advanced logic (multiple entry/exit points && player position)
 	void SetPlayerStartPosition() {
 		GameObject backPoint = GameObject.Find("BackPointStart");
-		if (PlayerState.Instance.lastSceneInex > sceneIndex && backPoint) {
+		if (PlayerState.Instance.lastSceneIndex > sceneIndex && backPoint) {
 			player.transform.position = backPoint.transform.position;
 			player.GetComponent<SpriteRenderer>().flipX = true;
 		}

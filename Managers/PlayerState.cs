@@ -8,7 +8,7 @@ public class PlayerState : MonoBehaviour {
     public List<GameObject> sWeapons;
     public bool introDone = false;
     public bool bobQuest = false;
-    public int lastSceneInex = 0;
+    public int lastSceneIndex = 0;
 
     private void Awake() {
         if (Instance == null) {

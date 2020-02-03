@@ -6,7 +6,7 @@ public class PlayerControl : MonoBehaviour {
     GameObject playerUI;
     Rigidbody2D rb;
     SpriteRenderer sprite;
-    SceneLoader sceneLoader;
+    SceneTransition SceneTransition;
     PlayerState playerState;
     PauseMenuManager pauseMenuManager;
     PlayerHealth playerHealth;
@@ -28,12 +28,12 @@ public class PlayerControl : MonoBehaviour {
         colliderOffsetY = GetComponent<CapsuleCollider2D>().offset.y;
 
         playerState = GameObject.Find("PlayerState").GetComponent<PlayerState>();
-        sceneLoader = GameObject.Find("SceneTransition").GetComponent<SceneLoader>();
+        SceneTransition = GameObject.Find("SceneTransition").GetComponent<SceneTransition>();
         pauseMenuManager = GameObject.Find("PlayerUI").GetComponent<PauseMenuManager>();
     }
 
     void Update() {
-        bool isLoading = sceneLoader ? sceneLoader.isLoading : false;
+        bool isLoading = SceneTransition ? SceneTransition.isLoading : false;
         bool inDialog = playerUI ? playerUI.GetComponent<DialogManager>().inDialog : false;
         bool tookDamage = playerHealth ? playerHealth.isInv : false;
         bool isDead = playerHealth ? playerHealth.isDead : false;
@@ -69,6 +69,6 @@ public class PlayerControl : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D other) {
         npc = null;
-        if (other.name == "Environment") sceneLoader.StartLoadScene(false);
+        if (other.name == "Environment") SceneTransition.StartLoadScene(false);
     }
 }

@@ -59,7 +59,7 @@ public class PlayerHealth : MonoBehaviour {
 			PlayerState.Instance.playerHealth = 100;
 			GameObject.Find("MainCamera").GetComponent<AudioSource>().Stop();
 			restartLevelTimer -= Time.deltaTime;
-			if (restartLevelTimer <= 0) GameObject.Find("SceneTransition").GetComponent<SceneLoader>().StartLoadScene(true);
+			if (restartLevelTimer <= 0) GameObject.Find("SceneTransition").GetComponent<SceneTransition>().StartLoadScene(true);
 		}
 	}
 

@@ -2,18 +2,18 @@
 
 public class SimpleWarp : MonoBehaviour {
     PlayerState playerState;
-    SceneLoader sceneLoader;
+    SceneTransition SceneTransition;
     bool canWarp = false;
 
     private void Start() {
         playerState = GameObject.Find("PlayerState").GetComponent<PlayerState>();
-        sceneLoader = GameObject.Find("SceneTransition").GetComponent<SceneLoader>();
+        SceneTransition = GameObject.Find("SceneTransition").GetComponent<SceneTransition>();
     }
 
     private void Update() {
         if (Input.GetButtonDown("Jump") && canWarp) {
             canWarp = false;
-            sceneLoader.StartLoadScene(false);
+            SceneTransition.StartLoadScene(false);
         }
     }
 
