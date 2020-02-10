@@ -3,11 +3,12 @@ using UnityEngine;
 
 public class PlayerState : MonoBehaviour {
     public static PlayerState Instance { get; private set; }
-    public bool isGamepad = false;
-    public float playerHealth = 100;
     public List<GameObject> sWeapons;
+    public bool isGamepad = false;
     public bool introDone = false;
     public bool bobQuest = false;
+    public float playerMaxHealth = 100;
+    public float playerHealth = 100;
     public int lastSceneIndex = 0;
 
     private void Awake() {
@@ -25,7 +26,8 @@ public class PlayerState : MonoBehaviour {
         }
     }
 
-    public void Save() {
+    public void SaveState() {
+        playerMaxHealth = GameObject.Find("Player").GetComponent<PlayerHealth>().playerMaxHealth;
         playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>().playerHealth;
         sWeapons = GameObject.Find("Player").GetComponent<PlayerSWeapons>().sWeapons;
     }

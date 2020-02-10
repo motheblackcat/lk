@@ -15,9 +15,7 @@ public class SceneTransition : MonoBehaviour {
 		animator = GetComponent<Animator>();
 		animator.Play(transitionType + "Transition");
 		sceneIndex = SceneManager.GetActiveScene().buildIndex;
-		Debug.Log(SceneManager.GetActiveScene().buildIndex);
 		Scene scene = SceneManager.GetActiveScene();
-        Debug.Log("Active Scene is '" + scene.name + "'.");
 		SetPlayerStartPosition();
 	}
 

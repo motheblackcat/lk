@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
-	Image healthBar;
+	Slider healthBarSlider;
 	public float pushX = 10f;
 	public float pushY = 10f;
+	public float playerMaxHealth = 100f;
 	public float playerHealth = 100f;
 	public bool isDead = false;
 	public bool tookDamage = false;
@@ -15,13 +15,14 @@ public class PlayerHealth : MonoBehaviour {
 	float invTimerTemp = 0;
 
 	void Start() {
-		healthBar = GameObject.Find("Content").GetComponent<Image>();
+		healthBarSlider = GameObject.Find("HealthBar").GetComponent<Slider>();
 		invTimerTemp = invicibilityTimer;
+		// TODO: Should be moved to a init / loading game state script
 		playerHealth = PlayerState.Instance ? PlayerState.Instance.playerHealth : 100;
+		healthBarSlider.value = playerHealth;
 	}
 
 	void Update() {
-		if (healthBar) healthBar.fillAmount = playerHealth / 100;
 		if (isInv) StartInvTimer();
 		Death();
 	}
@@ -37,10 +38,11 @@ public class PlayerHealth : MonoBehaviour {
 
 	void TakeDamage(GameObject enemy) {
 		playerHealth -= enemy.GetComponent<EnemyHealthControl>().damage;
+		healthBarSlider.value = playerHealth;
 		Death();
 		if (!isDead) {
 			PushBack(enemy);
-			PlayerState.Instance.Save();
+			PlayerState.Instance.SaveState();
 			isInv = true;
 			tookDamage = true;
 		}
