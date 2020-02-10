@@ -5,19 +5,17 @@ public class DialogManager : MonoBehaviour {
     public GameObject npc;
     Canvas dialogUI;
     PlayerControl playerControl;
-    PlayerState playerState;
     public bool inDialog = false;
 
     void Start() {
         dialogUI = GameObject.Find("DialogUI").GetComponent<Canvas>();
         playerControl = GameObject.Find("Player").GetComponent<PlayerControl>();
-        playerState = GameObject.Find("PlayerState").GetComponent<PlayerState>();
     }
 
     void Update() {
         npc = playerControl.npc;
         inDialog = dialogUI.enabled;
-        bool isGamepad = playerState.isGamepad;
+        bool isGamepad = PlayerState.Instance.isGamepad;
 
         if (npc && playerControl.isGrounded) {
             OpenCloseDialog();
@@ -36,7 +34,7 @@ public class DialogManager : MonoBehaviour {
         if (!autoStartDialog) {
             SpriteRenderer[] buttons = npc.GetComponentsInChildren<SpriteRenderer>();
             foreach (SpriteRenderer button in buttons)
-                if (button.name != npc.name && button.tag == "NPCButton") button.enabled = button.name == (playerState.isGamepad ? "ButtonA" : "SpaceBar");
+                if (button.name != npc.name && button.tag == "NPCButton") button.enabled = button.name == (PlayerState.Instance.isGamepad ? "ButtonA" : "SpaceBar");
         }
 
         // TODO: Track quests dialogs / states to fetch correct dialog / action
@@ -60,6 +58,7 @@ public class DialogManager : MonoBehaviour {
         }
     }
 
+    // TODO: Add multi pages dialogs
     void GetDialog() {
         string path = "Text/" + npc.name + "Dialog";
         TextAsset text = Resources.Load<TextAsset>(path);

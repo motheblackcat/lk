@@ -22,7 +22,7 @@ public class PlayerState : MonoBehaviour {
 
     void Update() {
         foreach (string gamepad in Input.GetJoystickNames()) {
-            isGamepad = gamepad != "" ? true : false;
+            isGamepad = gamepad != "";
         }
     }
 
