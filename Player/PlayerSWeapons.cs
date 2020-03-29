@@ -5,12 +5,14 @@ using UnityEngine.UI;
 public class PlayerSWeapons : MonoBehaviour {
     public List<GameObject> sWeapons;
     public GameObject sWeapon;
+    Animator animator;
     PlayerState playerState;
     public bool throwWeapon = false;
     public float throwTimer = 0;
     int sWeaponsCount = 0;
 
     void Start() {
+        animator = GetComponent<Animator>();
         playerState = GameObject.Find("PlayerState") ? GameObject.Find("PlayerState").GetComponent<PlayerState>() : null;
         sWeapons = PlayerState.Instance ? PlayerState.Instance.sWeapons : null;
         // TODO: SWeapon choice is reset between scenes
@@ -21,7 +23,8 @@ public class PlayerSWeapons : MonoBehaviour {
     }
 
     void Update() {
-        // TODO: Make a stable way to detect changes to the sWeapons list at runtime
+        animator.SetBool("throw", throwWeapon);
+        /** TODO: Make a stable way to detect changes to the sWeapons list at runtime */
         if (sWeapons != null) {
             if (sWeapons.Count > sWeaponsCount && sWeapons.Count < 2) sWeapon = sWeapons[0];
             GameObject.Find("SWeaponUI").GetComponent<Canvas>().enabled = sWeapon ? sWeapon : false;
