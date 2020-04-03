@@ -9,7 +9,7 @@ public class EnemyControl : MonoBehaviour {
     public float health = 2;
     public float damages = 25;
     void Start() {
-        /** TODO: Set health, damages according to type */
+        /** TODO: Set health & damages according to type */
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
     }
@@ -19,7 +19,6 @@ public class EnemyControl : MonoBehaviour {
             Instantiate(corpse, transform.position, transform.rotation);
             Destroy(gameObject);
         }
-
     }
 
     public void TakeDamage(float damage) {

@@ -8,8 +8,8 @@ public class PlayerHealth : MonoBehaviour {
 	PlayerSound playerSound;
 	public float pushX = 10f;
 	public float pushY = 10f;
-	public float playerMaxHealth = 100f;
-	public float playerHealth = 100f;
+	public float playerMaxHealth;
+	public float playerHealth;
 	public bool isDead = false;
 	public bool isInv = false;
 	public float restartLevelTimer = 2f;
@@ -22,9 +22,10 @@ public class PlayerHealth : MonoBehaviour {
 		playerSound = GetComponent<PlayerSound>();
 		healthBarSlider = GameObject.Find("HealthBar").GetComponent<Slider>();
 		invTimerTemp = invicibilityTimer;
-		/** TODO: Should be moved to a init / loading game state script */
-		playerHealth = PlayerState.Instance ? PlayerState.Instance.playerHealth : 100;
+		playerHealth = PlayerState.Instance.playerCurrentHealth;
+		playerMaxHealth = PlayerState.Instance.playerMaxHealth;
 		healthBarSlider.value = playerHealth;
+		healthBarSlider.maxValue = playerMaxHealth;
 	}
 
 	void Update() {
@@ -52,9 +53,7 @@ public class PlayerHealth : MonoBehaviour {
 			animator.SetTrigger("die");
 			audioSource.PlayOneShot(playerSound.deathSound);
 			GameObject.Find("MainCamera").GetComponent<AudioSource>().Stop();
-			/** TODO: PlayerState Reset() */
-			PlayerState.Instance.playerHealth = 100;
-			if (restartLevelTimer <= 0) GameObject.Find("SceneTransition").GetComponent<SceneTransition>().StartLoadScene(true);
+			PlayerState.Instance.Reset();
 		} else {
 			audioSource.PlayOneShot(playerSound.hurtSound);
 			PushBack(enemy);
@@ -63,7 +62,7 @@ public class PlayerHealth : MonoBehaviour {
 		}
 	}
 
-	/** TODO: Pushback strength taken from the enemy? */
+	/** TODO: Pushback strength taken from the enemy (currently taken from the inspector) */
 	void PushBack(GameObject enemy) {
 		bool enemyPos = enemy.transform.position.x > transform.position.x;
 		Vector2 pushDirection = new Vector2(enemyPos ? -pushX : pushX, pushY);
