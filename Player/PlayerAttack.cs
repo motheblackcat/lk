@@ -34,7 +34,7 @@ public class PlayerAttack : MonoBehaviour {
             animator.SetTrigger("attack");
             audioSource.PlayOneShot(playerSound.attackSound);
             enemyHits = Physics2D.OverlapCircleAll(atkPos.position, atkRange, enemyLayer);
-            foreach (Collider2D enemy in enemyHits) StartCoroutine(enemy.GetComponent<EnemyHealthControl>().TakeDamage(damage));
+            foreach (Collider2D enemy in enemyHits) enemy.GetComponent<EnemyControl>().TakeDamage(damage);
             timeBtwAtk = timeBtwAtkTemp;
         } else {
             timeBtwAtk -= Time.deltaTime;
@@ -48,7 +48,7 @@ public class PlayerAttack : MonoBehaviour {
         weapon.transform.localPosition = new Vector2(flipX ? -weaponPosX : weaponPosX, weaponPosY);
     }
 
-    /** TODO: Make an enum & get weapon by tag instead? */
+    /** TODO: Make an enum & get weapon by type, name or tag */
     void SetWeaponDamage(GameObject weapon) {
         switch (weapon.name) {
             case "Sword":

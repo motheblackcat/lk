@@ -45,7 +45,7 @@ public class PlayerHealth : MonoBehaviour {
 	}
 
 	void TakeDamage(GameObject enemy) {
-		playerHealth -= enemy.GetComponent<EnemyHealthControl>().damage;
+		playerHealth -= enemy.GetComponent<EnemyControl>().damages;
 		healthBarSlider.value = playerHealth;
 		if (playerHealth <= 0) {
 			isDead = true;
