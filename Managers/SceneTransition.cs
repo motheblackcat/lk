@@ -4,18 +4,21 @@ using UnityEngine.SceneManagement;
 
 public enum TransitionTypes { Box, Fade }
 public class SceneTransition : MonoBehaviour {
+	public Transform backSpawnPoint;
 	Animator animator;
 	GameObject player;
+	Bounds levelBounds;
 	public TransitionTypes transitionType;
 	public bool isLoading = false;
 	public int sceneIndex = 0;
+	public float spawnOffset = 5f;
 
 	void Start() {
 		player = GameObject.Find("Player");
 		animator = GetComponent<Animator>();
 		animator.Play(transitionType + "Transition");
 		sceneIndex = SceneManager.GetActiveScene().buildIndex;
-		Scene scene = SceneManager.GetActiveScene();
+		levelBounds = GameObject.Find("Environment").GetComponent<Collider2D>().bounds;
 		SetPlayerStartPosition();
 	}
 
@@ -36,17 +39,18 @@ public class SceneTransition : MonoBehaviour {
 		SceneManager.LoadScene(sceneIndex);
 	}
 
-	// TODO: Handle advanced logic (multiple entry/exit points && player position)
+	/** TODO: Will be evolved with more advanced logic (multiple entry / exit points) */
 	void SetPlayerStartPosition() {
-		GameObject backPoint = GameObject.Find("BackPointStart");
-		if (PlayerState.Instance.lastSceneIndex > sceneIndex && backPoint) {
-			player.transform.position = backPoint.transform.position;
+		if (PlayerState.Instance.lastSceneIndex > sceneIndex) {
+			Vector2 spawnPosition = backSpawnPoint ?
+				new Vector2(backSpawnPoint.position.x, backSpawnPoint.position.y) : new Vector2(levelBounds.max.x - spawnOffset, player.transform.position.y);
+			player.transform.position = spawnPosition;
 			player.GetComponent<SpriteRenderer>().flipX = true;
 		}
 	}
 
 	void SetNextSceneIndex() {
-		bool goBack = player.transform.position.x < GameObject.Find("Environment").GetComponent<Collider2D>().bounds.min.x;
+		bool goBack = player.transform.position.x < levelBounds.min.x;
 		if (goBack) --sceneIndex;
 		else if (sceneIndex + 1 < SceneManager.sceneCountInBuildSettings) ++sceneIndex;
 	}

@@ -55,8 +55,7 @@ public class PlayerControl : MonoBehaviour {
     void PlayerMove() {
         GetComponent<CapsuleCollider2D>().offset = new Vector2(sprite.flipX ? -colliderOffsetX : colliderOffsetX, colliderOffsetY);
         rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * runSpeed, rb.velocity.y);
-        /** TODO: Warning jumpSound null in dialogs */
-        if (Input.GetButtonDown("Jump") && isGrounded) {
+        if (Input.GetButtonDown("Jump") && isGrounded && playerSound.jumpSound) {
             audioSource.PlayOneShot(playerSound.jumpSound);
             rb.velocity = Vector2.up * jumpSpeed;
         }

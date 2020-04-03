@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyControl : MonoBehaviour {
     Animator animator;
@@ -16,6 +15,7 @@ public class EnemyControl : MonoBehaviour {
 
     void Update() {
         if (health <= 0) {
+            /** TODO: Clone remains in scene */
             Instantiate(corpse, transform.position, transform.rotation);
             Destroy(gameObject);
         }

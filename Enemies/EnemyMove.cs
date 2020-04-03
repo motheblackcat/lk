@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class EnnemyMove : StateMachineBehaviour {
+public class EnemyMove : StateMachineBehaviour {
     Rigidbody2D rigidbody;
     SpriteRenderer spriteRenderer;
     Transform player;
