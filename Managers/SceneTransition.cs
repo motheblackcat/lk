@@ -18,7 +18,7 @@ public class SceneTransition : MonoBehaviour {
 		animator = GetComponent<Animator>();
 		animator.Play(transitionType + "Transition");
 		sceneIndex = SceneManager.GetActiveScene().buildIndex;
-		levelBounds = GameObject.Find("Environment").GetComponent<Collider2D>().bounds;
+		levelBounds = FindObjectOfType<PolygonCollider2D>().bounds;
 		SetPlayerStartPosition();
 	}
 

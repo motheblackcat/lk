@@ -78,6 +78,7 @@ public class PlayerControl : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D other) {
         npc = null;
-        if (other.name == "Environment") SceneTransition.StartLoadScene(false);
+        /** TODO: Use a more safe method to target the PolygonCollider2D component that acts as level boundaries */
+        if (other.name == "Grid") SceneTransition.StartLoadScene(false);
     }
 }
