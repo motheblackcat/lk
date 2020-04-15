@@ -2,13 +2,11 @@
 
 public class NpcAnimation : MonoBehaviour {
     Animator animator;
-    PlayerState playerState;
     DialogManager dialogManager;
     public bool autoStart = false;
 
     void Start() {
         animator = GetComponent<Animator>();
-        playerState = PlayerState.Instance;
         dialogManager = GameObject.Find("PlayerUI").GetComponent<DialogManager>();
     }
 

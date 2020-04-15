@@ -13,7 +13,7 @@ public class SimpleWarp : MonoBehaviour {
     private void Update() {
         if (Input.GetButtonDown("Jump") && canWarp) {
             canWarp = false;
-            SceneTransition.StartLoadScene(false);
+            StartCoroutine(SceneTransition.LoadScene(false));
         }
     }
 

@@ -14,12 +14,8 @@ public class PlayerSWeapons : MonoBehaviour {
     void Start() {
         animator = GetComponent<Animator>();
         playerState = GameObject.Find("PlayerState") ? GameObject.Find("PlayerState").GetComponent<PlayerState>() : null;
-        sWeapons = PlayerState.Instance ? PlayerState.Instance.sWeapons : null;
-        // TODO: SWeapon choice is reset between scenes
-        if (sWeapons != null) {
-            if (sWeapons.Count > 0) sWeapon = sWeapons[0];
-            sWeaponsCount = sWeapons != null ? sWeapons.Count : 0;
-        }
+        sWeapons = PlayerState.Instance.sWeapons;
+        sWeapon = PlayerState.Instance.sWeapon;
     }
 
     void Update() {
@@ -53,11 +49,12 @@ public class PlayerSWeapons : MonoBehaviour {
 
     void SwitchWeapon() {
         int index = sWeapons.FindIndex(s => s == sWeapon);
+        int lastIndex = sWeapons.Count - 1;
         if (Input.GetButtonDown("RB")) {
-            sWeapon = (index + 1) > sWeapons.Count - 1 ? sWeapons[0] : sWeapons[index + 1];
+            sWeapon = (index + 1) > lastIndex ? sWeapons[0] : sWeapons[index + 1];
         }
         if (Input.GetButtonDown("LB")) {
-            sWeapon = (index - 1) < 0 ? sWeapons[sWeapons.Count - 1] : sWeapons[index - 1];
+            sWeapon = (index - 1) < 0 ? sWeapons[lastIndex] : sWeapons[index - 1];
         }
     }
 

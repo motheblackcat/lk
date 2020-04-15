@@ -20,7 +20,7 @@ public class BobAxeEvent : MonoBehaviour {
         if (questState == QuestState.DIALOG_STARTED && !DialogUI.enabled) {
             if (sWeapons.Count == 0) sWeapons.Add(axe);
             GetComponent<Collider2D>().enabled = false;
-            PlayerState.Instance.bobQuest = true;
+            Destroy(gameObject);
         };
     }
 }

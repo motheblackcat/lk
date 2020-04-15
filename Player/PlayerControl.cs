@@ -9,7 +9,6 @@ public class PlayerControl : MonoBehaviour {
     Rigidbody2D rb;
     SpriteRenderer sprite;
     SceneTransition SceneTransition;
-    PlayerState playerState;
     PauseMenuManager pauseMenuManager;
     PlayerHealth playerHealth;
     PlayerSound playerSound;
@@ -31,7 +30,6 @@ public class PlayerControl : MonoBehaviour {
         playerSound = GetComponent<PlayerSound>();
         colliderOffsetX = GetComponent<CapsuleCollider2D>().offset.x;
         colliderOffsetY = GetComponent<CapsuleCollider2D>().offset.y;
-        playerState = GameObject.Find("PlayerState").GetComponent<PlayerState>();
         SceneTransition = GameObject.Find("SceneTransition").GetComponent<SceneTransition>();
         pauseMenuManager = GameObject.Find("PlayerUI").GetComponent<PauseMenuManager>();
     }
@@ -55,7 +53,7 @@ public class PlayerControl : MonoBehaviour {
     void PlayerMove() {
         GetComponent<CapsuleCollider2D>().offset = new Vector2(sprite.flipX ? -colliderOffsetX : colliderOffsetX, colliderOffsetY);
         rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * runSpeed, rb.velocity.y);
-        if (Input.GetButtonDown("Jump") && isGrounded && playerSound.jumpSound) {
+        if (Input.GetButtonDown("Jump") && isGrounded && playerSound) {
             audioSource.PlayOneShot(playerSound.jumpSound);
             rb.velocity = Vector2.up * jumpSpeed;
         }
@@ -79,6 +77,6 @@ public class PlayerControl : MonoBehaviour {
     private void OnTriggerExit2D(Collider2D other) {
         npc = null;
         /** TODO: Use a more safe method to target the PolygonCollider2D component that acts as level boundaries */
-        if (other.name == "Grid") SceneTransition.StartLoadScene(false);
+        if (other.name == "Grid") StartCoroutine(SceneTransition.LoadScene(false));
     }
 }
