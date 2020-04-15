@@ -6,13 +6,13 @@ public class PlayerHealth : MonoBehaviour {
 	Animator animator;
 	AudioSource audioSource;
 	PlayerSound playerSound;
+	SceneTransition sceneTransition;
 	public float pushX = 10f;
 	public float pushY = 10f;
 	public float playerMaxHealth;
 	public float playerHealth;
 	public bool isDead = false;
 	public bool isInv = false;
-	public float restartLevelTimer = 2f;
 	public float invicibilityTimer = 0.5f;
 	float invTimerTemp = 0;
 
@@ -20,6 +20,7 @@ public class PlayerHealth : MonoBehaviour {
 		animator = GetComponent<Animator>();
 		audioSource = GetComponent<AudioSource>();
 		playerSound = GetComponent<PlayerSound>();
+		sceneTransition = GameObject.Find("SceneTransition").GetComponent<SceneTransition>();
 		healthBarSlider = GameObject.Find("HealthBar").GetComponent<Slider>();
 		invTimerTemp = invicibilityTimer;
 		playerHealth = PlayerState.Instance.playerCurrentHealth;
@@ -30,17 +31,14 @@ public class PlayerHealth : MonoBehaviour {
 
 	void Update() {
 		if (isInv) StartInvTimer();
-		animator.SetBool("hurt", isInv);
-		if (isDead) {
-			restartLevelTimer -= Time.deltaTime;
-			if (restartLevelTimer <= 0) GameObject.Find("SceneTransition").GetComponent<SceneTransition>().StartLoadScene(true);
-		}
 	}
 
 	void StartInvTimer() {
+		animator.SetBool("hurt", true);
 		invicibilityTimer -= Time.deltaTime;
 		if (invicibilityTimer <= 0) {
 			invicibilityTimer = invTimerTemp;
+			animator.SetBool("hurt", false);
 			isInv = false;
 		}
 	}
@@ -53,11 +51,10 @@ public class PlayerHealth : MonoBehaviour {
 			animator.SetTrigger("die");
 			audioSource.PlayOneShot(playerSound.deathSound);
 			GameObject.Find("MainCamera").GetComponent<AudioSource>().Stop();
-			PlayerState.Instance.Reset();
+			StartCoroutine(sceneTransition.LoadScene(true));
 		} else {
 			audioSource.PlayOneShot(playerSound.hurtSound);
 			PushBack(enemy);
-			PlayerState.Instance.SaveState();
 			isInv = true;
 		}
 	}

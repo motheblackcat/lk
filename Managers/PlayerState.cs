@@ -33,13 +33,10 @@ public class PlayerState : MonoBehaviour {
     }
 
     public void Save() {
+        float playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>().playerHealth;
         playerMaxHealth = GameObject.Find("Player").GetComponent<PlayerHealth>().playerMaxHealth;
-        playerCurrentHealth = GameObject.Find("Player").GetComponent<PlayerHealth>().playerHealth;
+        playerCurrentHealth = playerHealth > 0 ? playerHealth : playerMaxHealth;
         sWeapons = GameObject.Find("Player").GetComponent<PlayerSWeapons>().sWeapons;
         sWeapon = GameObject.Find("Player").GetComponent<PlayerSWeapons>().sWeapon;
-    }
-
-    public void Reset() {
-        playerCurrentHealth = playerMaxHealth;
     }
 }

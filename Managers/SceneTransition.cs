@@ -26,16 +26,14 @@ public class SceneTransition : MonoBehaviour {
 		isLoading = animator.GetCurrentAnimatorStateInfo(0).IsName(transitionType + "Transition");
 	}
 
-	public void StartLoadScene(bool reload) {
+	public IEnumerator LoadScene(bool reload) {
 		PlayerState.Instance.lastSceneIndex = sceneIndex;
 		if (!reload) SetNextSceneIndex();
-		StartCoroutine(LoadScene(reload));
-	}
-
-	public IEnumerator LoadScene(bool reload) {
+		else yield return new WaitForSeconds(2);
 		animator.SetFloat("direction", -1f);
 		animator.Play(transitionType + "Transition", 0, 1);
 		yield return new WaitForSeconds(1);
+		if (SceneManager.GetActiveScene().buildIndex != 1) PlayerState.Instance.Save();
 		SceneManager.LoadScene(sceneIndex);
 	}
 
