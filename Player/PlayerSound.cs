@@ -5,6 +5,4 @@ public class PlayerSound : MonoBehaviour {
     public AudioClip attackSound;
     public AudioClip hurtSound;
     public AudioClip deathSound;
-
-    /** TODO: Sound manager using events to play sounds? */
 }

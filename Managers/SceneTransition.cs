@@ -37,7 +37,7 @@ public class SceneTransition : MonoBehaviour {
 		SceneManager.LoadScene(sceneIndex);
 	}
 
-	/** TODO: Will be evolved with more advanced logic (multiple entry / exit points) */
+	/** TODOL: Evolve with multiple entry / exit points logic */
 	void SetPlayerStartPosition() {
 		if (PlayerState.Instance.lastSceneIndex > sceneIndex) {
 			Vector2 spawnPosition = backSpawnPoint ?

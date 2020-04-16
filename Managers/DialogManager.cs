@@ -47,7 +47,7 @@ public class DialogManager : MonoBehaviour {
         }
     }
 
-    // TODO: Add multi pages dialogs
+    /** TODO: Add multi pages dialogs */
     void GetDialog() {
         string path = "Text/" + npc.name + "Dialog";
         TextAsset text = Resources.Load<TextAsset>(path);

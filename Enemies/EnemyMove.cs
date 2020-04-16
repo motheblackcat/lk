@@ -9,8 +9,8 @@ public class EnemyMove : StateMachineBehaviour {
     public float attackRange = 0f;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-        /** TODO: Set enemy speed, move & attack ranges according to type */
-        /** TODO: Keep in mind evolution for ranged enemies */
+        /** TODOL: Set enemy speed, move & attack ranges according to type */
+        /** TODOL: Keep in mind evolution for ranged enemies */
         rigidbody = animator.GetComponent<Rigidbody2D>();
         spriteRenderer = animator.GetComponent<SpriteRenderer>();
         player = GameObject.FindWithTag("Player").transform;

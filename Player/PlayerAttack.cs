@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 
+public enum WeaponTypes { Sword }
+
 public class PlayerAttack : MonoBehaviour {
     public Collider2D[] enemyHits;
     public Transform atkPos;
     public LayerMask enemyLayer;
+    public WeaponTypes weaponType;
     Animator animator;
     AudioSource audioSource;
     GameObject weapon;
@@ -24,7 +27,7 @@ public class PlayerAttack : MonoBehaviour {
         atkPos = GameObject.Find("AttackPos").GetComponent<Transform>();
         atkPosX = atkPos.localPosition.x;
         timeBtwAtkTemp = timeBtwAtk;
-        SetWeaponDamage(weapon);
+        SetWeaponDamage(weaponType);
     }
 
     void Update() {
@@ -48,10 +51,9 @@ public class PlayerAttack : MonoBehaviour {
         weapon.transform.localPosition = new Vector2(flipX ? -weaponPosX : weaponPosX, weaponPosY);
     }
 
-    /** TODO: Make an enum & get weapon by type, name or tag */
-    void SetWeaponDamage(GameObject weapon) {
-        switch (weapon.name) {
-            case "Sword":
+    void SetWeaponDamage(WeaponTypes weaponType) {
+        switch (weaponType) {
+            case WeaponTypes.Sword:
                 damage = 1;
                 break;
         }

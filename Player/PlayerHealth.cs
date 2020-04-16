@@ -59,7 +59,7 @@ public class PlayerHealth : MonoBehaviour {
 		}
 	}
 
-	/** TODO: Pushback strength taken from the enemy (currently taken from the inspector) */
+	/** TODOL: Pushback strength taken from the enemy (currently taken from the inspector) */
 	void PushBack(GameObject enemy) {
 		bool enemyPos = enemy.transform.position.x > transform.position.x;
 		Vector2 pushDirection = new Vector2(enemyPos ? -pushX : pushX, pushY);
