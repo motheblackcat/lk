@@ -43,7 +43,6 @@ public class PlayerControl : MonoBehaviour {
 
         canMove = !isPaused && !inDialog && !isLoading && !tookDamage && !isDead;
 
-        /** TODO: Moving to FixedUpdate() messes pushback */
         if (canMove) PlayerMove();
         if (inDialog || isLoading) GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         animator.SetBool("run", GetComponent<Rigidbody2D>().velocity.x != 0);
@@ -76,7 +75,6 @@ public class PlayerControl : MonoBehaviour {
 
     private void OnTriggerExit2D(Collider2D other) {
         npc = null;
-        /** TODO: Use a more safe method to target the PolygonCollider2D component that acts as level boundaries */
-        if (other.name == "Grid") StartCoroutine(SceneTransition.LoadScene(false));
+        if (other.tag == "Level") StartCoroutine(SceneTransition.LoadScene(false));
     }
 }
