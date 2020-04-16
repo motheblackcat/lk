@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-[SerializeField]
+﻿[System.Serializable]
 public class Quest {
     public string npcName;
     public bool isActive;

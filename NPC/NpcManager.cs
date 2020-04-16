@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class NpcAnimation : MonoBehaviour {
+public class NpcManager : MonoBehaviour {
+    public Dialog dialog;
     Animator animator;
     DialogManager dialogManager;
     public bool autoStart = false;

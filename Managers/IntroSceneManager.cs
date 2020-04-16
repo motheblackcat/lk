@@ -18,7 +18,7 @@ public class IntroSceneManager : MonoBehaviour {
 				FreePlayer();
 			} else {
 				player.GetComponent<SpriteRenderer>().flipX = false;
-				GameObject.Find("Bartender").GetComponent<Animator>().SetBool("watch", false);
+				GameObject.Find("Arth").GetComponent<Animator>().SetBool("watch", false);
 			}
 		}
 	}
