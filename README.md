@@ -6,17 +6,20 @@ A sandbox/pet project to learn 2D in Unity, advancing slowly due to work and lif
 
 You can test the current build in the releases.
 
-Patch notes v0.0.5:
+Patch notes upcoming v0.0.5:
 
 - WIP: New NPC - Juke The Menstrel
 - WIP: New NPC - Jack The Lumber
-- WIP: Tilemaps convertion for plains
+- WIP: Convertion to Tilemaps for plains
 - WIP: Global Quest System
-- URP migration done
-- Correct player position / facing between scenes
-- Improved player state management
-- Improved attack animation timing / effective range impact
-- Added glow effect to neon light
+- WIP: Better attack animation timing / effective impact
+- WIP: Migration to new Input System
+- Migration to URP done
+- Added glow effect (neon light)
+- Added Correct player position / facing for backtracking
+- Improved Life Bar (better logic / graphic scalability)
+- Improved Player State (better life / sweapon management)
+- Improved Dialog System (multi-pages / text animation)
 
 Currently Known Issues:
 
