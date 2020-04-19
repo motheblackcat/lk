@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
 public class SimpleWarp : MonoBehaviour {
-    PlayerState playerState;
     SceneTransition SceneTransition;
     PlayerInputActions playerInputs;
     bool warp = false;
@@ -12,7 +11,6 @@ public class SimpleWarp : MonoBehaviour {
     }
 
     void Start() {
-        playerState = GameObject.Find("PlayerState").GetComponent<PlayerState>();
         SceneTransition = GameObject.Find("SceneTransition").GetComponent<SceneTransition>();
     }
 
@@ -23,7 +21,7 @@ public class SimpleWarp : MonoBehaviour {
     void OnTriggerStay2D(Collider2D other) {
         if (other.tag == "Player") {
             SpriteRenderer[] buttons = GetComponentsInChildren<SpriteRenderer>();
-            foreach (SpriteRenderer button in buttons) button.enabled = button.name == (playerState.isGamepad ? "ButtonA" : "SpaceBar");
+            foreach (SpriteRenderer button in buttons) button.enabled = button.name == (PlayerState.Instance.isGamepad ? "ButtonA" : "SpaceBar");
             warp = true;
         }
     }

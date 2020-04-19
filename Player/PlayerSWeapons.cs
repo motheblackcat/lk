@@ -6,7 +6,6 @@ public class PlayerSWeapons : MonoBehaviour {
     public List<GameObject> sWeapons;
     public GameObject sWeapon;
     Animator animator;
-    PlayerState playerState;
     PlayerInputActions playerInputs;
     public bool throwWeapon = false;
     public float throwTimer = 0;
@@ -19,7 +18,6 @@ public class PlayerSWeapons : MonoBehaviour {
 
     void Start() {
         animator = GetComponent<Animator>();
-        playerState = GameObject.Find("PlayerState") ? GameObject.Find("PlayerState").GetComponent<PlayerState>() : null;
         sWeapons = PlayerState.Instance.sWeapons;
         sWeapon = PlayerState.Instance.sWeapon;
     }
@@ -33,7 +31,7 @@ public class PlayerSWeapons : MonoBehaviour {
 
             Canvas[] buttons = GameObject.Find("SWeaponUI").GetComponentsInChildren<Canvas>();
             foreach (Canvas button in buttons)
-                if (button.name != "SWeaponUI") button.GetComponent<Canvas>().enabled = button.name == (playerState.isGamepad ? "Buttons" : "Keys");
+                if (button.name != "SWeaponUI") button.GetComponent<Canvas>().enabled = button.name == (PlayerState.Instance.isGamepad ? "Buttons" : "Keys");
 
             GameObject.Find("SWeaponIcon").GetComponent<Image>().sprite = sWeapon.GetComponent<SpriteRenderer>().sprite;
         }
