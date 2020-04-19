@@ -8,16 +8,26 @@ public class PlayerControl : MonoBehaviour {
     AudioSource audioSource;
     Rigidbody2D rb;
     SpriteRenderer sprite;
+    PlayerInputActions playerInputs;
     SceneTransition SceneTransition;
     PauseMenuManager pauseMenuManager;
     PlayerHealth playerHealth;
     PlayerSound playerSound;
-    public float runSpeed = 40;
-    public float jumpSpeed = 600;
-    public bool canMove;
-    public bool isGrounded;
-    float colliderOffsetX;
-    float colliderOffsetY;
+    public float runSpeed = 18;
+    public float jumpSpeed = 18;
+    public bool canMove = false;
+    public bool isGrounded = false;
+    bool jump = false;
+    float direction = 0;
+    float colliderOffsetX = 0;
+    float colliderOffsetY = 0;
+
+    void Awake() {
+        playerInputs = new PlayerInputActions();
+        playerInputs.Player.Move.performed += ctx => direction = ctx.ReadValue<float>();
+        playerInputs.Player.Jump.performed += ctx => jump = true;
+        playerInputs.Player.Jump.canceled += ctx => jump = false;
+    }
 
     void Start() {
         playerUI = GameObject.Find("PlayerUI");
@@ -43,22 +53,29 @@ public class PlayerControl : MonoBehaviour {
 
         canMove = !isPaused && !inDialog && !isLoading && !tookDamage && !isDead;
 
-        if (canMove) PlayerMove();
         if (inDialog || isLoading) GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         animator.SetBool("run", GetComponent<Rigidbody2D>().velocity.x != 0);
         animator.SetBool("air", !isGrounded);
+
+        GetComponent<CapsuleCollider2D>().offset = new Vector2(sprite.flipX ? -colliderOffsetX : colliderOffsetX, colliderOffsetY);
+        if (ghost) ghost.GetComponent<SpriteRenderer>().flipX = sprite.flipX;
+
+        /** TODO: Enemy doesn't hurt on first contact if player is facing it */
+        if (canMove) {
+            if (rb.velocity.x > 0) sprite.flipX = false;
+            if (rb.velocity.x < 0) sprite.flipX = true;
+        }
     }
 
-    void PlayerMove() {
-        GetComponent<CapsuleCollider2D>().offset = new Vector2(sprite.flipX ? -colliderOffsetX : colliderOffsetX, colliderOffsetY);
-        rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * runSpeed, rb.velocity.y);
-        if (Input.GetButtonDown("Jump") && isGrounded && playerSound) {
-            audioSource.PlayOneShot(playerSound.jumpSound);
-            rb.velocity = Vector2.up * jumpSpeed;
+    void FixedUpdate() {
+        if (canMove) {
+            rb.velocity = new Vector2(direction * runSpeed, rb.velocity.y);
+            if (jump && isGrounded && playerSound) {
+                rb.velocity = (Vector2.up * jumpSpeed);
+                audioSource.PlayOneShot(playerSound.jumpSound);
+                jump = false;
+            }
         }
-        if (rb.velocity.x > 0) sprite.flipX = false;
-        if (rb.velocity.x < 0) sprite.flipX = true;
-        if (ghost) ghost.GetComponent<SpriteRenderer>().flipX = sprite.flipX;
     }
 
     void OnCollisionStay2D(Collision2D other) {
@@ -69,12 +86,20 @@ public class PlayerControl : MonoBehaviour {
         if (other.gameObject.tag == "Ground") isGrounded = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "NPC" || other.gameObject.tag == "StaticNPC") npc = other.gameObject;
     }
 
-    private void OnTriggerExit2D(Collider2D other) {
+    void OnTriggerExit2D(Collider2D other) {
         npc = null;
         if (other.tag == "Level") StartCoroutine(SceneTransition.LoadScene(false));
+    }
+
+    void OnEnable() {
+        playerInputs.Enable();
+    }
+
+    void OnDisable() {
+        playerInputs.Disable();
     }
 }

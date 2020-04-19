@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerState : MonoBehaviour {
     public static PlayerState Instance { get; private set; }
@@ -13,10 +14,6 @@ public class PlayerState : MonoBehaviour {
     public int lastSceneIndex = 0;
 
     void Awake() {
-        CheckInstance();
-    }
-
-    void CheckInstance() {
         if (Instance == null) {
             Instance = this;
             DontDestroyOnLoad(gameObject);
@@ -26,10 +23,7 @@ public class PlayerState : MonoBehaviour {
     }
 
     void Update() {
-        /** TODO: Check if this way of checking for a gamepad changes with the new input system */
-        foreach (string gamepad in Input.GetJoystickNames()) {
-            isGamepad = gamepad != "";
-        }
+        isGamepad = Gamepad.current != null;
     }
 
     public void Save() {

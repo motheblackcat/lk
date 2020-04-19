@@ -6,23 +6,26 @@ public class PauseMenuManager : MonoBehaviour {
     Image keyboardUI;
     Canvas pauseUI;
     AudioSource audioSource;
-    PlayerState playerState;
+    PlayerInputActions playerInputs;
     public bool paused = false;
+
+    void Awake() {
+        playerInputs = new PlayerInputActions();
+        playerInputs.Player.Pause.performed += ctx => Pause();
+        playerInputs.Player.Quit.performed += ctx => Quit();
+    }
 
     void Start() {
         gamepadUI = GameObject.Find("GamepadUI").GetComponent<Image>();
         keyboardUI = GameObject.Find("KeyboardUI").GetComponent<Image>();
-        playerState = GameObject.Find("PlayerState").GetComponent<PlayerState>();
         pauseUI = GameObject.Find("PauseUI").GetComponent<Canvas>();
         audioSource = GetComponent<AudioSource>();
         audioSource.ignoreListenerPause = true;
     }
 
     void Update() {
-        if (Input.GetButtonDown("Start")) Pause();
-        if (paused && Input.GetButtonDown("Select")) Application.Quit();
-        gamepadUI.enabled = playerState.isGamepad;
-        keyboardUI.enabled = !playerState.isGamepad;
+        gamepadUI.enabled = PlayerState.Instance.isGamepad;
+        keyboardUI.enabled = !PlayerState.Instance.isGamepad;
     }
 
     void Pause() {
@@ -31,5 +34,17 @@ public class PauseMenuManager : MonoBehaviour {
         AudioListener.pause = paused;
         audioSource.enabled = paused;
         pauseUI.enabled = paused;
+    }
+
+    void Quit() {
+        if (paused) Application.Quit();
+    }
+
+    void OnEnable() {
+        playerInputs.Enable();
+    }
+
+    void OnDisable() {
+        playerInputs.Disable();
     }
 }

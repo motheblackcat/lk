@@ -7,8 +7,15 @@ public class PlayerSWeapons : MonoBehaviour {
     public GameObject sWeapon;
     Animator animator;
     PlayerState playerState;
+    PlayerInputActions playerInputs;
     public bool throwWeapon = false;
     public float throwTimer = 0;
+
+    void Awake() {
+        playerInputs = new PlayerInputActions();
+        playerInputs.Player.Throw.performed += ctx => TriggerThrow();
+        playerInputs.Player.Switch.performed += ctx => SwitchWeapon(ctx.ReadValue<float>());
+    }
 
     void Start() {
         animator = GetComponent<Animator>();
@@ -23,14 +30,12 @@ public class PlayerSWeapons : MonoBehaviour {
         if (sWeapon) {
             animator.SetBool("throw", throwWeapon);
             GameObject.Find("SWeaponUI").GetComponent<Canvas>().enabled = true;
-            if (Input.GetButtonDown("SWeapon") && GetComponent<PlayerControl>().canMove && throwTimer <= 0) throwWeapon = true;
 
             Canvas[] buttons = GameObject.Find("SWeaponUI").GetComponentsInChildren<Canvas>();
             foreach (Canvas button in buttons)
                 if (button.name != "SWeaponUI") button.GetComponent<Canvas>().enabled = button.name == (playerState.isGamepad ? "Buttons" : "Keys");
 
             GameObject.Find("SWeaponIcon").GetComponent<Image>().sprite = sWeapon.GetComponent<SpriteRenderer>().sprite;
-            SwitchWeapon();
         }
     }
 
@@ -39,11 +44,8 @@ public class PlayerSWeapons : MonoBehaviour {
         else throwTimer -= Time.fixedDeltaTime;
     }
 
-    void SwitchWeapon() {
-        int index = sWeapons.FindIndex(s => s == sWeapon);
-        int lastIndex = sWeapons.Count - 1;
-        if (Input.GetButtonDown("RB")) sWeapon = (index + 1) > lastIndex ? sWeapons[0] : sWeapons[index + 1];
-        if (Input.GetButtonDown("LB")) sWeapon = (index - 1) < 0 ? sWeapons[lastIndex] : sWeapons[index - 1];
+    void TriggerThrow() {
+        if (GetComponent<PlayerControl>().canMove && throwTimer <= 0 && sWeapon) throwWeapon = true;
     }
 
     void ThrowWeapon() {
@@ -58,5 +60,22 @@ public class PlayerSWeapons : MonoBehaviour {
             );
             throwTimer = sWeaponControl.throwTimerCd;
         } else throwWeapon = false;
+    }
+
+    void SwitchWeapon(float direction) {
+        if (sWeapons.Count > 1) {
+            int index = sWeapons.FindIndex(s => s == sWeapon);
+            int lastIndex = sWeapons.Count - 1;
+            if (direction == 1) sWeapon = (index + 1) > lastIndex ? sWeapons[0] : sWeapons[index + 1];
+            if (direction == -1) sWeapon = (index - 1) < 0 ? sWeapons[lastIndex] : sWeapons[index - 1];
+        }
+    }
+
+    void OnEnable() {
+        playerInputs.Enable();
+    }
+
+    void OnDisable() {
+        playerInputs.Disable();
     }
 }

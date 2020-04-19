@@ -3,36 +3,44 @@
 public class SimpleWarp : MonoBehaviour {
     PlayerState playerState;
     SceneTransition SceneTransition;
-    bool canWarp = false;
+    PlayerInputActions playerInputs;
+    bool warp = false;
 
-    private void Start() {
+    void Awake() {
+        playerInputs = new PlayerInputActions();
+        playerInputs.Player.Jump.performed += ctx => Warp();
+    }
+
+    void Start() {
         playerState = GameObject.Find("PlayerState").GetComponent<PlayerState>();
         SceneTransition = GameObject.Find("SceneTransition").GetComponent<SceneTransition>();
     }
 
-    private void Update() {
-        if (Input.GetButtonDown("Jump") && canWarp) {
-            canWarp = false;
-            StartCoroutine(SceneTransition.LoadScene(false));
-        }
+    void Warp() {
+        if (warp) StartCoroutine(SceneTransition.LoadScene(false));
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        canWarp = true;
-    }
-
-    private void OnTriggerStay2D(Collider2D other) {
+    void OnTriggerStay2D(Collider2D other) {
         if (other.tag == "Player") {
             SpriteRenderer[] buttons = GetComponentsInChildren<SpriteRenderer>();
             foreach (SpriteRenderer button in buttons) button.enabled = button.name == (playerState.isGamepad ? "ButtonA" : "SpaceBar");
+            warp = true;
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other) {
+    void OnTriggerExit2D(Collider2D other) {
         if (other.tag == "Player") {
             SpriteRenderer[] buttons = GetComponentsInChildren<SpriteRenderer>();
             foreach (SpriteRenderer button in buttons) button.enabled = false;
-            canWarp = false;
+            warp = false;
         }
+    }
+
+    void OnEnable() {
+        playerInputs.Enable();
+    }
+
+    void OnDisable() {
+        playerInputs.Disable();
     }
 }

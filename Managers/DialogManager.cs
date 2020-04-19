@@ -7,8 +7,14 @@ public class DialogManager : MonoBehaviour {
     public GameObject npc;
     Canvas dialogUI;
     PlayerControl playerControl;
+    PlayerInputActions playerInputs;
     Queue<string> sentences;
     public bool inDialog = false;
+
+    void Awake() {
+        playerInputs = new PlayerInputActions();
+        playerInputs.Player.Jump.performed += ctx => TriggerDialog();
+    }
 
     void Start() {
         playerControl = FindObjectOfType<PlayerControl>();
@@ -22,26 +28,22 @@ public class DialogManager : MonoBehaviour {
         bool isGamepad = PlayerState.Instance.isGamepad;
 
         if (npc && playerControl.isGrounded) {
-            OpenCloseDialog();
+            bool autoStartDialog = npc.GetComponent<NpcManager>().autoStart;
+            if (!autoStartDialog) {
+                SpriteRenderer[] buttons = npc.GetComponentsInChildren<SpriteRenderer>();
+                foreach (SpriteRenderer button in buttons)
+                    if (button.name != npc.name && button.tag == "NPCButton") button.enabled = button.name == (PlayerState.Instance.isGamepad ? "ButtonA" : "SpaceBar");
+            } else TriggerDialog();
         }
 
         if (!npc || inDialog) {
             GameObject[] buttons = GameObject.FindGameObjectsWithTag("NPCButton");
             foreach (GameObject button in buttons) button.GetComponent<SpriteRenderer>().enabled = false;
         }
-
-        if (!npc) dialogUI.enabled = false;
     }
 
-    void OpenCloseDialog() {
-        bool autoStartDialog = npc.GetComponent<NpcManager>().autoStart;
-        if (!autoStartDialog) {
-            SpriteRenderer[] buttons = npc.GetComponentsInChildren<SpriteRenderer>();
-            foreach (SpriteRenderer button in buttons)
-                if (button.name != npc.name && button.tag == "NPCButton") button.enabled = button.name == (PlayerState.Instance.isGamepad ? "ButtonA" : "SpaceBar");
-        }
-
-        if (autoStartDialog || Input.GetButtonDown("Jump")) {
+    void TriggerDialog() {
+        if (npc) {
             if (!inDialog) StartDialog(npc.GetComponent<NpcManager>());
             else DisplayNextDialog();
         }
@@ -79,5 +81,13 @@ public class DialogManager : MonoBehaviour {
             dialogText.text += letter;
             yield return null;
         }
+    }
+
+    void OnEnable() {
+        playerInputs.Enable();
+    }
+
+    void OnDisable() {
+        playerInputs.Disable();
     }
 }

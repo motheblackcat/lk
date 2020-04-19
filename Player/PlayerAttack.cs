@@ -11,12 +11,20 @@ public class PlayerAttack : MonoBehaviour {
     AudioSource audioSource;
     GameObject weapon;
     PlayerSound playerSound;
+    PlayerInputActions playerInputs;
     public float timeBtwAtk = 0.3f;
     public float atkRange = 0.7f;
     public int damage = 0;
-    float timeBtwAtkTemp;
-    float atkPosX;
-    float weaponPosX;
+    float timeBtwAtkTemp = 0;
+    float atkPosX = 0;
+    float weaponPosX = 0;
+    bool attack = false;
+
+    void Awake() {
+        playerInputs = new PlayerInputActions();
+        playerInputs.Player.Attack.performed += ctx => attack = true;
+        playerInputs.Player.Attack.canceled += ctx => attack = false;
+    }
 
     void Start() {
         animator = GetComponent<Animator>();
@@ -33,15 +41,14 @@ public class PlayerAttack : MonoBehaviour {
     void Update() {
         WeaponPosition();
         atkPos.localPosition = new Vector2(GetComponent<SpriteRenderer>().flipX ? -atkPosX : atkPosX, atkPos.localPosition.y);
-        if (Input.GetButtonDown("Attack") && weapon && timeBtwAtk <= 0 && GetComponent<PlayerControl>().canMove) {
+        if (attack && weapon && timeBtwAtk <= 0 && GetComponent<PlayerControl>().canMove) {
             animator.SetTrigger("attack");
             audioSource.PlayOneShot(playerSound.attackSound);
             enemyHits = Physics2D.OverlapCircleAll(atkPos.position, atkRange, enemyLayer);
             foreach (Collider2D enemy in enemyHits) enemy.GetComponent<EnemyControl>().TakeDamage(damage);
             timeBtwAtk = timeBtwAtkTemp;
-        } else {
-            timeBtwAtk -= Time.deltaTime;
-        }
+            attack = false;
+        } else timeBtwAtk -= Time.deltaTime;
     }
 
     void WeaponPosition() {
@@ -62,5 +69,13 @@ public class PlayerAttack : MonoBehaviour {
     void OnDrawGizmosSelected() {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(atkPos.position, atkRange);
+    }
+
+    void OnEnable() {
+        playerInputs.Enable();
+    }
+
+    void OnDisable() {
+        playerInputs.Disable();
     }
 }
