@@ -66,7 +66,7 @@ public class PlayerHealth : MonoBehaviour {
 		GetComponent<Rigidbody2D>().AddForce(pushDirection, ForceMode2D.Impulse);
 	}
 
-	void OnCollisionStay2D(Collision2D col) {
+	void OnCollisionEnter2D(Collision2D col) {
 		if (col.gameObject.tag == "Enemy" && !isInv && !isDead) TakeDamage(col.gameObject);
 	}
 }

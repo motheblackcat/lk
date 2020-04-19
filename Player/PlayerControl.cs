@@ -59,17 +59,13 @@ public class PlayerControl : MonoBehaviour {
 
         GetComponent<CapsuleCollider2D>().offset = new Vector2(sprite.flipX ? -colliderOffsetX : colliderOffsetX, colliderOffsetY);
         if (ghost) ghost.GetComponent<SpriteRenderer>().flipX = sprite.flipX;
-
-        /** TODO: Enemy doesn't hurt on first contact if player is facing it */
-        if (canMove) {
-            if (rb.velocity.x > 0) sprite.flipX = false;
-            if (rb.velocity.x < 0) sprite.flipX = true;
-        }
     }
 
     void FixedUpdate() {
         if (canMove) {
             rb.velocity = new Vector2(direction * runSpeed, rb.velocity.y);
+            if (rb.velocity.x > 0) sprite.flipX = false;
+            if (rb.velocity.x < 0) sprite.flipX = true;
             if (jump && isGrounded && playerSound) {
                 rb.velocity = (Vector2.up * jumpSpeed);
                 audioSource.PlayOneShot(playerSound.jumpSound);
