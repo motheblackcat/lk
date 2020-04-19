@@ -13,8 +13,8 @@ Patch notes upcoming v0.0.5:
 - WIP: Convertion to Tilemaps for plains
 - WIP: Global Quest System
 - WIP: Better attack animation timing / effective impact
-- WIP: Migration to new Input System
-- Migration to URP done
+- Migration to URP
+- Migration to new Input System
 - Added glow effect (neon light)
 - Added Correct player position / facing for backtracking
 - Improved Life Bar (better logic / graphic scalability)
