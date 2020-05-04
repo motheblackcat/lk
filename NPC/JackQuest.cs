@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public class JackQuest : MonoBehaviour {
-    [SerializeField] Quest quest;
+    public Quest quest;
     [SerializeField] DialogManager dialogManager;
     [SerializeField] GameObject sWeapon;
 
