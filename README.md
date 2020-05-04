@@ -12,7 +12,6 @@ Patch notes upcoming v0.0.5:
 - WIP: New NPC - Jack The Lumber
 - WIP: Convertion to Tilemaps for plains
 - WIP: Global Quest System
-- WIP: Better attack animation timing / effective impact
 - Migration to URP
 - Migration to new Input System
 - Added glow effect (neon light)

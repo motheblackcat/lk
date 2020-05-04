@@ -66,7 +66,7 @@ public class PlayerControl : MonoBehaviour {
             rb.velocity = new Vector2(direction * runSpeed, rb.velocity.y);
             if (rb.velocity.x > 0) sprite.flipX = false;
             if (rb.velocity.x < 0) sprite.flipX = true;
-            if (jump && isGrounded && playerSound) {
+            if (jump && isGrounded && playerSound && npc == null) {
                 rb.velocity = (Vector2.up * jumpSpeed);
                 audioSource.PlayOneShot(playerSound.jumpSound);
                 jump = false;
