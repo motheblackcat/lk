@@ -2,10 +2,11 @@
 
 public class JackQuest : MonoBehaviour {
     public Quest quest;
-    [SerializeField] DialogManager dialogManager;
-    [SerializeField] GameObject sWeapon;
+    DialogManager dialogManager = null;
+    [SerializeField] GameObject sWeapon = null;
 
     void Start() {
+        dialogManager = GameObject.FindObjectOfType<DialogManager>();
         quest.name = "AxeEvent";
         quest.npcName = gameObject.name;
         Quest savedQuest = PlayerState.Instance.quests.Find(q => q.name == quest.name);
