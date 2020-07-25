@@ -6,23 +6,12 @@ A sandbox/pet project to learn 2D in Unity, advancing slowly due to work and lif
 
 You can test the current build in the releases.
 
-Release notes v0.0.5:
+Release notes upcoming v0.0.6:
 
 - WIP: New NPC - Juke The Menstrel
 - WIP: New NPC - Jack The Lumber
-- WIP: Convertion to Tilemaps for plains
-- WIP: Global Quest System
-- Migration to URP
-- Migration to new Input System
-- Added glow effect (neon light)
-- Added Correct player position / facing for backtracking
-- Improved Life Bar (better logic / graphic scalability)
-- Improved Player State (better life / sweapon management)
-- Improved Dialog System (multi-pages / text animation)
-- Fix: Dialog start conditions (intro / special scenes)
-- Fix: PlayerState save conditions (intro / special scenes)
+- Fix: Jack Quest's saved state
 
 Currently Known Issues:
 
-- Player push back can have unexpected behavior(ex: pushing too far)
 - Damage boost on enemy (Bigger jump while taking damage)

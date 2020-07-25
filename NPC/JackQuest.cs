@@ -7,7 +7,9 @@ public class JackQuest : MonoBehaviour {
 
     void Start() {
         dialogManager = GameObject.FindObjectOfType<DialogManager>();
-        quest.name = "AxeEvent";
+
+        /** TODOL: Quests props are only set here they could be taken from a dictionary of quests */
+        quest.name = "Jack's Quest";
         quest.npcName = gameObject.name;
         Quest savedQuest = PlayerState.Instance.quests.Find(q => q.name == quest.name);
         if (savedQuest != null) {
@@ -18,7 +20,7 @@ public class JackQuest : MonoBehaviour {
 
     void Update() {
         if (!quest.isComplete) {
-            if (dialogManager.npc == gameObject && dialogManager.inDialog) {
+            if (dialogManager.npc == gameObject && dialogManager.inDialog && !quest.isActive) {
                 quest.isActive = true;
                 PlayerState.Instance.quests.Add(quest);
             }
