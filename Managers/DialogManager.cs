@@ -43,7 +43,7 @@ public class DialogManager : MonoBehaviour {
     }
 
     void TriggerDialog() {
-        if (npc) {
+        if (npc && playerControl.isGrounded && PlayerState.Instance.introDone) {
             if (!inDialog) StartDialog(npc.GetComponent<NpcManager>());
             else DisplayNextDialog();
         }

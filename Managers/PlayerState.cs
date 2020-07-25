@@ -27,10 +27,17 @@ public class PlayerState : MonoBehaviour {
     }
 
     public void Save() {
-        float playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>().playerHealth;
-        playerMaxHealth = GameObject.Find("Player").GetComponent<PlayerHealth>().playerMaxHealth;
-        playerCurrentHealth = playerHealth > 0 ? playerHealth : playerMaxHealth;
-        sWeapons = GameObject.Find("Player").GetComponent<PlayerSWeapons>().sWeapons;
-        sWeapon = GameObject.Find("Player").GetComponent<PlayerSWeapons>().sWeapon;
+        PlayerHealth playerHealthScript = GameObject.FindObjectOfType<PlayerHealth>();
+        if (playerHealthScript) {
+            float playerHealth = playerHealthScript.playerHealth;
+            playerMaxHealth = playerHealthScript.playerMaxHealth;
+            playerCurrentHealth = playerHealth > 0 ? playerHealth : playerMaxHealth;
+        }
+
+        PlayerSWeapons playerSWeapons = GameObject.FindObjectOfType<PlayerSWeapons>();
+        if (playerSWeapons) {
+            sWeapons = playerSWeapons.sWeapons;
+            sWeapon = playerSWeapons.sWeapon;
+        }
     }
 }

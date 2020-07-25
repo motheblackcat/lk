@@ -33,7 +33,7 @@ public class SceneTransition : MonoBehaviour {
 		animator.SetFloat("direction", -1f);
 		animator.Play(transitionType + "Transition", 0, 1);
 		yield return new WaitForSeconds(1);
-		if (SceneManager.GetActiveScene().buildIndex != 1) PlayerState.Instance.Save();
+		PlayerState.Instance.Save();
 		SceneManager.LoadScene(sceneIndex);
 	}
 
