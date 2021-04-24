@@ -1,81 +1,94 @@
 ﻿using UnityEngine;
 
-public enum WeaponTypes { Sword }
-
 public class PlayerAttack : MonoBehaviour {
-    public Collider2D[] enemyHits;
-    public Transform atkPos;
-    public LayerMask enemyLayer;
-    public WeaponTypes weaponType;
-    Animator animator;
-    AudioSource audioSource;
-    GameObject weapon;
-    PlayerSound playerSound;
-    PlayerInputActions playerInputs;
-    public float timeBtwAtk = 0.3f;
-    public float atkRange = 0.7f;
-    public int damage = 0;
-    float timeBtwAtkTemp = 0;
-    float atkPosX = 0;
-    float weaponPosX = 0;
-    bool attack = false;
+	[SerializeField] Collider2D[] enemyHits;
+	[SerializeField] LayerMask enemyLayer;
+	[SerializeField] bool atkStart = false;
+	[SerializeField] float atkCd = 0.3f;
+	[SerializeField] float atkRange = 0.7f;
+	[SerializeField] int damage = 1;
 
-    void Awake() {
-        playerInputs = new PlayerInputActions();
-        playerInputs.Player.Attack.performed += ctx => attack = true;
-        playerInputs.Player.Attack.canceled += ctx => attack = false;
-    }
+	PlayerInputActions playerInputs;
+	Transform atkPos;
+	Animator animator;
+	AudioSource audioSource;
+	GameObject weapon;
+	PlayerSound playerSound;
 
-    void Start() {
-        animator = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
-        playerSound = GetComponent<PlayerSound>();
-        weapon = GameObject.FindWithTag("Weapon");
-        weaponPosX = weapon.transform.localPosition.x;
-        atkPos = GameObject.Find("AttackPos").GetComponent<Transform>();
-        atkPosX = atkPos.localPosition.x;
-        timeBtwAtkTemp = timeBtwAtk;
-        SetWeaponDamage(weaponType);
-    }
+	float atkCdTimer = 0;
+	float weaponPosX = 0;
+	float atkPosX = 0;
 
-    void Update() {
-        WeaponPosition();
-        atkPos.localPosition = new Vector2(GetComponent<SpriteRenderer>().flipX ? -atkPosX : atkPosX, atkPos.localPosition.y);
-        if (attack && weapon && timeBtwAtk <= 0 && GetComponent<PlayerControl>().canMove) {
-            animator.SetTrigger("attack");
-            audioSource.PlayOneShot(playerSound.attackSound);
-            enemyHits = Physics2D.OverlapCircleAll(atkPos.position, atkRange, enemyLayer);
-            foreach (Collider2D enemy in enemyHits) enemy.GetComponent<EnemyControl>().TakeDamage(damage);
-            timeBtwAtk = timeBtwAtkTemp;
-            attack = false;
-        } else timeBtwAtk -= Time.deltaTime;
-    }
+	void Start() {
+		weapon = GameObject.FindWithTag("Weapon");
+		atkPos = GameObject.Find("AttackPos").GetComponent<Transform>();
+		animator = GetComponent<Animator>();
+		audioSource = GetComponent<AudioSource>();
+		playerSound = GetComponent<PlayerSound>();
+		atkCdTimer = atkCd;
+		weaponPosX = weapon.transform.localPosition.x;
+		atkPosX = atkPos.localPosition.x;
+	}
 
-    void WeaponPosition() {
-        bool flipX = GetComponent<SpriteRenderer>().flipX;
-        float weaponPosY = weapon.transform.localPosition.y;
-        weapon.GetComponent<SpriteRenderer>().flipX = flipX;
-        weapon.transform.localPosition = new Vector2(flipX ? -weaponPosX : weaponPosX, weaponPosY);
-    }
+	void Update() {
+		if (weapon) {
+			WeaponPosition();
+			Attack();
+		}
+	}
 
-    void SetWeaponDamage(WeaponTypes weaponType) {
-        switch (weaponType) {
-            case WeaponTypes.Sword:
-                damage = 1;
-                break;
-        }
-    }
+	/**
+	 *  Play attack animation and sound then reset timer and trigger
+	 **/
+	void Attack() {
+		if (atkStart && atkCdTimer <= 0 && GetComponent<PlayerControl>().canMove) {
+			animator.SetTrigger("attack");
+			audioSource.PlayOneShot(playerSound.attackSound);
+			atkCdTimer = atkCd;
+			atkStart = false;
+		} else atkCdTimer -= Time.deltaTime;
+	}
 
-    void OnDrawGizmosSelected() {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(atkPos.position, atkRange);
-    }
+	/**
+	 *  Damage the enemy
+	 **/
+	public void DamageEnemy() {
+		enemyHits = Physics2D.OverlapCircleAll(atkPos.position, atkRange, enemyLayer);
+		foreach (Collider2D enemy in enemyHits) enemy.GetComponent<EnemyControl>().TakeDamage(damage);
+	}
 
-    void OnEnable() {
-        playerInputs.Enable();
-    }
+	/**
+	 *  Position the weapon depending if the player is facing left or right
+	 **/
+	void WeaponPosition() {
+		bool playerFlipX = GetComponent<SpriteRenderer>().flipX;
+		weapon.GetComponent<SpriteRenderer>().flipX = playerFlipX;
+		float weaponPosY = weapon.transform.localPosition.y;
+		weapon.transform.localPosition = new Vector2(playerFlipX ? -weaponPosX : weaponPosX, weaponPosY);
+		atkPos.localPosition = new Vector2(GetComponent<SpriteRenderer>().flipX ? -atkPosX : atkPosX, atkPos.localPosition.y);
+	}
 
-    void OnDisable() {
-        playerInputs.Disable();
-    }
+	/**
+	 *  From MonoBehaviour: draw a gizmo when the player is selected in the editor, the gizmo represents the weapon's radius
+	 **/
+	void OnDrawGizmosSelected() {
+		Gizmos.color = Color.red;
+		Gizmos.DrawWireSphere(GameObject.Find("AttackPos").GetComponent<Transform>().position, atkRange);
+	}
+
+	/**
+	 *   From MonoBehaviour: this is called when the attached GameObject is enabled
+	 **/
+	void OnEnable() {
+		playerInputs = new PlayerInputActions();
+		playerInputs.Player.Attack.performed += ctx => atkStart = true;
+		playerInputs.Enable();
+	}
+
+	/**
+	 *   From MonoBehaviour: this is called when the attached GameObject is disabled
+	 **/
+	void OnDisable() {
+		playerInputs.Disable();
+	}
 }

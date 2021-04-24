@@ -2,7 +2,7 @@
 
 public class IntroSceneManager : MonoBehaviour {
 	GameObject player;
-	public float startTimer = 5.0f;
+	[SerializeField] float startTimer = 5.0f;
 
 	void Start() {
 		player = GameObject.Find("Player");

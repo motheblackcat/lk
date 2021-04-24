@@ -3,15 +3,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public enum TransitionTypes { Box, Fade }
+
 public class SceneTransition : MonoBehaviour {
-	public Transform backSpawnPoint;
+	[SerializeField] TransitionTypes transitionType;
+	[SerializeField] int sceneIndex = 0;
+	[SerializeField] float spawnOffset = 5f;
+	[SerializeField] Transform backSpawnPoint;
+	public bool isLoading = false;
+
 	Animator animator;
 	GameObject player;
 	Bounds levelBounds;
-	public TransitionTypes transitionType;
-	public bool isLoading = false;
-	public int sceneIndex = 0;
-	public float spawnOffset = 5f;
 
 	void Start() {
 		player = GameObject.Find("Player");

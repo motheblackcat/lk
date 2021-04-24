@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public class EnemyCorpse : MonoBehaviour {
-    public void Destroy() {
-        Destroy(gameObject);
-    }
+	public void Destroy() {
+		Destroy(gameObject);
+	}
 }
