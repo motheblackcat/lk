@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 
 public class JackQuest : MonoBehaviour {
-	[SerializeField] GameObject sWeapon = null;
+	[SerializeField] GameObject sWeapon;
+
 	public Quest quest;
-	DialogManager dialogManager = null;
+
+	DialogManager dialogManager;
 
 	void Start() {
 		dialogManager = GameObject.FindObjectOfType<DialogManager>();
