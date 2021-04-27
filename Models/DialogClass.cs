@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [System.Serializable]
-public class Dialog {
+public class DialogClass {
 	[TextArea(3, 10)]
 	public string[] sentences;
 }
