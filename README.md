@@ -10,7 +10,7 @@ Release notes upcoming v0.0.6:
 
 - WIP: New NPC - Juke The Menstrel
 - WIP: New NPC - Jack The Lumber
-- Fix: Jack Quest's saved state
+- Attack timing fixed
 
 Currently Known Issues:
 
