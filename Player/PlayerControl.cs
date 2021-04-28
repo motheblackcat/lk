@@ -67,8 +67,13 @@ public class PlayerControl : MonoBehaviour {
 	void FixedUpdate() {
 		if (canMove) {
 			rb.velocity = new Vector2(direction * runSpeed, rb.velocity.y);
-			if (rb.velocity.x > 0) sprite.flipX = false;
-			if (rb.velocity.x < 0) sprite.flipX = true;
+			/**
+			 *	Due to the use of a separate sword object if the animation use position it cannot be flipped
+			 *	if (rb.velocity.x > 0) sprite.flipX = false;
+			 *	if (rb.velocity.x < 0) sprite.flipX = true;
+			 **/
+			if (rb.velocity.x > 0) transform.eulerAngles = new Vector3(0, 0, 0);
+			if (rb.velocity.x < 0) transform.eulerAngles = new Vector3(0, 180, 0);
 			if (jump && isGrounded && playerSound && npc == null) {
 				rb.velocity = (Vector2.up * jumpSpeed);
 				audioSource.PlayOneShot(playerSound.jumpSound);

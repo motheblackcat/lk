@@ -48,9 +48,9 @@ public class PlayerSWeapons : MonoBehaviour {
 
 	void ThrowWeapon() {
 		if (throwTimer <= 0) {
-			bool playerFlip = GetComponent<SpriteRenderer>().flipX;
+			bool playerFlip = transform.eulerAngles.y > 0;
 			Vector2 playerVel = GetComponent<Rigidbody2D>().velocity;
-			GameObject clone = Instantiate(sWeapon, transform) as GameObject;
+			GameObject clone = Instantiate(sWeapon, transform.position, transform.rotation);
 			SWeaponsControl sWeaponControl = clone.GetComponent<SWeaponsControl>();
 			clone.GetComponent<Rigidbody2D>().AddForce(
 				new Vector2((playerFlip ? -sWeaponControl.throwForceX : sWeaponControl.throwForceX) + playerVel.x, sWeaponControl.throwForceY),
