@@ -32,7 +32,6 @@ public class PlayerAttack : MonoBehaviour {
 
 	void Update() {
 		if (weapon) {
-			WeaponPosition();
 			Attack();
 		}
 	}
@@ -55,17 +54,6 @@ public class PlayerAttack : MonoBehaviour {
 	public void DamageEnemy() {
 		enemyHits = Physics2D.OverlapCircleAll(atkPos.position, atkRange, enemyLayer);
 		foreach (Collider2D enemy in enemyHits) enemy.GetComponent<EnemyControl>().TakeDamage(damage);
-	}
-
-	/**
-	 *  Position the weapon depending if the player is facing left or right
-	 **/
-	void WeaponPosition() {
-		bool playerFlipX = GetComponent<SpriteRenderer>().flipX;
-		weapon.GetComponent<SpriteRenderer>().flipX = playerFlipX;
-		float weaponPosY = weapon.transform.localPosition.y;
-		weapon.transform.localPosition = new Vector2(playerFlipX ? -weaponPosX : weaponPosX, weaponPosY);
-		atkPos.localPosition = new Vector2(GetComponent<SpriteRenderer>().flipX ? -atkPosX : atkPosX, atkPos.localPosition.y);
 	}
 
 	/**

@@ -25,9 +25,6 @@ public class StartMenuManager : MonoBehaviour {
 	void Update() {
 		CancelMouseFocus();
 		CheckOptions();
-		if (Input.GetButtonDown("Accept")) {
-			audioSource.Play();
-		}
 	}
 
 	void CancelMouseFocus() {
@@ -40,6 +37,7 @@ public class StartMenuManager : MonoBehaviour {
 
 	void CheckOptions() {
 		if (startGame || quitGame) {
+			audioSource.Play();
 			audioTimer -= Time.deltaTime;
 			if (audioTimer <= 0) {
 				if (startGame) { SceneManager.LoadScene(1); } else { Application.Quit(); }

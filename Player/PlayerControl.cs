@@ -53,8 +53,9 @@ public class PlayerControl : MonoBehaviour {
 		bool tookDamage = playerHealth ? playerHealth.isInv : false;
 		bool isDead = playerHealth ? playerHealth.isDead : false;
 		bool isPaused = pauseMenuManager? pauseMenuManager.paused : false;
+		bool introDone = PlayerState.Instance.introDone;
 
-		canMove = !isPaused && !inDialog && !isLoading && !tookDamage && !isDead;
+		canMove = !isPaused && !inDialog && !isLoading && !tookDamage && !isDead && introDone;
 
 		if (inDialog || isLoading) GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
 		animator.SetBool("run", GetComponent<Rigidbody2D>().velocity.x != 0);
@@ -67,11 +68,6 @@ public class PlayerControl : MonoBehaviour {
 	void FixedUpdate() {
 		if (canMove) {
 			rb.velocity = new Vector2(direction * runSpeed, rb.velocity.y);
-			/**
-			 *	Due to the use of a separate sword object if the animation use position it cannot be flipped
-			 *	if (rb.velocity.x > 0) sprite.flipX = false;
-			 *	if (rb.velocity.x < 0) sprite.flipX = true;
-			 **/
 			if (rb.velocity.x > 0) transform.eulerAngles = new Vector3(0, 0, 0);
 			if (rb.velocity.x < 0) transform.eulerAngles = new Vector3(0, 180, 0);
 			if (jump && isGrounded && playerSound && npc == null) {
