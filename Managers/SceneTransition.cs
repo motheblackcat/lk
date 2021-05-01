@@ -46,7 +46,7 @@ public class SceneTransition : MonoBehaviour {
 			Vector2 spawnPosition = backSpawnPoint ?
 				new Vector2(backSpawnPoint.position.x, backSpawnPoint.position.y) : new Vector2(levelBounds.max.x - spawnOffset, player.transform.position.y);
 			player.transform.position = spawnPosition;
-			player.GetComponent<SpriteRenderer>().flipX = true;
+			player.transform.eulerAngles = new Vector3(0, 180, 0);
 		}
 	}
 

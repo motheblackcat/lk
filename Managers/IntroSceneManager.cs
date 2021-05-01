@@ -16,7 +16,6 @@ public class IntroSceneManager : MonoBehaviour {
 				PlayerState.Instance.introDone = true;
 				FreePlayer();
 			} else {
-				player.GetComponent<SpriteRenderer>().flipX = false;
 				GameObject.Find("Arth").GetComponent<Animator>().SetBool("watch", false);
 			}
 		}

@@ -60,9 +60,6 @@ public class PlayerControl : MonoBehaviour {
 		if (inDialog || isLoading) GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
 		animator.SetBool("run", GetComponent<Rigidbody2D>().velocity.x != 0);
 		animator.SetBool("air", !isGrounded);
-
-		GetComponent<CapsuleCollider2D>().offset = new Vector2(sprite.flipX ? -colliderOffsetX : colliderOffsetX, colliderOffsetY);
-		if (ghost) ghost.GetComponent<SpriteRenderer>().flipX = sprite.flipX;
 	}
 
 	void FixedUpdate() {
