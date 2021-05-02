@@ -10,6 +10,7 @@ Release notes upcoming v0.0.6:
 
 - WIP: New NPC - Juke The Menstrel
 - WIP: New NPC - Jack The Lumber
+- Readd stable enemy pushback
 - Attack timing fixed
 
 Currently Known Issues:
