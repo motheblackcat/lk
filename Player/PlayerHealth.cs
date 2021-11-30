@@ -51,7 +51,7 @@ public class PlayerHealth : MonoBehaviour {
 			animator.SetTrigger("die");
 			audioSource.PlayOneShot(playerSound.deathSound);
 			GameObject.Find("MainCamera").GetComponent<AudioSource>().Stop();
-			StartCoroutine(sceneTransition.LoadScene(true));
+			StartCoroutine(sceneTransition.LoadScene(-1));
 		} else {
 			audioSource.PlayOneShot(playerSound.hurtSound);
 			PushBack(enemy);
@@ -59,7 +59,7 @@ public class PlayerHealth : MonoBehaviour {
 		}
 	}
 
-	/** TODOL: Pushback strength taken from the enemy (currently taken from the inspector) */
+	/* TODO: Pushback strength taken from the enemy (currently taken from the inspector) */
 	void PushBack(GameObject enemy) {
 		bool enemyPos = enemy.transform.position.x > transform.position.x;
 		Vector2 pushDirection = new Vector2(enemyPos ? -pushX : pushX, pushY);

@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 
 public class SimpleWarp : MonoBehaviour {
+    [SerializeField] int nextSceneIndex = -1;
     SceneTransition SceneTransition;
     PlayerInputActions playerInputs;
     bool warp = false;
 
+    /* TODO: Make playerInputs global? */
     void Awake() {
         playerInputs = new PlayerInputActions();
         playerInputs.Player.Jump.performed += ctx => Warp();
@@ -15,7 +17,7 @@ public class SimpleWarp : MonoBehaviour {
     }
 
     void Warp() {
-        if (warp) StartCoroutine(SceneTransition.LoadScene(false));
+        if (warp && GameObject.Find("Player").GetComponent<PlayerControl>().isGrounded) StartCoroutine(SceneTransition.LoadScene(nextSceneIndex));
     }
 
     void OnTriggerStay2D(Collider2D other) {

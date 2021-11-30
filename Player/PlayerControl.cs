@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerControl : MonoBehaviour {
 	[SerializeField] float runSpeed = 18;
@@ -53,9 +54,8 @@ public class PlayerControl : MonoBehaviour {
 		bool tookDamage = playerHealth ? playerHealth.isInv : false;
 		bool isDead = playerHealth ? playerHealth.isDead : false;
 		bool isPaused = pauseMenuManager? pauseMenuManager.paused : false;
-		bool introDone = PlayerState.Instance.introDone;
 
-		canMove = !isPaused && !inDialog && !isLoading && !tookDamage && !isDead && introDone;
+		canMove = !isPaused && !inDialog && !isLoading && !tookDamage && !isDead;
 
 		if (inDialog || isLoading) GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
 		animator.SetBool("run", GetComponent<Rigidbody2D>().velocity.x != 0);
@@ -87,9 +87,13 @@ public class PlayerControl : MonoBehaviour {
 		if (other.gameObject.tag == "NPC" || other.gameObject.tag == "StaticNPC") npc = other.gameObject;
 	}
 
+	/* TODO: Define next scene with refactored scenetransition manager */
 	void OnTriggerExit2D(Collider2D other) {
 		npc = null;
-		if (other.tag == "Level") StartCoroutine(SceneTransition.LoadScene(false));
+		int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+		Bounds levelBounds = FindObjectOfType<PolygonCollider2D>().bounds;
+		int nextSceneIndex = transform.position.x < levelBounds.min.x ? SceneTransition.previousSceneIndex : SceneTransition.nextSceneIndex;
+		if (other.tag == "Level") StartCoroutine(SceneTransition.LoadScene(nextSceneIndex));
 	}
 
 	void OnEnable() {
